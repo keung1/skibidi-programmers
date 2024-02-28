@@ -1,0 +1,21 @@
+
+/*------------------ grid ------------------*/ 
+body {
+    overflow-x: hidden;
+    display: grid;
+    grid-template-areas:
+    'header' 'header' 'header'
+    'main' 'main' 'main'
+    'footer' 'footer' 'footer';
+    background-color: #1d1d1f;
+}
+
+header {
+    grid-area: header;
+}
+main {
+    grid-area: main;
+}
+footer {
+    grid-area: footer;
+}
