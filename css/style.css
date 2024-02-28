@@ -27,9 +27,14 @@ header {
     
 }
 
-header.h1 {
+
+header h1 {
     font-size: 40;
     font-family: DM-sans;
-    color:azure;
-    
 }
+
+.projects image {
+    width: 800 px;
+    height: 800 px;
+}
+
