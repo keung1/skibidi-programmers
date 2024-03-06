@@ -12,38 +12,57 @@
 </head>
 <body>
     <header>
-        <h1>Skibidi Programmers</h1>
-        <ul>
-            <li><button>sign in</button></li>
-            <li><button>login</button></li>
-        </ul>
+        <section id = "container_header_landing">
+            <h1>Skibidi Programmers</h1>
+            <ul id = "account_buttons">
+                <li><button>sign in</button></li>
+                <li><button id = "login_button">login</button></li>
+            </ul>
+        </section>
     </header>
     <main>
-        <h2>Projecten</h2>
-        <article>
-            <a href = ""><img src = "assets/images/logo-pokemon.webp" alt = "foto Pokémon project"></a>
-            <p>Pokémon</p>
-        </article>
-        <article>
-            <a href = ""><img src = "assets/images/logo-pokemon.webp" alt = "foto fortnite project"></a>
-            <p>Fornite</p>
-        </article>
-        <article>
-            <a href = ""><img src = "assets/images/logo-mtg.webp" alt = "foto MTG project"></a>
-            <p>Magic The Gathering</p>
-        </article>
-        <article>
-            <a href = ""><img src = "assets/images/logo-fifa.webp" alt = "foto Fifa project"></a>
-            <p>Fifa</p>
-        </article>
-        <article>
-            <a href = ""><img src = "assets/images/logo-lego.webp" alt = "foto LegoMasters project"></a>
-            <p>LegoMasters</p>
-        </article>
-        <article>
-            <a href = ""><img src = "assets/images/logo-lotr.webp" alt = "foto LOTR project"></a>
-            <p>Lord Of The Rings</p>
-        </article>
+        <div id = main_landingspagina>
+            <h2>Projecten</h2>
+            <section id = "container_projects">
+                <article class = "project">
+                    <a href = ""><img src = "assets/pokemon.jpg" alt = "foto Pokémon project" width="168" height="300"></a>
+                    <p>Pokémon</p>
+                </article>
+                <article class = "project">
+                    <a href = ""><img src = "assets/fortnite.jpg" alt = "foto fortnite project" width="168" height="300"></a>
+                    <p>Fornite</p>
+                </article>
+                <article class = "project">
+                    <a href = ""><img src = "assets/mtg.jpg" alt = "foto MTG project" width="168" height="300"></a>
+                    <p>Magic The Gathering</p>
+                </article>
+                <article class = "project">
+                    <a href = ""><img src = "assets/fifa.jpg" alt = "foto Fifa project" width="168" height="300"></a>
+                    <p>Fifa</p>
+                </article>
+                <article class = "project">
+                    <a href = ""><img src = "assets/lego.jpg" alt = "foto LegoMasters project" width="168" height="300"></a>
+                    <p>LegoMasters</p>
+                </article>
+                <article class = "project">
+                    <a href = ""><img src = "assets/lotr.jpg" alt = "foto LOTR project" width="168" height="300"></a>
+                    <p>Lord Of The Rings</p>
+                </article>
+            </section>
+            <section id = "account_popups">
+                <form action="#" method="post" id = "popup_content">
+                    <h3>Login</h3>
+                    <button id = "close_login_button">X</button>
+                    <fieldset>
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" placeholder="username" required><br>
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" placeholder="password" required><br>
+                    </fieldset>    
+                    <input id = "popup_login" type="submit" value="Inzenden">           
+                </form>
+            </section>
+        </div>
     </main>
     <footer>
         <div class="privacy-policy">
