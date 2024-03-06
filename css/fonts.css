@@ -1,9 +1,9 @@
 @font-face {
-    font-family: DM-sans;
-    src: url(../assets/fonts/DMSans-VariableFont_opsz\,wght.ttf);
+    font-family: Pokémon-Classic;
+    src: url(../assets/fonts/pokemon-classic.ttf);
 }
 
 @font-face {
-    font-family: Raleway;
-    src: url(../assets/fonts/Raleway-VariableFont_wght.ttf);
+    font-family: "Flexo-Regular";
+    src: url("/assets/fonts/Flexo-Regular.ttf");
 }
