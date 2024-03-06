@@ -2,3 +2,8 @@
     font-family: Pokémon-Classic;
     src: url(../assets/fonts/pokemon-classic.ttf);
 }
+
+@font-face {
+    font-family: "Flexo-Regular";
+    src: url("/assets/fonts/Flexo-Regular.ttf");
+}
