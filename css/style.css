@@ -1,3 +1,12 @@
+/*------------------ colors ------------------*/
+:root {
+    --bg-color: rgb(244, 244, 244);
+    --primary-color: rgb(18, 18, 18);
+    --secondary-color: rgb(224, 15, 0);
+    --tertiary-color: rgb(51, 51, 51);
+    --link-color: rgb(200, 0, 0);
+  }
+
 /*------------------ grid ------------------*/ 
 body {
     overflow-x: hidden;
@@ -41,7 +50,7 @@ header h1 {
 }
 
 nav {
-    background-color: #f44336; 
+    background-color: var(--secondary-color); 
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -73,7 +82,7 @@ ul li a:hover {
 }
 
 footer {
-    background-color: #333; 
+    background-color: var(--tertiary-color); 
     color: white; 
     padding: 20px;
     text-align: center;
