@@ -218,3 +218,43 @@ fieldset {
     margin-left: 80%;
 }
 
+
+/*--------------pokedex--------------*/
+
+
+#Pokédex{
+    background-color: white;
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+h1{
+    left: 50%;   
+    
+}
+
+select{
+    padding: 10px;
+    background-color: rgb(46, 45, 45);
+    color: white;
+    border-radius: 15px;
+}
+
+
+#Pokemon{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+
+#Pokemon img{
+    background-color: rgb(194, 191, 191);
+    border-radius: 15px;
+}
+
+article{
+    padding: 1rem;
+}
+
+
