@@ -7,7 +7,7 @@
     --link-color: rgb(200, 0, 0);
   }
 
-/*------------------ grid ------------------*/ 
+/*------------------ grid ------------------*/
 body {
     overflow-x: hidden;
     display: grid;
@@ -258,3 +258,21 @@ article{
 }
 
 
+/*------------------ teampage ------------------*/
+#teams h1{
+    font-size: 5rem;
+};
+
+#teams ol{
+    display: flex;
+    flex-direction: row;
+}
+
+#teams li{
+    background-color: var(--tertiary-color);
+}
+
+#teams h2{
+    font-size: 3rem;
+    text-align: left;
+}
