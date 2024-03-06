@@ -222,8 +222,8 @@ fieldset {
 /*--------------pokedex--------------*/
 
 
-#Pokédex{
-    background-color: white;
+main{
+    background-color: var(--bg-color);
     border-radius: 15px;
     padding: 1rem;
 }
