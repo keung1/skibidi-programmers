@@ -25,21 +25,16 @@ main {
     grid-area: main;
 }
 
-#main_landingspagina {
-    background-color: #000000;
-}
-
 footer {
     grid-area: footer;
 }
-
-
 
 nav {
     background-color: #1f1f1f;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    
 }
 
 
@@ -104,24 +99,34 @@ footer {
 }
 
 
-#container_header_landing {
+/* --------------------------- landingspagina -----------------------------*/
+.landing_header {
+    background-color: #101014;
+    color: white;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    background-color: #101014;
 }
 
-#container_header_landing h1 {
+.landing_header h1 {
     margin: 3rem;
     font-size: 3.5rem;
 }
 
+
 #account_buttons {
+    font-family: Roboto-Regular;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.landing_main {
+    font-family: Roboto-Regular;
+    background-color: #000000;
+    color: white;
 }
 
 #container_projects {
@@ -132,7 +137,7 @@ footer {
     margin: 5rem;
 }
 
-h2 {
+.landing_main h2 {
     margin-top: 3rem;
     text-align: center;
     font-size: 2.5rem;
@@ -149,7 +154,8 @@ h2 {
     padding-bottom: 0.5rem;
 }
 
-#account_popups {
+#login_popup, #container_pokeguesser_image {
+    left: 0;
     background: rgba(0, 0, 0, 0.6);
     min-width: 100vw;
     min-height: 100%;
@@ -160,8 +166,20 @@ h2 {
     align-items: center;
 }
 
-#popup_content {
-    height: 250px;
+#signin_popup {
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    min-width: 100vw;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#login_content {
+    height: 350px;
     width: 500px;
     background: #101014;
     display: flex;
@@ -173,49 +191,123 @@ h2 {
     border-radius: 1rem;
 }
 
-#popup_content.active {
-    opacity: 0;
-    pointer-events: all;
+#signin_content {
+    height: 500px;
+    width: 500px;
+    background: #101014;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    border-radius: 1rem;
 }
 
-#popup_content h3 {
+#login_content h3, #signin_content h3 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
     width: 90%;
 }
 
-#close_button {
-    margin-bottom: 2rem;
-    color: azure;
+.close_button {
     background: none;
     border: none;
     outline: none;
+    margin-bottom: 2rem;
+    color: white;
 }
 
-fieldset {
+#login_content fieldset, #signin_content fieldset{
     width: 90%;
 }
 
-#popup_content fieldset input, #popup_content label, legend {
-    margin: 0 0 2rem 0;
+#login_content fieldset input, #signin_content fieldset input {
+    margin: 0.7rem 0 2rem 0;
     width: 100%;
-}
-
-#popup_content fieldset input {
-    background-color: beige;
+    background-color: #3a3a3a;
     border-radius: 1rem;
-    padding: 0.4rem;
+    padding: 0.6rem;
 }
 
-#popup_content label {
+
+#login_content label, #signin_content label {
     font-size: 0.9rem;
-    padding-bottom: 1rem;
+    margin-left: 0.3rem;
 }
 
-#popup_login {
-    background-color: beige;
-    border-radius: 1rem;
+#popup_login_button, #popup_signin_button {
+    background-color: #3a3a3a;
+    border-radius: 0.5rem;
+    padding: 0.6rem;
     margin-left: 80%;
+    border-color: #000000;
+    border-style: solid;
+}
+
+
+/* --------------------------- pokeguesser -----------------------------*/
+.pokeguesser_main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokeguesser_main h2 {
+    font-size: 2rem;
+    font-family: "Pokémon-Classic"; 
+}
+
+#pokeguesser_black {
+    position: relative;
+    left: 6rem;
+    top: 4rem;
+    width: 300px;
+    height: 300px;
+}
+
+.pokeguesser_bg {
+    background-image: url("../assets/images/pokemonguesserbackground.webp");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 760px;
+    height: 428px;
+    border-radius: 10px;
+    margin: 3rem 0 3rem 0;
+}
+
+#guess_input {
+    font-family: "Roboto-Regular";
+    text-decoration: none solid rgb(49, 49, 49);
+    background-color: white;
+    color: #000000;
+    border: 3px solid #616161;
+    padding: 5px 0 5px 10px;
+    width: 20rem;
+}
+
+#guess_button {
+    font-family: "Roboto-Regular";
+    padding: 3px;
+    background-color: #EE6B2F;
+    border: 3px solid #616161;
+    border-radius: 10px;
+}
+
+
+.pokeguesser_image {
+    /* bron: https://www.pokemon.com/us/pokedex/eevee*/
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    border-radius: 1rem;
+    background-color: #3a3a3a;
+    color: white;
 }
 
 
