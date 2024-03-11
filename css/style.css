@@ -33,14 +33,12 @@ footer {
     grid-area: footer;
 }
 
-
-
 header {
     background-color: #1f1f1f;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
+  
 }
 
 header h1 {

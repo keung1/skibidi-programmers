@@ -1,11 +1,23 @@
 const loginButton = document.getElementById("login_button");
-const closeLoginButton = document.getElementById("close_login_button");
-let popupBackground = document.getElementById("account_popups");
+const closeButton = document.getElementsByClassName("close_button");
+let popupLoginBackground = document.getElementById("login_popup");
+const signinButton = document.getElementById("signin_button");
 
-loginButton.addEventListener("click", () =>{
-    popupBackground.style.display = "flex"
+let popupSigninBackground = document.getElementById("signin_popup");
+
+loginButton.addEventListener("click", (e) =>{
+    e.preventDefault();
+    popupLoginBackground.style.display = "flex"
 });
 
-closeLoginButton.addEventListener("click", () =>{
-    popupBackground.style.display = "none"
+signinButton.addEventListener("click", (e) =>{
+    e.preventDefault();
+    popupSigninBackground.style.display = "flex"
 });
+
+for (let i = 0; i < closeButton.length; i++) {
+    closeButton.addEventListener("click", (e) =>{
+        e.preventDefault();
+        popupLoginBackground.style.display = "none"
+    });
+}
