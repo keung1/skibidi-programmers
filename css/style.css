@@ -45,7 +45,7 @@ header h1 {
 }
 
 nav {
-    background-color: var(--secondary-color); 
+    background-color: #f44336; 
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -53,7 +53,18 @@ nav {
 }
 
 .logo img {
-    width: 100px; 
+    width: 100px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover img {
+    transform: scale(1.2);
+}
+
+nav li img{
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
 }
 
 ul {
@@ -64,19 +75,31 @@ ul {
 
 ul li {
     display: inline;
-    margin-right: 20px; 
+    margin-right: 20px;
 }
 
 ul li a {
     color: white;
     text-decoration: none;
-    font-family: "Pokémon-Classic"
 }
 
 ul li a:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
+ul li a img {
+    margin-right: 5px;
+}
+
+.presentPoke {
+    margin-left: 20px;
+}
+
+.presentPoke img {
+    margin-right: 5px;
+}
+
+/*-------footer-------*/
 footer {
     background-color: var(--tertiary-color); 
     color: white; 
@@ -97,6 +120,64 @@ footer {
     width: 30px;
     height: auto; 
 }
+
+/*--------battler-------*/
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #595959; 
+    margin-top: 2rem;
+}
+
+
+.pokemon-container {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.player-pokemon, .opponent-pokemon {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    width: 60%;
+}
+
+button {
+    background-color: #32d500;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #f44336;
+}
+
+.result {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.player-pokemon img{
+    width: 190px; 
+    height: auto; 
+}
+.opponent-pokemon img{
+    width: 150px; 
+    height: auto;
+}
+
 
 
 /* --------------------------- landingspagina -----------------------------*/
@@ -350,3 +431,4 @@ article{
 }
 
 
+  

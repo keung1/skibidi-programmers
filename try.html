@@ -12,9 +12,11 @@
     <script type="module" src="js/script.js" defer></script>
 </head>
 <body>
+    
     <header>
+        <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
+        
         <nav>
-            <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
             <ul>
                 <li><a href="home.html" >Home</a></li>
                 <li><a href="myteam.html">My Team</a></li>
@@ -25,33 +27,45 @@
             <a class="presentPoke"  href=""><img id="presentPoke" src="">Huidige pokémon</a>
         </nav>
     </header>
+
     <main>
-    <div class="container">
-        <h1>Pokémon Battler</h1>
-        <div class="pokemon-container">
-            <div class="player-pokemon">
-                <h2>Your Pokémon</h2>
-                <img src="assets/images/pikachu.png" alt="Pikachu">
-                <p>Name: Pikachu</p>
-                <p>Level: 10</p>
-                <p>Attack: 20</p>
-                <p>Defense: 10</p>
-                <p>HP: <span id="player-hp">100</span></p>
+        <div class="instructions">
+            <p>Choose your hero</p>
+          </div>
+          
+          <section class="characters">
+            <div class="char-container">
+              <img src="assets/images/pikachu.png" alt="Pokemon 1">
+              <h2>Pikachu</h2>
             </div>
-            <div class="opponent-pokemon">
-                <h2>Opponent Pokémon</h2>
-                <img src="assets/images/charmander.png" alt="Pikachu">
-                <p>Name: Charmander</p>
-                <p>Level: 8</p>
-                <p>Attack: 18</p>
-                <p>Defense: 8</p>
-                <p>HP: <span id="opponent-hp">90</span></p>
+            <div class="char-container">
+              <img src="assets/images/charmander.png" alt="Pokemon 2">
+              <h2>Charmander</h2>
             </div>
-        </div>
-        <button id="attack-btn">Attack!</button>
-        <div class="result" id="result"></div>
-    </div>
-</main>
+          </section>
+          <section class="stadium">
+            <section class="enemy char">
+              <img src="assets/images/bulbasaur.png" alt="Enemy Pokemon">
+              <div class="data">
+                <p>Enemy Pokemon</p>
+                <progress value="50" max="100"></progress>
+              </div>
+            </section>
+            <section class="hero char">
+              <img src="assets/images/pokemon1.png" alt="Hero Pokemon">
+              <div class="data">
+                <p>Hero Pokemon</p>
+                <progress value="50" max="100"></progress>
+              </div>
+            </section>
+          </section>
+          
+          <ul class="attack-list">
+            <li>Attack</li>
+          </ul>
+        </main>
+      
+            
     <footer>
         <div class="privacy-policy">
             <p>&copy; Skibidi Programmers 2024 - privacy policy - cookies</p>
