@@ -258,3 +258,51 @@ article{
 }
 
 
+/*-------pokemonvergelijking.html------------*/
+
+
+input{
+    padding: 6px;
+    width: 15rem;
+}
+
+
+#vergelijking{
+    display: flex;
+}
+
+
+.Pokemons {
+    background-color: rgb(194, 191, 191);
+    border-radius: 15px;
+    width: 20%;
+    padding: 3rem;
+    margin: 0 auto;
+  }
+
+ol  {
+    display: inline;
+    list-style: none;
+}
+ol > li{
+    width: 120px;
+}
+
+.list{
+    display:  flex;
+    justify-content: space-evenly;
+}
+
+.more{
+    background-color: green;
+}
+.less{
+    background-color: red;
+}
+.even{
+    background-color: grey;
+}
+
+
+
+
