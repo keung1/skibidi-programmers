@@ -456,6 +456,13 @@ select{
     margin: 0 auto;
 }
 
+#zoek-pokemon > input{
+    margin-left: 35%;
+    margin-bottom: 5rem;
+    width: 30rem;
+
+}
+
 #pokemon img{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
