@@ -460,7 +460,7 @@ select{
     margin-left: 35%;
     margin-bottom: 5rem;
     width: 30rem;
-
+    border-radius: 10px ;
 }
 
 #pokemon img{
