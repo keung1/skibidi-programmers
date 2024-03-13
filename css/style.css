@@ -452,6 +452,8 @@ select{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    width: 80%;
+    margin: 0 auto;
 }
 
 #pokemon img{
@@ -491,7 +493,7 @@ ol  {
     list-style: none;
 }
 ol > li{
-    width: 120px;
+    width: 100px;
 }
 
 .list{
