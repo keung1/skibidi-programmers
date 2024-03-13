@@ -37,7 +37,7 @@ nav {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
+    font-family: "Pokémon-Classic";
 }
 
 
@@ -56,8 +56,9 @@ nav {
 }
 
 .logo img {
-    width: 100px;
+    width: 200px;
     transition: transform 0.3s ease;
+    margin: 10px;
 }
 
 .logo:hover img {
