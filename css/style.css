@@ -128,8 +128,13 @@ footer {
 
 .container {
     max-width: 800px;
-    margin: 0 auto;
+    margin: auto;
     text-align: center;
+}
+
+.pokemon-container h2{
+    font-size: 1.4rem;
+    text-align:center;
 }
 
 h1 {
@@ -140,20 +145,45 @@ h1 {
 
 
 .pokemon-container {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    justify-content:center;
     margin-bottom: 20px;
+    
 }
 
-.player-pokemon, .opponent-pokemon {
+.player-image, .opponent-image{
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin: 0 10px;
-    width: 60%;
+    width: 600px;
+    font-size: large;
+    background-color: rgb(194, 191, 191);
 }
 
-button {
+.player-info, .opponent-info{
+    display: grid;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    width: 600px;
+    font-size: large;
+    background-color: rgb(194, 191, 191);
+}
+.player-pokemon, .opponent-pokemon {
+    display: flex;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 0 10px;
+    width: 80%;
+}
+
+.opponent-info:nth-child(2){
+    order: -1;
+}
+
+.attack-btn {
     background-color: #32d500;
     color: white;
     padding: 10px 20px;
@@ -175,6 +205,7 @@ button:hover {
 .player-pokemon img{
     width: 190px; 
     height: auto; 
+
 }
 .opponent-pokemon img{
     width: 150px; 
