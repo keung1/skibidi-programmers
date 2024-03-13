@@ -30,25 +30,33 @@
         <h1>Pokémon Battler</h1>
         <div class="pokemon-container">
             <div class="player-pokemon">
+                <div class="player-image">
                 <h2>Your Pokémon</h2>
-                <img src="assets/images/pikachu.png" alt="Pikachu">
-                <p>Name: Pikachu</p>
-                <p>Level: 10</p>
-                <p>Attack: 20</p>
-                <p>Defense: 10</p>
-                <p>HP: <span id="player-hp">100</span></p>
+                    <img src="assets/images/pikachu.png" alt="Pikachu">
+                </div>
+                <div class="player-info">
+                    <h2>Name: Pikachu</h2>
+                    <p>Level: 10</p>
+                    <p>Attack: 20</p>
+                    <p>Defense: 10</p>
+                    <p>HP: <span id="player-hp">100</span></p>
+                </div>
             </div>
             <div class="opponent-pokemon">
+                <div class="opponent-image">
                 <h2>Opponent Pokémon</h2>
-                <img src="assets/images/charmander.png" alt="Pikachu">
-                <p>Name: Charmander</p>
-                <p>Level: 8</p>
-                <p>Attack: 18</p>
-                <p>Defense: 8</p>
-                <p>HP: <span id="opponent-hp">90</span></p>
+                    <img src="assets/images/charmander.png" alt="Pikachu">
+                </div>
+                <div class="opponent-info">
+                    <h2>Name: Charmander</h2>
+                    <p>Level: 8</p>
+                    <p>Attack: 18</p>
+                    <p>Defense: 8</p>
+                    <p>HP: <span id="opponent-hp">90</span></p>
+                </div>
             </div>
         </div>
-        <button id="attack-btn">Attack!</button>
+        <button class="attack-btn" id="attack-btn">Attack!</button>
         <div class="result" id="result"></div>
     </div>
 </main>
