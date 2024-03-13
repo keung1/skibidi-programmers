@@ -9,7 +9,7 @@
     --link-color: rgb(200, 0, 0);
   }
 
-/*------------------ grid ------------------*/
+/*------------------ grid ------------------*/ 
 body {
     overflow-x: hidden;
     display: grid;
@@ -432,4 +432,98 @@ article{
     padding: 1rem;
 }
 
+/*------------------ teampage ------------------*/
+#teams h1{
+    font-size: 3rem;
+    font-family: "Pokémon-Classic";
+    margin: 1rem;
+    margin-left: 5rem;
+}
 
+#teams h2{
+    font-size: 3rem;
+    text-align: left;
+    font-family: "Pokémon-Classic";
+    max-height: fit-content;
+    margin-top: -0.5rem;
+}
+
+#teams h3{
+    font-size: large;
+    font-family: "Pokémon-Classic";
+}
+
+#teams ol{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    flex: none;
+
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+
+#teams li{
+    /*
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: flex-start;
+    flex: none;
+    min-width: fit-content;*/
+    
+    height: 25rem;
+    width: 25rem;
+    margin: 1rem;
+    padding: 1rem;
+    padding-top: -5;
+    background-color: rgb(209, 209, 209);
+    border-radius: 10%;
+}
+
+#teams img{
+   max-width: min-content; 
+   max-height: min-content;
+}
+
+
+
+#teams p{
+    font-size: 0.8rem;
+    font-family: "Pokémon-Classic";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#teams a{
+    transition-property: var(--bg-color);
+}
+
+#teams a:nth-child(1){
+    color: green;
+    margin-left: 5px;
+}
+
+#teams a:last-child{
+    color: var(--secondary-color);
+}
+
+#teams .empty{
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+#teams a:hover{
+    text-decoration: underline;
+    font-weight: bold;
+    transform: scale(1.05);
+    transition-property: "transform";
+    transition-duration: 150ms;
+    transition-timing-function: ease;
+}
+  
