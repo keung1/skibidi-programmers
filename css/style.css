@@ -727,3 +727,38 @@ ol > li{
     white-space: nowrap;
 }
   
+
+/*--------detailed-----------*/
+
+
+#Detail{
+    margin:  0 auto;
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(194, 191, 191);
+    border-radius: 10px;
+
+}
+
+#Detail > article{
+   margin: 10rem;
+   margin-bottom: 0rem;
+   margin-top: 0rem;
+}
+
+#Detail > article > ol > li{
+    width: 100%;
+    
+}
+
+#Detail-foto{
+    width: 200%;
+}
+#evolution > li{
+    display: inline;
+}
+
+
+
+
