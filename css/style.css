@@ -39,7 +39,6 @@ nav {
     
 }
 
-
 header h1 {
     font-size: 40px;
     font-family: "Tektur-Regular"; 
@@ -54,6 +53,14 @@ nav {
     align-items: center;
 }
 
+
+.presentPoke img{
+    width: 120px;
+    background-color:  rgb(216, 210, 210);
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
 .logo img {
     width: 100px;
     transition: transform 0.3s ease;
@@ -61,6 +68,10 @@ nav {
 
 .logo:hover img {
     transform: scale(1.2);
+}
+
+.logo:active img{
+    transform: scale(1);
 }
 
 nav li img{
@@ -83,10 +94,19 @@ ul li {
 ul li a {
     color: white;
     text-decoration: none;
+    display: inline-block;
+    border: 1px solid #e87373;
+    background-color: #f06060;
+    padding: 5px;
+    border-radius: 5px;
 }
 
+
 ul li a:hover {
-    text-decoration: underline;
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: #fff;
+    transform: scale(1.2);
 }
 
 ul li a img {
@@ -103,7 +123,7 @@ ul li a img {
 
 /*-------footer-------*/
 footer {
-    background-color: var(--tertiary-color); 
+    background-color: rgba(23, 22, 22, 0.948); 
     color: white; 
     padding: 20px;
     text-align: center;
@@ -134,6 +154,10 @@ footer {
 .pokemon-container h2{
     font-size: 1.4rem;
     text-align:center;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: white;
+    font-family: 'Press Start 2P', Arial, sans-serif;
 }
 
 h1 {
@@ -142,22 +166,32 @@ h1 {
     margin-top: 2rem;
 }
 
+.container p{
+    color: white;
+    font-weight: bold;
+}
 
 .pokemon-container {
     display: grid;
     justify-content:center;
     margin-bottom: 20px;
-    
+    justify-items: center;
 }
 
 .player-image, .opponent-image{
+    display: grid;
+    justify-items: center;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin: 0 10px;
-    width: 600px;
+    height: 300px;
+    width: 650px;
     font-size: large;
-    background-color: rgb(194, 191, 191);
+    background-image: url('../assets/images/background22.png');
+    background-size: cover;
+    padding: 20px;
+
 }
 
 .player-info, .opponent-info{
@@ -166,10 +200,15 @@ h1 {
     border-radius: 5px;
     padding: 10px;
     margin: 0 10px;
-    width: 600px;
+    height: 300px;
+    width: 650px;
     font-size: large;
     background-color: rgb(194, 191, 191);
+    background-image: url('../assets/images/background-battle4.png');
+    background-size: cover;
 }
+
+
 .player-pokemon, .opponent-pokemon {
     display: flex;
     border-radius: 5px;
@@ -183,18 +222,30 @@ h1 {
 }
 
 .attack-btn {
-    background-color: #32d500;
+    background: linear-gradient( #32d500, #209c15); 
     color: white;
-    padding: 10px 20px;
+    width: 100px;
+    height: 100px;
     border: none;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 16px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); 
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-button:hover {
-    background-color: #f44336;
+.attack-btn:hover {
+    background: linear-gradient(135deg, #f44336, #c21300); 
+    transform: scale(1.1); 
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.8); 
 }
+
+.attack-btn:active {
+    transform: scale(0.9); 
+    box-shadow: none; 
+}
+
 
 .result {
     font-weight: bold;
@@ -210,6 +261,45 @@ button:hover {
     width: 150px; 
     height: auto;
 }
+
+.player-life, .opponent-life {
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 20px;
+    background-color: #32d500;
+}
+
+#search{
+    display: flex;
+    justify-content: right;
+}
+
+#search button{
+    padding: 8px 12px;
+      background-color: #EC4C4C;
+      color: #FFFFFF;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 5px;
+}
+
+#search text{
+    border: 1px solid#000000;
+}
+
+#search input[type="text"] {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgb(194, 191, 191);
+  }
+
+
+#search button:hover {
+    background-color: #FF0000;
+  }
+
 
 
 

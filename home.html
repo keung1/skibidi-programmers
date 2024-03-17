@@ -11,52 +11,61 @@
     <link rel="stylesheet" href="css/fonts.css">
     <script type="module" src="js/script.js" defer></script>
 </head>
-<body>
+<body class="home-page">
     <header>
         <nav>
             <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
             <ul>
                 <li><a href="home.html" >Home</a></li>
-                <li><a href="myteam.html">My Team</a></li>
+                <li><a href="myteam.html">Mijn Team</a></li>
                 <li><a href="pokedex.html">Uw Pokémons</a></li>
                 <li><a href="pokemonvergelijking.html">Pokemonvergelijking</a></li>
             </ul>
 
-            <a class="presentPoke"  href=""><img id="presentPoke" src="">Huidige pokémon</a>
+            <a class="presentPoke"  href=""><img id="presentPoke" src="assets/images/pokemon1.png"></a>
         </nav>
     </header>
     <main>
     <div class="container">
         <h1>Pokémon Battler</h1>
+        <section id="search">
+            <input type="text" placeholder="Type Pokemon Naam">
+            <button type="submit">Zoek</button>
+        </section>
         <div class="pokemon-container">
             <div class="player-pokemon">
                 <div class="player-image">
-                <h2>Your Pokémon</h2>
+                <h2>Jou Pokémon</h2>
                     <img src="assets/images/pikachu.png" alt="Pikachu">
                 </div>
                 <div class="player-info">
-                    <h2>Name: Pikachu</h2>
-                    <p>Level: 10</p>
-                    <p>Attack: 20</p>
-                    <p>Defense: 10</p>
-                    <p>HP: <span id="player-hp">100</span></p>
+                    <h2>Naam: Pikachu</h2>
+                    <h2> 10</h2><p>Level</p>
+                    <h2>49</h2><p>Aanval</p>
+                    <h2>49</h2><p>Verdediging</p>
+                    <h2>100</h2><p>HP</p>
+                    <div class="player-life">
+                    </div>
+                    
                 </div>
             </div>
             <div class="opponent-pokemon">
                 <div class="opponent-image">
-                <h2>Opponent Pokémon</h2>
+                <h2>Tegenstander Pokémon</h2>
                     <img src="assets/images/charmander.png" alt="Pikachu">
                 </div>
                 <div class="opponent-info">
-                    <h2>Name: Charmander</h2>
+                    <h2>Naam: Charmander</h2>
                     <p>Level: 8</p>
-                    <p>Attack: 18</p>
-                    <p>Defense: 8</p>
+                    <p>Aanval: 18</p>
+                    <p>Verdediging: 8</p>
                     <p>HP: <span id="opponent-hp">90</span></p>
+                    <div class="opponent-life">
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="attack-btn" id="attack-btn">Attack!</button>
+        <button class="attack-btn" id="attack-btn">Aanvallen!</button>
         <div class="result" id="result"></div>
     </div>
 </main>
