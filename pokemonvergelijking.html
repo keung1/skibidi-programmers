@@ -1,37 +1,98 @@
 <!DOCTYPE html>
-<html lang="nl-BE">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepagina</title>
-    <link rel="icon" href="assets/images/icon-pokeball.png">
-
-    <link rel="stylesheet" href="css/css-reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
     <script type="module" src="js/script.js" defer></script>
+
+    <title>Pokédex</title>
 </head>
 <body>
+
+  <header>
     <nav>
     <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
 
         <ul>
             <li><a href="home.html">Home</a></li>
-            <li><a href="myteam.html">My Team</a></li>
+            <li><a href="myteam.html">Mijn Teams</a></li>
             <li><a href="pokedex.html">Uw Pokémons</a></li>
+            <li><a href="vergelijking.html"></a></li>
             <li><a href=""></a></li>
         </ul>
 
     <a class="presentPoke"  href=""><img id="presentPoke" src="">Huidige pokémon</a>
     </nav>
+    </header>
+
     <main>
-        
+
+      <h1>Vergelijk Pokémon</h1>
+
+  
+  
+      <section  id="vergelijking">
+
+            <article class="Pokemons"> 
+                <form>
+                    <input type="text" placeholder="Search.." name="search">
+                </form>
+                <img src="/assets/images/001.png" alt="">
+                <h3>Bulbasaur</h3>
+                
+                
+                <section class="list">
+                    <ol>
+                        <li>Type: </li>
+                        <li>HP</li>
+                        <li>Attack</li>
+                        <li>Special Attack</li>
+                        <li>Special Defense</li>
+                        <li>Speed</li>
+                    </ol>
+
+                    <ol class="values">
+                        <li>Grass/Poison</li>
+                        <li class="more">40</li>
+                        <li class="less">20</li>
+                        <li class="more">40</li>
+                        <li class="less">30</li>
+                        <li class="even">30</li>
+                    </ol>
+                </section>     
+            </article>
+
+            <article class="Pokemons">
+                <form>
+                    <input type="text" placeholder="Search.." name="search">
+                </form>
+                <img src="/assets/images/004.png" alt="">
+                <h3>Charmander</h3>
+
+                <section class="list">
+                    <ol>
+                        <li>Type: </li>
+                        <li>HP</li>
+                        <li>Attack</li>
+                        <li>Special Attack</li>
+                        <li>Special Defense</li>
+                        <li>Speed</li>
+                    </ol>
+
+                    <ol class="values">
+                        <li>Fire</li>
+                        <li class="less">30</li>
+                        <li class="more">40</li>
+                        <li class="less">30</li>
+                        <li class="more">40</li>
+                        <li class="even">30</li>
+                    </ol>
+                </section>            
+            </article>
+      </section>
     </main>
 
-    <footer>
-        <div class="privacy-policy">
-            <p>&copy; Skibidi Programmers 2024 - privacy policy - cookies</p>
-        </div>
-    </footer>
 </body>
 </html>

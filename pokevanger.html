@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
     <script type="module" src="js/login.js" defer></script>
-    <script defer src = "js/guesser.js"></script>
+    <script defer src = "js/catcher.js"></script>
 </head>
 <body>
     <header>
@@ -21,28 +21,30 @@
             <li><a href="home.html">Home</a></li>
             <li><a href="myteam.html">Mijn Teams</a></li>
             <li><a href="pokedex.html">Uw Pokémons</a></li>
-            <li><a href=""></a></li>
+            <li><a href="pokeguesser.html">Pokéquiz</a></li>
         </ul>
 
     <a class="presentPoke"  href=""><img id="presentPoke" src="">Huidige pokémon</a>
     </nav>
     </header>
-    <main class = "pokeguesser_main">
-        <h2>Wie is deze pokemon?</h2>
-        <section class = "pokeguesser_bg">
-            
-        </section>
-        <form action="" method ="get">
-            <select id = "guess_input">
-                <option value = "eevee">Eevee</option>
-                <option value = "pikachu">Pikachu</option>
-                <option value = "mew">Mew</option>
-            </select>
-            <button id = "guess_button"  value = "raden">raden</button>
-        </form>
-        <section id = "container_pokeguesser_image">
-            <article class = "pokeguesser_image">
-                
+    <main class = "pokevanger_main">
+        <h2>Gotta Catch 'Em All</h2>
+        <div id = "pokevanger_bgcontainer">
+            <section id = "pokevanger_bg">
+                <a class = "popup_catch"><img src="assets/images/ditto.png" alt = "ditto sprite" class = "pokemon_catch"></a>
+            </section>
+        </div>
+        <section id = "container_pokevanger_image">
+            <article class = "pokevanger_image">
+                <div id = "pokevanger_bgfield">
+                    <img src="assets/images/ditto.png" alt = "ditto sprite" width="200" height="200">
+                    <p id = "catch_text">caught</p>
+                    <p id = "missed_text">missed</p>
+                    <p id = "pokeballs">pokéballs: <span id = "amount_balls">3</span></p>
+                </div>
+                <button id = "catch_button">
+                    <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="70" height="70">
+                </button>
             </article>
         </section>
     </main>
