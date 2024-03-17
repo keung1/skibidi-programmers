@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landingspagina</title>
 
-    <link rel="stylesheet" href="css/css-reset.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
     <script type="module" src="js/login.js" defer></script>
@@ -14,8 +14,8 @@
     <header class = "landing_header">
         <h1>Skibidi Programmers</h1>
         <ul id = "account_buttons">
-            <li><button id = "signin_button">sign in</button></li>
-            <li><button id = "login_button">login</button></li>
+            <li><button id = "signin_button">Registreer</button></li>
+            <li><button id = "login_button">Login</button></li>
         </ul>
     </header>
     <main class = "landing_main">
@@ -51,27 +51,27 @@
                 <h3>Login</h3>
                 <button class = "close_button" formnovalidate>X</button>
                 <fieldset>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" placeholder="username" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="password" required><br>
+                    <label for="username">Gebruikersnaam:</label>
+                    <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" name="password" placeholder="Wachtwoord" required><br>
                 </fieldset>    
-                <input id = "popup_login_button" type="submit" value="login">           
+                <input id = "popup_login_button" type="submit" value="Inloggen">           
             </form>
         </section>
         <section id = "signin_popup">
             <form action="" method="GET" id = "signin_content">
-                <h3>signin</h3>
+                <h3>Registratie</h3>
                 <button class = "close_button" formnovalidate>X</button>
                 <fieldset>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" placeholder="username" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="password" id = "password" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="confirm password" id = "confirm_password" required><br>
+                    <label for="username">Gebruikersnaam:</label>
+                    <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" name="password" placeholder="Wachtwoord" id = "password" required><br>
+                    <label for="password">Wachtwoord Bevestigen:</label>
+                    <input type="password" name="password" placeholder="Bevestig Wachtwoord" id = "confirm_password" required><br>
                 </fieldset>    
-                <input id = "popup_signin_button" type="submit" value="sign in">           
+                <input id = "popup_signin_button" type="submit" value="Registreren">           
             </form>
         </section>
     </main>

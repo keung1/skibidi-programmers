@@ -166,6 +166,7 @@ h1 {
     font-size: 3rem;
     color: #595959; 
     margin-top: 2rem;
+    font-family: "Pokémon-Classic";
 }
 
 .container p{
@@ -421,7 +422,7 @@ h1 {
     border: none;
     outline: none;
     margin-bottom: 2rem;
-    color: white;
+    color: var(--secondary-color);
 }
 
 #login_content fieldset, #signin_content fieldset{
@@ -434,6 +435,7 @@ h1 {
     background-color: #3a3a3a;
     border-radius: 1rem;
     padding: 0.6rem;
+    color: rgb(169, 169, 169);
 }
 
 
