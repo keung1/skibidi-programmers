@@ -159,7 +159,8 @@ footer {
     text-transform: uppercase;
     font-weight: bold;
     color: white;
-    font-family: 'Press Start 2P', Arial, sans-serif;
+    font-family: "Pokémon-Classic";
+    font-size: large;
 }
 
 h1 {
@@ -198,11 +199,14 @@ h1 {
 }
 
 .player-info{
-    display: grid;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
     margin: 0 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
     height: 300px;
     width: 650px;
     font-size: large;
@@ -226,10 +230,16 @@ h1 {
     background-size: cover;
 }
 
-.opponent-info h2 {
+.opponent-info h2, .player-info h2 {
     padding-top: 1rem;
     height: 30px;
     width: 100%;
+    font-family: "Pokémon-Classic";
+}
+
+.opponent-info h3, .player-info h3 {
+    font-size: 35px;
+    margin-bottom: 1px;
 }
 
 .opponent-info-stat {
