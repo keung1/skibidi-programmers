@@ -759,6 +759,25 @@ ol > li{
     display: inline;
 }
 
+.arrow{
+    margin-bottom: 4rem;
+}
 
+#detail-list{
+    display:  flex;
+    justify-content: space-evenly;
+    
+}
+
+#detail-list > ol >li{
+    width: 7rem;
+    padding: 2px;
+    margin-bottom: 1rem;
+}
+
+#detail.values > li{
+    padding: 2px;
+    margin-bottom: 1rem;
+}
 
 
