@@ -1142,3 +1142,57 @@ ol > li{
     }
 }
   
+
+/*--------detailed-----------*/
+
+
+#Detail{
+    margin:  0 auto;
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: rgb(194, 191, 191);
+    border-radius: 10px;
+
+}
+
+#Detail > article{
+   margin: 10rem;
+   margin-bottom: 0rem;
+   margin-top: 0rem;
+}
+
+#Detail > article > ol > li{
+    width: 100%;
+    
+}
+
+#Detail-foto{
+    width: 200%;
+}
+#evolution > li{
+    display: inline;
+}
+
+.arrow{
+    margin-bottom: 4rem;
+}
+
+#detail-list{
+    display:  flex;
+    justify-content: space-evenly;
+    
+}
+
+#detail-list > ol >li{
+    width: 7rem;
+    padding: 2px;
+    margin-bottom: 1rem;
+}
+
+#detail.values > li{
+    padding: 2px;
+    margin-bottom: 1rem;
+}
+
+
