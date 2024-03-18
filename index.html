@@ -5,45 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landingspagina</title>
 
-    <link rel="stylesheet" href="css/css-reset.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="module" src="js/login.js" defer></script>
 </head>
 <body>
     <header class = "landing_header">
         <h1>Skibidi Programmers</h1>
-        <ul id = "account_buttons">
-            <li><button id = "signin_button">sign in</button></li>
-            <li><button id = "login_button">login</button></li>
-        </ul>
+        <div class = "account_dropdown">
+            <button class = "account_dropdown_button"><i class="fa-regular fa-user"></i></button>
+            <ul id = "account_buttons">
+                <li><button id = "signin_button">sign in</button></li>
+                <li><button id = "login_button">login</button></li>
+            </ul>     
+        </div>
     </header>
     <main class = "landing_main">
         <h2>Projecten</h2>
         <section id = "container_projects">
             <article class = "project">
                 <a href = "home.html"><img src = "assets//images/pokemon.webp" alt = "foto Pokémon project" width="168" height="300"></a>
-                <p>Pokémon</p>
+                <section class = "project_description">
+                    <h3>Pokémon</h3>
+                    <p>Begin je avontuur in de wereld van Pokémon en wordt de eerste trainer die alle pokémons van generatie 1 verzamelt.</p>
+                </section>
             </article>
             <article class = "project">
                 <a href = ""><img src = "assets/images/fortnite.webp" alt = "foto fortnite project" width="168" height="300"></a>
-                <p>Fornite</p>
+                <section class = "project_description">
+                    <h3>Fornite</h3>
+                    <p>Fortnite is een online multiplayer-shooter met bouwmechanica, ontwikkeld door Epic Games. Spelers vechten in een Battle Royale, 
+                        waarin ze strijden tot de laatste persoon of team overblijft.</p>
+                </section>
             </article>
             <article class = "project">
                 <a href = ""><img src = "assets/images/mtg.webp" alt = "foto MTG project" width="168" height="300"></a>
-                <p>Magic The Gathering</p>
+                <section class = "project_description">
+                    <h3>Magic The Gathering</h3>
+                    <p>Magic The Gathering is een populair verzamelbaar kaartspel waarin spelers tovenaars zijn die spreuken en wezens gebruiken om elkaar te verslaan. 
+                        Met een enorme verscheidenheid aan kaarten en strategieën biedt het spel een diepgaande en boeiende ervaring voor spelers van alle niveaus.</p>
+                </section>
             </article>
             <article class = "project">
                 <a href = ""><img src = "assets/images/fifa.webp" alt = "foto Fifa project" width="168" height="300"></a>
-                <p>Fifa</p>
+                <section class = "project_description">
+                    <h3>Fifa</h3>
+                    <p>Met Fifa test je jouw voetbalkennis met vragen over teams, spelers en legendarische momenten. 
+                        Het is een leuke en uitdagende manier om je kennis over voetbal, geschikt voor zowel casual fans als fervente liefhebbers van voetbal.</p>
+                </section>
             </article>
             <article class = "project">
                 <a href = ""><img src = "assets/images/lego.webp" alt = "foto LegoMasters project" width="168" height="300"></a>
-                <p>LegoMasters</p>
+                <section class = "project_description">
+                    <h3>Lego Masters</h3>
+                    <p>Lego Masters is een spel waarin spelers hun eigen unieke Lego-figuren kunnen creëren. Met aanpasbare opties zoals gezichtsuitdrukkingen, 
+                        kleding en accessoires, kunnen spelers hun verbeelding de vrije loop laten en hun eigen stijl tot leven brengen.</p>
+                </section>
             </article>
             <article class = "project">
                 <a href = ""><img src = "assets/images/lotr.webp" alt = "foto LOTR project" width="168" height="300"></a>
-                <p>Lord Of The Rings</p>
+                <section class = "project_description">
+                    <h3>Lord Of The Rings</h3>
+                    <p>De Lord of the Rings test je kennis van J.R.R. Tolkiens epische wereld. 
+                        Ontdek hoeveel je weet over personages, locaties, gebeurtenissen en trivia uit de trilogie. </p>
+                </section>
             </article>
         </section>
         <section id = "login_popup">
@@ -51,27 +78,27 @@
                 <h3>Login</h3>
                 <button class = "close_button" formnovalidate>X</button>
                 <fieldset>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" placeholder="username" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="password" required><br>
+                    <label for="username">Gebruikersnaam:</label>
+                    <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" name="password" placeholder="Wachtwoord" required><br>
                 </fieldset>    
-                <input id = "popup_login_button" type="submit" value="login">           
+                <input id = "popup_login_button" type="submit" value="Inloggen">           
             </form>
         </section>
         <section id = "signin_popup">
             <form action="" method="GET" id = "signin_content">
-                <h3>signin</h3>
+                <h3>Registratie</h3>
                 <button class = "close_button" formnovalidate>X</button>
                 <fieldset>
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" placeholder="username" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="password" id = "password" required><br>
-                    <label for="password">Password:</label>
-                    <input type="password" name="password" placeholder="confirm password" id = "confirm_password" required><br>
+                    <label for="username">Gebruikersnaam:</label>
+                    <input type="text" name="username" placeholder="Gebruikersnaam" required><br>
+                    <label for="password">Wachtwoord:</label>
+                    <input type="password" name="password" placeholder="Wachtwoord" id = "password" required><br>
+                    <label for="password">Wachtwoord Bevestigen:</label>
+                    <input type="password" name="password" placeholder="Bevestig Wachtwoord" id = "confirm_password" required><br>
                 </fieldset>    
-                <input id = "popup_signin_button" type="submit" value="sign in">           
+                <input id = "popup_signin_button" type="submit" value="Registreren">           
             </form>
         </section>
     </main>

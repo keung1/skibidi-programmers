@@ -1,13 +1,25 @@
 let ditto = [100, 10, 75]
 let myPokemon = [100, 20, 15]
 
-let wildPokemon = document.getElementsByClassName("popup_catch")[0];
+let wildPokemon = document.getElementsByClassName("popup_catch");
+let catchMenu = document.getElementById("container_pokevanger_menu");
+let pokeballButton = document.getElementsByClassName("pokeball_button");
 let popup_catch = document.getElementById("container_pokevanger_image");
 
-wildPokemon.addEventListener("click", (e) =>{
-    e.preventDefault();
-    popup_catch.style.display = "flex";
-});
+for (let i = 0; i < wildPokemon.length; i++) {
+    wildPokemon[i].addEventListener("click", (e) =>{
+        e.preventDefault();
+        catchMenu.style.display = "flex"
+    });
+};
+
+for (let i = 0; i < wildPokemon.length; i++) {
+    pokeballButton[i].addEventListener("click", (e) => {
+        e.preventDefault();
+        catchMenu.style.display = "none";
+        popup_catch.style.display = "flex";
+    });
+};
 
 let catchButton = document.getElementById("catch_button");
 let catchText = document.getElementById("catch_text");
@@ -23,9 +35,8 @@ function catchPokemon(e) {
     if (Math.random() < chance) {
         missText.style.display = "none"
         catchText.style.display = "block";
-        catchButton.removeEventListener("click", catchButton);
     }
-    else {
+    else if (randNumb > chance && !(catchText.style.display === "block")) {
         missText.style.display = "block"
         pokeballs--
         amountBalls.innerHTML = pokeballs
@@ -40,12 +51,15 @@ function catchPokemon(e) {
 
 catchButton.addEventListener("click", catchPokemon)
 
-window.onclick = function(event) {
-    if (event.target == popup_catch) {
+window.addEventListener("click", (e) => {
+    if (e.target == catchMenu) {
+        catchMenu.style.display = "none";
+    }
+    else if (e.target == popup_catch) {
         popup_catch.style.display = "none";
         catchText.style.display = "none";
         missText.style.display = "none";
         pokeballs = 3 
         amountBalls.innerHTML = 3;
     }
-};
+});

@@ -6,7 +6,7 @@
     <title>Homepagina</title>
     <link rel="icon" href="assets/images/icon-pokeball.png">
 
-    <link rel="stylesheet" href="css/css-reset.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
     <script type="module" src="js/script.js" defer></script>
@@ -17,15 +17,21 @@
             <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
             <ul>
                 <li><a href="home.html" >Home</a></li>
+<<<<<<< HEAD
                 <li><a href="myteam.html">Mijn Team</a></li>
+=======
+                <li><a href="myteam.html">Mijn Teams</a></li>
+>>>>>>> c87089d32295513f606890c8c4c90d6cf070635b
                 <li><a href="pokedex.html">Uw Pokémons</a></li>
-                <li><a href="pokemonvergelijking.html">Pokemonvergelijking</a></li>
+                <li><a href="pokeguesser.html">Pokéquiz</a></li>
+                <li><a href="pokemoncomparison.html">Pokemonvergelijking</a></li>
             </ul>
 
             <a class="presentPoke"  href=""><img id="presentPoke" src="assets/images/pokemon1.png"></a>
         </nav>
     </header>
     <main>
+<<<<<<< HEAD
         <aside>
             <ul class="keuzemenu">
                 <h1>Maak keuze</h1>
@@ -40,6 +46,63 @@
         </aside>
     
     </main>
+=======
+    <div class="container">
+        <h1>Pokémon Battler</h1>
+        <section id="search">
+            <input type="text" placeholder="Type Pokemon Naam">
+            <button type="submit">Zoek</button>
+        </section>
+        <div class="pokemon-container">
+            <div class="player-pokemon">
+                <div class="player-image">
+                <h2>Jouw Pokémon</h2>
+                    <img src="assets/images/pikachu.png" alt="Pikachu">
+                </div>
+                <div class="player-info">
+                    <h2>Naam: Pikachu</h2>
+                    <h2> 10</h2><p>Level</p>
+                    <h2>49</h2><p>Aanval</p>
+                    <h2>49</h2><p>Verdediging</p>
+                    <h2>100</h2><p>HP</p>
+                    <div class="player-life">
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="opponent-pokemon">
+                <div class="opponent-image">
+                <h2>Tegenstander Pokémon</h2>
+                    <img src="assets/images/charmander.png" alt="Pikachu">
+                </div>
+                <div class="opponent-info">
+                    <h2>Charmander</h2>
+                    <article class = "opponent-info-stat">
+                        <h3>8</h3>
+                        <p>Level</p>
+                    </article>
+                    <article class = "opponent-info-stat">
+                        <h3>18</h3>
+                        <p>Aanval</p>
+                    </article>
+                    <article class = "opponent-info-stat">
+                        <h3>8</h3>
+                        <p>Verdediging</p>
+                    </article>
+                    <article class = "opponent-info-stat">
+                        <h3><span id="opponent-hp">90</span></h3>
+                        <p>HP</p>
+                    </article>
+                    <div class="opponent-life">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="attack-btn" id="attack-btn">Aanvallen!</button>
+        <div class="result" id="result"></div>
+    </div>
+</main>
+>>>>>>> c87089d32295513f606890c8c4c90d6cf070635b
     <footer>
         <div class="privacy-policy">
             <p>&copy; Skibidi Programmers 2024 - privacy policy - cookies</p>
