@@ -233,8 +233,7 @@ h1 {
 }
 
 .opponent-info-stat {
-    height: 60px;
-    width: 15rem;
+    padding: 0;
 }
 
 
