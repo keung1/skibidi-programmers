@@ -698,13 +698,11 @@ h1 {
 
 @media screen and (max-width: 510px) {
     .pokeguesser_bg {
-        width: 228px;
-        height: 128px;
+        width: 300px;
+        height: 169px;
     }
 
     #pokeguesser_black {
-        left: 1.5rem;
-        top: 1rem;
         width: 100px;
         height: 100px;
     }
