@@ -35,9 +35,8 @@ function catchPokemon(e) {
     if (Math.random() < chance) {
         missText.style.display = "none"
         catchText.style.display = "block";
-        catchButton.removeEventListener("click", catchButton);
     }
-    else {
+    else if (randNumb > chance && !(catchText.style.display === "block")) {
         missText.style.display = "block"
         pokeballs--
         amountBalls.innerHTML = pokeballs
