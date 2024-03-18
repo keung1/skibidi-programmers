@@ -52,18 +52,15 @@ function catchPokemon(e) {
 
 catchButton.addEventListener("click", catchPokemon)
 
-window.onclick = function(event) {
-    if (event.target == popup_catch) {
+window.addEventListener("click", (e) => {
+    if (e.target == catchMenu) {
+        catchMenu.style.display = "none";
+    }
+    else if (e.target == popup_catch) {
         popup_catch.style.display = "none";
         catchText.style.display = "none";
         missText.style.display = "none";
         pokeballs = 3 
         amountBalls.innerHTML = 3;
     }
-};
-
-window.onclick = function(event) {
-    if (event.target == catchMenu) {
-        catchMenu.style.display = "none"
-    }
-};
+});
