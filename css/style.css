@@ -104,11 +104,11 @@ ul li a {
 }
 
 
-ul li a:hover {
+nav ul li a:hover {
     background-color: #FF0000;
     border-color: #FF0000;
     color: #fff;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 ul li a img {
@@ -301,6 +301,44 @@ h1 {
 #search button:hover {
     background-color: #FF0000;
   }
+
+
+/*-------------------------keuzemenu------------------------*/
+.keuzemenu h1{
+    font-family: "Pokémon-Classic";
+}
+
+.keuzemenu{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keuzemenu li a{
+    padding: 10px;
+    width: 500px;
+    margin: 10px;
+    height: 45px;
+    text-align: center;
+    border-radius: 7px;
+    font-size: 15px;
+    font-family: "Pokémon-Classic";
+    
+}
+
+.keuzemenu li a:hover {
+    background-color: #FF0000;
+    border-color: #FF0000;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.home-page main{
+    background-image: url(../assets/images/pikachu.png), url(../assets/images/bulbasaur.png), url(../assets/images/charmander.png), url(../assets/images/eevee.webp);
+    background-position: top left, top right, bottom left, bottom right;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: 220px; 
+}
 
 
 
