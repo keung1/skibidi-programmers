@@ -96,6 +96,26 @@ ul li a {
     border-radius: 5px;
 }
 
+.catch_dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.catch_dropdown_content {
+    display: none;
+    position: absolute;
+    max-width: 110px;
+    z-index: 1;
+}
+
+.catch_dropdown:hover .catch_dropdown_content {
+    display: block;
+}
+
+.catch_dropdown:hover .catch_dropdown_button {
+    background-color: #FF0000;
+}
+
 
 nav ul li a:hover {
     background-color: #FF0000;
