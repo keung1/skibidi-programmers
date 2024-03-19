@@ -86,7 +86,7 @@ ul li {
     margin-right: 20px;
 }
 
-ul li a {
+ul li a, .catch_dropdown_button, #nav_menu_button {
     color: white;
     text-decoration: none;
     display: inline-block;
@@ -117,7 +117,7 @@ ul li a {
 }
 
 
-nav ul li a:hover {
+nav ul li a:hover, #nav_menu_button:hover {
     background-color: #FF0000;
     border-color: #FF0000;
     color: #fff;
@@ -157,6 +157,60 @@ ul li a img {
     padding-bottom: 5px;
     padding-top: 0;
     margin-top: 100px;
+}
+
+#nav_menu_button {
+    display: none;
+}
+
+.nav_menu_content{
+    display: none;
+}
+
+.nav_menu_content a{
+    font-family: "Pokémon-Classic";
+    color: white;
+    display: inline-block;
+    border: 1px solid #e87373;
+    font-size: 15px;
+    padding: 10px
+}
+
+.nav_menu_content a:hover {
+    background-color: #e87373;
+}
+
+@media screen and (max-width: 1253px) {
+    .nav_menu_content{
+        height: 100vh;
+        width: 350px;
+        background: #FF0000;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        padding-left: 3rem;
+    }
+
+    #nav_menu_button {
+        display: block;
+    }
+
+    header nav ul {
+        display: none;
+    }
+
+    #container_nav_menu {
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.6);
+        min-width: 100vw;
+        min-height: 100%;
+        position: fixed;        
+        display: none;
+    }
 }
 
 /*-------footer-------*/
