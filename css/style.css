@@ -164,12 +164,7 @@ ul li a img {
 }
 
 .nav_menu_content{
-    height: 100vh;
-    width: 350px;
-    background: #FF0000;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    display: none;
 }
 
 .nav_menu_content a{
@@ -186,6 +181,15 @@ ul li a img {
 }
 
 @media screen and (max-width: 1253px) {
+    .nav_menu_content{
+        height: 100vh;
+        width: 350px;
+        background: #FF0000;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+
     .logo {
         padding-left: 3rem;
     }
