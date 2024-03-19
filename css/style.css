@@ -1117,7 +1117,7 @@ input{
 .Pokemons {
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
-    width: 20%;
+    width: 30%;
     padding: 3rem;
     margin: 0 auto;
   }
@@ -1158,8 +1158,15 @@ ol > li{
 }
 
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1150px) {
 
+    .Pokemons {
+        background-color: rgb(194, 191, 191);
+        border-radius: 15px;
+        width: 30%;
+        padding: 3rem;
+        margin: 0 auto;
+      }
     ol > li{
         width: 50px;
         margin: 5px;
@@ -1167,6 +1174,42 @@ ol > li{
     
 
 }
+
+@media screen and (max-width: 900px) {
+
+
+    .Pokemons {
+        width: 30%;
+        
+    margin-bottom: 1rem;
+      }
+
+
+      .Pokemons > form > input{
+        border: solid black 1px;
+        border-radius: 15px;
+        width: 100%;
+    }
+
+    ol > li{
+        width: 50px;
+        margin: 5px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+
+    #vergelijking{
+        flex-direction: column;
+
+    }
+
+    .Pokemons {
+        width: 60%;
+
+      }
+}
+
 
 /*------------------ teampage ------------------*/
 #teams h1{
