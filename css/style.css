@@ -797,15 +797,12 @@ select{
     margin-bottom: 5rem;
     width: 30rem;
     border-radius: 10px ;
+    border: solid black 1px;
 }
 
 #pokemon img{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
-}
-.pokefoto{
-        transition: transform 0.3s ease;
-
 }
 
 article{
