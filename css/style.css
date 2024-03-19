@@ -803,6 +803,10 @@ select{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
 }
+.pokefoto{
+        transition: transform 0.3s ease;
+
+}
 
 article{
     padding: 1rem;
@@ -1167,8 +1171,8 @@ ol > li{
 
 #Detail > article{
    margin: 10rem;
-   margin-bottom: 0rem;
-   margin-top: 0rem;
+   margin-bottom: 0;
+   margin-top: 0;
 }
 
 #Detail > article > ol > li{
@@ -1179,12 +1183,18 @@ ol > li{
 #Detail-foto{
     width: 200%;
 }
+
+#evolution{
+    display: flex;
+    flex-direction: row;
+}
+
 #evolution > li{
     display: inline;
 }
 
 .arrow{
-    margin-bottom: 4rem;
+    margin-top: 3rem;
 }
 
 #detail-list{
@@ -1203,5 +1213,57 @@ ol > li{
     padding: 2px;
     margin-bottom: 1rem;
 }
+#evo-article > h2{
+    margin-left: 40%;
+}
 
+
+@media screen and (max-width: 1500px) {
+    
+    #evolution{
+        display: flex;
+    }
+    #Detail > article{
+        margin: 5rem;
+     }
+
+}
+
+@media screen and (max-width: 1150px) {
+
+     
+    #evolution{
+        display: flex;
+        flex-direction: column;
+        margin-left: 30%;
+    }
+    #Detail > article{
+        margin: 5rem;
+     }
+
+    .arrow{
+       transform: rotate(90deg);
+       margin-left: 40%;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+    #Detail-foto{
+        width: 100%;
+    }
+
+     #evolution{
+         display: flex;
+         flex-direction: column;
+         margin-left: 30%;
+     }
+
+     .arrow{
+        transform: rotate(90deg);
+        margin-left: 40%;
+     }
+
+}
 
