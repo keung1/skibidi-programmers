@@ -1169,6 +1169,23 @@ ol > li{
 
 }
 
+#Detail > form > input{
+    width: 15rem;
+    border-radius: 10px ;
+    margin-left: 80%;
+    
+}
+
+#Detail > form > button{
+    margin-left: 100%;
+    margin-top: 1rem;
+    background-color:var( --bg-color);
+    border-radius: 10px;
+   
+    font-size: 15px;
+    width: 7rem;
+}
+
 #Detail > article{
    margin: 10rem;
    margin-bottom: 0;
