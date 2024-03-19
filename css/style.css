@@ -853,7 +853,6 @@ h1 {
 
 /* --------------------------- forgottenpassword -----------------------------*/
 
-
 #forgotpassword_content {
     height: 400px;
     width: 500px;
@@ -866,6 +865,9 @@ h1 {
     padding: 20px;
     padding-right: 0;
     border-radius: 1rem;
+    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #forgotpassword_content fieldset{
@@ -885,14 +887,6 @@ h1 {
 #forgotpassword_content label{
     font-size: 0.9rem;
     margin-left: 0.3rem;
-}
-
-#forgotpassword_content {
-    padding-left: 0.2rem;
-    position: relative;
-    bottom: 1.5rem;
-    color: rgb(63, 63, 254);
-    text-decoration: underline;
 }
 
 /* --------------------------- pokeguesser -----------------------------*/
