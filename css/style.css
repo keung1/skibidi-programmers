@@ -824,6 +824,7 @@ input{
 
 #vergelijking{
     display: flex;
+    margin-top: 5rem;
 }
 
 
@@ -859,6 +860,15 @@ ol > li{
 }
 
 
+@media screen and (max-width: 900px) {
+
+    ol > li{
+        width: 50px;
+        margin: 5px;
+    }
+    
+
+}
 
 /*------------------ teampage ------------------*/
 #teams h1{
