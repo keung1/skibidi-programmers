@@ -624,6 +624,7 @@ h1 {
 }
 
 .landing_main h2 {
+    font-family: "Flexo-Regular";
     margin-top: 3rem;
     text-align: center;
     font-size: 2.5rem;
@@ -849,6 +850,55 @@ h1 {
     #popup_signin_button {
         margin-left: 55%;
     }
+}
+
+/* --------------------------- forgottenpassword -----------------------------*/
+
+#forgotpassword_content {
+    height: 250px;
+    width: 500px;
+    background: #101014;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    padding-right: 0;
+    border-radius: 1rem;
+    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2rem;
+}
+
+#forgotpassword_content fieldset{
+    width: 90%;
+    margin-top: 2rem;
+}
+
+#forgotpassword_content fieldset input{
+    margin: 0.7rem 0 2rem 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    border-radius: 1rem;
+    padding: 0.6rem;
+    color: rgb(169, 169, 169);
+}
+
+
+#forgotpassword_content label{
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+}
+
+#passwordrecoverybtn{
+    background-color: #3a3a3a;
+    border-radius: 0.5rem;
+    margin-right: 20%;
+    border-color: #000000;
+    border-style: solid;
+    width: fit-content;
 }
 
 /* --------------------------- pokeguesser -----------------------------*/
