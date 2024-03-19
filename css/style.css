@@ -1486,4 +1486,26 @@ ol > li{
     margin-bottom: 1rem;
 }
 
+@media screen and (max-width: 600px) {
+    .logo {
+        display: none;
+    }
 
+    .keuzemenu, aside, .keuzemenu li a {
+        width: 280px;
+    }
+
+    .keuzemenu li {
+        margin-right: 0;
+    }
+
+    .keuzemenu h1 {
+        font-size: x-large;
+    }
+
+    .home-page main {
+        background-image: none;
+        display: flex;
+        justify-content: center;
+    }
+}
