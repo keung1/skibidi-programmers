@@ -94,6 +94,8 @@ ul li a, .catch_dropdown_button, #nav_menu_button {
     background-color: #f06060;
     padding: 5px;
     border-radius: 5px;
+    font-family: "Pokémon-Classic";
+    font-size: 15px;
 }
 
 .catch_dropdown {
@@ -157,6 +159,7 @@ ul li a img {
     padding-bottom: 5px;
     padding-top: 0;
     margin-top: 100px;
+    text-decoration: none;
 }
 
 #nav_menu_button {
