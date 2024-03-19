@@ -17,17 +17,27 @@
 
   <header>
     <nav>
-    <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
-
+        <button id = "nav_menu_button">Menu</button>
+        <a class="logo" href="home.html"><img id="logo" src="assets/images/logo-pokemon.webp"></a>
         <ul>
-            <li><a href="home.html">Home</a></li>
-            <li><a href="myteam.html">Mijn Teams</a></li>
-            <li><a href="pokedex.html">Uw Pokémons</a></li>
-            <li><a href="pokeguesser.html">Pokéquiz</a></li>
-            <li><a href="pokemoncomparison.html">Pokemonvergelijking</a></li>
+            <li><a href="home.html" >Home</a></li>
+            <li><a href="myteam.html">Teams</a></li>
+            <li><a href="pokedex.html">Pokédex</a></li>
+            <li><a href="pokemoncomparison.html">Vergelijken</a></li>
+            <li class = "catch_dropdown">
+                <button class = "catch_dropdown_button">Vangen</button>
+                <ul class = "catch_dropdown_content">
+                    <li><a href="pokecatcher.html">Safari Zone</a></li>
+                    <li><a href="battle.html">Battler</a></li>
+                </ul>
+            </li>
+            <li><a href="pokeguesser.html">Trainen</a></li>
         </ul>
 
-    <a class="presentPoke"  href=""><img id="presentPoke" src="">Huidige pokémon</a>
+        <section class="presentPoke">
+            <a href="pokedex.html" class="noPresentPoke">?</a>
+        </section>
+        
     </nav>
     </header>
 
@@ -96,6 +106,17 @@
                 </section>            
             </article>
       </section>
+      <section id = "container_nav_menu">
+        <div class = "nav_menu_content">
+            <a href="home.html" >Home</a>
+            <a href="myteam.html">Teams</a>
+            <a href="pokedex.html">Pokédex</a>
+            <a href="pokemoncomparison.html">Vergelijken</a>
+            <a href="pokecatcher.html">Safari Zone</a>
+            <a href="battle.html">Battler</a>
+            <a href="pokeguesser.html">Trainen</a>
+        </div>
+    </section>
     </main>
 
 </body>
