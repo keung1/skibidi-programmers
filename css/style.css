@@ -55,13 +55,6 @@ nav {
 }
 
 
-.presentPoke img{
-    width: 120px;
-    background-color:  rgb(216, 210, 210);
-    padding: 10px;
-    border-radius: 15px;
-    border: 1px solid black;
-}
 .logo img {
     width: 200px;
     transition: transform 0.3s ease;
@@ -115,16 +108,40 @@ ul li a img {
     margin-right: 5px;
 }
 
+
 .presentPoke {
     margin-left: 20px;
 }
 
+.presentPoke img{
+    width: 100px;
+    background-color: var(--tertiary-color);
+    border-radius: 50px;
+    border: 3px solid var(--bg-color);
+    margin-left: 50px;
+    margin-top: 10px;
+    margin-bottom: -15px;
+}
+/*
 .presentPoke img {
     margin-right: 5px;
+    margin-left: 50px;
+    width: 100px;
+} */
+
+.presentPoke a{
+    font-size: x-large;
 }
 
+.presentPoke p{
+    font-weight: bold;
+    font-palette: normal;
+}
 
-
+.noPresentPoke{
+    margin-left: 100px;
+    color: #ffffff;
+}
 
 /*-------footer-------*/
 footer {
