@@ -797,6 +797,50 @@ h1 {
     }
 }
 
+/* --------------------------- forgottenpassword -----------------------------*/
+
+
+#forgotpassword_content {
+    height: 400px;
+    width: 500px;
+    background: #101014;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    padding-right: 0;
+    border-radius: 1rem;
+}
+
+#forgotpassword_content fieldset{
+    width: 90%;
+}
+
+#forgotpassword_content fieldset input{
+    margin: 0.7rem 0 2rem 0;
+    width: 100%;
+    background-color: #3a3a3a;
+    border-radius: 1rem;
+    padding: 0.6rem;
+    color: rgb(169, 169, 169);
+}
+
+
+#forgotpassword_content label{
+    font-size: 0.9rem;
+    margin-left: 0.3rem;
+}
+
+#forgotpassword_content {
+    padding-left: 0.2rem;
+    position: relative;
+    bottom: 1.5rem;
+    color: rgb(63, 63, 254);
+    text-decoration: underline;
+}
+
 /* --------------------------- pokeguesser -----------------------------*/
 .pokeguesser_main {
     display: flex;
