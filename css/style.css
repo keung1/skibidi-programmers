@@ -792,6 +792,10 @@ select{
     margin: 0 auto;
 }
 
+#pokemon > article > p{
+    margin-left: 30%;
+    font-size: 20px;
+}
 
 #zoek-pokemon > input{
     margin-left: 35%;
