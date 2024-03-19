@@ -19,5 +19,6 @@ for (let i = 0; i < closeButton.length; i++) {
     closeButton.addEventListener("click", (e) =>{
         e.preventDefault();
         popupLoginBackground.style.display = "none"
+        popupSigninBackground.style.display = "none"
     });
 }

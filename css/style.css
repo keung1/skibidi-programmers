@@ -484,7 +484,7 @@ h1 {
 }
 
 #login_content {
-    height: 350px;
+    height: 400px;
     width: 500px;
     background: #101014;
     display: flex;
@@ -520,10 +520,8 @@ h1 {
 }
 
 .close_button {
-    background: none;
-    border: none;
-    outline: none;
-    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    padding-bottom: 2rem;
     color: var(--secondary-color);
 }
 
@@ -544,6 +542,14 @@ h1 {
 #login_content label, #signin_content label {
     font-size: 0.9rem;
     margin-left: 0.3rem;
+}
+
+#login_content a {
+    padding-left: 0.2rem;
+    position: relative;
+    bottom: 1.5rem;
+    color: rgb(63, 63, 254);
+    text-decoration: underline;
 }
 
 #popup_login_button, #popup_signin_button {
@@ -625,6 +631,23 @@ h1 {
     .landing_header h1 {
         font-size: 1.5rem;
     }
+
+    
+    #login_content {
+        width: 320px;
+    }
+
+    #signin_content {
+        width: 320px;
+    }
+
+    #popup_login_button{
+        margin-left: 62%;
+    }
+
+    #popup_signin_button {
+        margin-left: 55%;
+    }
 }
 
 /* --------------------------- pokeguesser -----------------------------*/
@@ -703,6 +726,7 @@ h1 {
     border-radius: 1rem;
     background-color: #3a3a3a;
     color: white;
+    font-family: "Roboto-Regular";
 }
 
 @media screen and (max-width: 900px) {
@@ -745,8 +769,9 @@ h1 {
 
 @media screen and (max-width: 510px) {
     .pokeguesser_bg {
-        width: 300px;
-        height: 169px;
+        width: 280px;
+        height: 158px;
+        margin: 1rem 0 1rem 0;
     }
 
     #pokeguesser_black {
@@ -760,6 +785,11 @@ h1 {
 
     #guess_input {
         width: 6rem;
+    }
+    
+    .pokeguesser_image img {
+        width: 250px;
+        height: 250px;
     }
 }
 
@@ -1049,10 +1079,61 @@ ol > li{
     bottom: 8rem;
 }
 
+#container_confirmation_release {
+    font-family: "Roboto-Regular";
+    color: white;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+    min-width: 100vw;
+    min-height: 100%;
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirmation_release {
+    height: 140px;
+    width: 500px;
+    background: #3a3a3a;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 30px;
+    border-radius: 1rem;
+}
+
+.confirmation_release p{
+    font-size: 20px;
+    position: relative;
+    height: 50%;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.confirmation_release input{
+    width: 60px;
+    border-radius: 10px;
+    margin: 3px;
+    border: 2px solid black;
+}
+
+.confirmation_release :nth-child(2) {
+    background-color: #32d500;
+}
+
+.confirmation_release :nth-child(3) {
+    background-color: #c21300;
+}
+
+
 .pokevanger_image {
     height: 350px;
     width: 300px;
-    background: #3a3a3a;
+    background: #ccc;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -1143,7 +1224,7 @@ ol > li{
 
 @media screen and (max-width: 410px) {
     #pokevanger_bgcontainer {
-        width: 290px;      
+        width: 285px;        
     }
 
     .pokevanger_main h2 {
