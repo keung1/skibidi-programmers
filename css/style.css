@@ -1101,7 +1101,7 @@ select{
     transition: transform 0.3s ease;
 }
 
-#pokemon:hover > article > a > img{
+#pokemon > article > a > img:hover{
     
     transform: scale(1.2);
 }
