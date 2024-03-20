@@ -1081,6 +1081,7 @@ select{
 }
 
 #pokemon > article > p{
+    margin-top: 10%;
     margin-left: 30%;
     font-size: 20px;
 }
@@ -1096,6 +1097,13 @@ select{
 #pokemon img{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
+    
+    transition: transform 0.3s ease;
+}
+
+#pokemon:hover > article > a > img{
+    
+    transform: scale(1.2);
 }
 
 article{
@@ -1598,6 +1606,11 @@ ol > li{
    margin-top: 0;
 }
 
+#Detail > article > h2{
+    margin-left: 20%;
+}
+
+
 #Detail > article > ol > li{
     width: 100%;
     
@@ -1615,6 +1628,7 @@ ol > li{
 #evolution > li{
     display: inline;
 }
+
 
 .arrow{
     margin-top: 3rem;
