@@ -1111,6 +1111,28 @@ article{
 }
 
 
+
+@media screen and (max-width: 1150px) {
+
+    
+    #zoek-pokemon > input{
+        width: 30rem;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+
+
+     #zoek-pokemon > input{
+        margin-top: 10%;
+        width: 20rem;
+        margin-left: 20%;
+            
+    }
+}
+
+
 /*-------pokemonvergelijking.html------------*/
 
 
