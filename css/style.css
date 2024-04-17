@@ -1135,6 +1135,9 @@ article{
 
 /*-------pokemonvergelijking.html------------*/
 
+#detail h1{
+    margin-left: 25%;
+}
 
 input{
     padding: 6px;
@@ -1182,13 +1185,13 @@ ol > li{
 }
 
 .more{
-    background-color: green;
+    background-color: rgb(17, 208, 17);
 }
 .less{
-    background-color: red;
+    background-color: rgb(238, 82, 82);
 }
 .even{
-    background-color: grey;
+    background-color: rgb(156, 155, 155);
 }
 
 
