@@ -1319,16 +1319,17 @@ ol > li{
 #teams h1{
     font-size: 3rem;
     font-family: "Pokémon-Classic";
-    margin: 1rem;
-    margin-left: 5rem;
+    max-width: fit-content;
+    margin: auto;
 }
 
 #teams h2{
-    font-size: 3rem;
+    font-size: 4rem;
     text-align: left;
     font-family: "Pokémon-Classic";
     max-height: fit-content;
     margin-top: -0.5rem;
+    margin-bottom: 0;
 }
 
 #teams h3{
@@ -1350,16 +1351,7 @@ ol > li{
 
 
 #teams li{
-    /*
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-content: flex-start;
-    flex: none;
-    min-width: fit-content;*/
-    
-    height: 25rem;
+    height: 26rem;
     width: 25rem;
     margin: 1rem;
     padding: 1rem;
@@ -1371,8 +1363,9 @@ ol > li{
 #teams img{
    max-width: min-content; 
    max-height: min-content;
+   background-color: rgb(205, 205, 205);
+   border-radius: 10%;
 }
-
 
 
 #teams p{
@@ -1381,6 +1374,7 @@ ol > li{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 5px;
 }
 
 #teams a{
