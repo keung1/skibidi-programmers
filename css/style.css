@@ -1056,12 +1056,12 @@ h1 {
 
 main{
     background-color: var(--bg-color);
-    /*border-radius: 15px;*/
     padding: 1rem;
 }
 
-h1{
-    left: 50%;   
+#pokedex > h1{ 
+    margin-left: 40%;
+    margin-bottom: 2rem;
 }
 
 select{
@@ -1117,25 +1117,75 @@ article{
     
     #zoek-pokemon > input{
         width: 30rem;
+        margin-left: 30%;
+    }
+    
+    #pokedex > h1{ 
+        margin-left: 35%;
     }
 
 }
 
 @media screen and (max-width: 900px) {
 
-
+    #pokedex > h1{ 
+        margin-left: 33%;
+    }
      #zoek-pokemon > input{
-        margin-top: 10%;
+        margin-top: 5%;
         width: 20rem;
-        margin-left: 20%;
+        margin-left: 35%;
             
+    }
+    #select-pokemon{
+        margin-left: 45%;
     }
 }
 
 
+@media screen and (max-width: 700px) {
+
+
+    #pokedex > h1{ 
+        margin-left: 25%;
+    }
+     #zoek-pokemon > input{
+        margin-top: 5%;
+        width: 20rem;
+        margin-left: 25%;
+            
+    }
+    #select-pokemon{
+        margin-left: 40%;
+    }
+}
+
+
+@media screen and (max-width: 510px) {
+
+
+    #pokedex > h1{ 
+        margin-left: 0%;
+    }
+     #zoek-pokemon > input{
+        width: 15rem;
+        margin-left: 15%;
+            
+    }
+    #select-pokemon{
+        margin-left: 30%;
+    }
+
+
+
+
+}
+
+
+
 /*-------pokemonvergelijking.html------------*/
 
-#detail h1{
+#vergelijken h1{
     margin-left: 25%;
 }
 
@@ -1159,8 +1209,15 @@ input{
     margin: 0 auto;
   }
 
+  .Pokemons > img{
+    margin-left: 15%;
+  }
+
 .Pokemons > h3{
-    margin-left: 30%;
+    margin-left: 25%;
+    font-size: large ;
+    margin-bottom: 1rem;
+    font-family: "Pokémon-Classic";
 }
 
 .Pokemons > form > input{
@@ -1597,6 +1654,9 @@ ol > li{
 
 /*--------detailed-----------*/
 
+#details h1{
+    margin-left: 33%;
+}
 
 #Detail{
     margin:  0 auto;
@@ -1605,30 +1665,38 @@ ol > li{
     flex-wrap: wrap;
     background-color: rgb(194, 191, 191);
     border-radius: 10px;
-
 }
 
-#Detail > form > input{
+#Detail >article>article> form > input{
     width: 15rem;
     border-radius: 10px ;
-    margin-left: 80%;
-    
 }
 
-#Detail > form > button{
-    margin-left: 100%;
+#Detail >article>article> form > button{
+   
     margin-top: 1rem;
+    margin-left: 20%;
     background-color:var( --bg-color);
     border-radius: 10px;
-   
     font-size: 15px;
     width: 7rem;
 }
+
+
+#Detail > article:nth-child(1){
+    display: flex;
+}
+
+#Detail >article> article:nth-child(2){
+    margin-left: 50%;
+}
+
 
 #Detail > article{
    margin: 10rem;
    margin-bottom: 0;
    margin-top: 0;
+   width: 40%;
 }
 
 #Detail > article > h2{
@@ -1642,7 +1710,12 @@ ol > li{
 }
 
 #Detail-foto{
-    width: 200%;
+    width: 150%;
+    margin-left: -20%;
+}
+
+#info{
+    
 }
 
 #evolution{
@@ -1662,7 +1735,6 @@ ol > li{
 #detail-list{
     display:  flex;
     justify-content: space-evenly;
-    
 }
 
 #detail-list > ol >li{
