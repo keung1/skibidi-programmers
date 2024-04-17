@@ -220,6 +220,16 @@ ul li a img {
     }
 }
 
+@media screen and (max-width: 600px) {
+    .logo {
+        width: 46%;
+        padding-left: 0;
+    }
+    .presentPoke a{
+        margin-left: 20px;
+    }
+}
+
 /*-------footer-------*/
 footer {
     background-color: rgba(23, 22, 22, 0.948); 
@@ -1749,10 +1759,6 @@ ol > li{
 }
 
 @media screen and (max-width: 600px) {
-    .logo {
-        display: none;
-    }
-
     .keuzemenu, aside, .keuzemenu li a {
         width: 280px;
     }
