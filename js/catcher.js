@@ -29,6 +29,7 @@ for (let i = 0; i < wildPokemon.length; i++) {
 };
 
 let catchButton = document.getElementById("catch_button");
+let runButton = document.getElementById("run_button");
 let catchText = document.getElementById("catch_text");
 let missText = document.getElementById("missed_text");
 let amountBalls = document.getElementById("amount_balls");
@@ -61,6 +62,10 @@ function catchPokemon(e) {
         }
     }
 };
+
+runButton.addEventListener("click", (e) => {
+    popup_catch.style.display = "none";
+})
 
 catchButton.addEventListener("click", catchPokemon);
 
