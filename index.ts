@@ -27,6 +27,9 @@ app.get("/home", (req, res) => {
     res.render("home");
 });
 
+app.get("/myteam", (req,res) => {
+    res.render("myteam")
+})
 
 app.get("/detail", (req, res) => {
     res.render("detailedpokemon");
