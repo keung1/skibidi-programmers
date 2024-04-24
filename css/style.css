@@ -677,7 +677,7 @@ h1 {
     width: 15rem;
 }
 
-#login_popup, #container_pokeguesser_image {
+#login_popup{
     left: 0;
     background: rgba(0, 0, 0, 0.6);
     min-width: 100vw;
@@ -687,6 +687,7 @@ h1 {
     display: none;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }
 
 #signin_popup {
@@ -699,6 +700,7 @@ h1 {
     display: none;
     justify-content: center;
     align-items: center;
+    z-index: 2;
 }
 
 #login_content {
@@ -809,17 +811,19 @@ h1 {
         position: absolute;
         right: 1rem;
         background-color: #3a3a3a;
-        width: 90px;
+        width: 100px;
         min-width: 60px;
         min-height: 60px;
         z-index: 1;
+        border-radius: 10px;
     }
 
     #account_buttons button {
+        margin: 5px;
         padding: 5px;
         width: 90px;
         min-height: 30px;
-        border: 1px solid #000000;
+        border-radius: 5px;
     }
 
     #account_buttons button:hover {
@@ -1019,6 +1023,26 @@ h1 {
     
 }
 
+#container_pokeguesser_image {
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    min-width: 100vw;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+#container_pokeguesser_image .close_button {
+    position: absolute;
+    padding-left: 20rem;
+    padding-bottom: 22rem;
+    font-family: "Roboto-Regular";
+}
+
 
 .pokeguesser_image {
     display: flex;
@@ -1094,6 +1118,11 @@ h1 {
     .pokeguesser_image img {
         width: 250px;
         height: 250px;
+    }
+
+    #container_pokeguesser_image .close_button {
+        padding-left: 18rem;
+        padding-bottom: 20rem;
     }
 }
 
