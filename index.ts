@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 
 app.get("/forgot", (req, res) => {
     res.render("forgot");
-})
+});
 
 app.get("/pokedex", (req, res) => {
     res.render("pokedex");
