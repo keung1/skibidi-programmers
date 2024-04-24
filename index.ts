@@ -8,8 +8,17 @@ app.set("port", 3000);
 app.use(express.static("public"));
 
 
+app.get("/", (req, res) => {
+    res.render("index");
+});
 
+app.get("/pokedex", (req, res) => {
+    res.render("pokedex");
+});
 
+app.get("/battle", (req, res) => {
+    res.render("battle");
+});
 
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
