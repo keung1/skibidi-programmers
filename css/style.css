@@ -597,8 +597,6 @@ h1 {
 }
 
 
-
-
 /* --------------------------- landingspagina -----------------------------*/
 .landing_header {
     background-color: #101014;
@@ -1810,6 +1808,8 @@ ol > li{
     margin-bottom: 1rem;
 }
 
+/*--------media-queries-----------*/
+
 @media screen and (max-width: 600px) {
     .keuzemenu, aside, .keuzemenu li a {
         width: 280px;
@@ -1861,7 +1861,6 @@ ol > li{
        transform: rotate(90deg);
        margin-left: 40%;
     }
-
 }
 
 @media screen and (max-width: 900px) {
@@ -1880,6 +1879,10 @@ ol > li{
         transform: rotate(90deg);
         margin-left: 40%;
      }
-
 }
 
+@media screen and (max-width: 1000px) {
+    .home-page main {
+        background-image: none;
+    }
+}
