@@ -7,17 +7,14 @@ app.set("view engine", "ejs");
 app.set("port", 3000);
 app.use(express.static("public"));
 
-app.get("/landing", (req, res) => {
-    res.render("landing");
-})
-
-app.get("/forgot", (req, res) => {
-    res.render("forgot");
-})
 
 app.get("/", (req, res) => {
     res.render("index");
 });
+
+app.get("/forgot", (req, res) => {
+    res.render("forgot");
+})
 
 app.get("/pokedex", (req, res) => {
     res.render("pokedex");
