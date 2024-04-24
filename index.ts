@@ -29,7 +29,7 @@ app.get("/home", (req, res) => {
 
 app.get("/myteam", (req,res) => {
     res.render("myteam")
-})
+});
 
 app.get("/detail", (req, res) => {
     res.render("detailedpokemon");
@@ -41,11 +41,11 @@ app.get("/comparison", (req, res) => {
 
 app.get("/guesser", (req, res) => {
     res.render("pokeguesser");
-})
+});
 
 app.get("/safari", (req, res) => {
     res.render("pokecatcher");
-})
+});
 
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
