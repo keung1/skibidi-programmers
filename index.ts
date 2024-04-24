@@ -20,6 +20,10 @@ app.get("/battle", (req, res) => {
     res.render("battle");
 });
 
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
 });
