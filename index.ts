@@ -1,26 +1,11 @@
 import express from "express";
 import ejs from "ejs";
 
-const fetch = require('node-fetch');
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("port", 3000);
 app.use(express.static("public"));
-
-
-
-app.get('/', async (req, res) => {
-    try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
-        const data = await response.json();
-        const pokemonList = data.results;
-        res.render('index', { pokemonList });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving Pokémon data');
-    }
-});
 
 
 
