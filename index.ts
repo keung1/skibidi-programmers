@@ -12,6 +12,10 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
+app.get("/forgot", (req, res) => {
+    res.render("forgot");
+})
+
 app.get("/pokedex", (req, res) => {
     res.render("pokedex");
 });
@@ -19,7 +23,6 @@ app.get("/pokedex", (req, res) => {
 app.get("/battle", (req, res) => {
     res.render("battle");
 });
-
 app.get("/home", (req, res) => {
     res.render("home");
 });
@@ -32,6 +35,14 @@ app.get("/detail", (req, res) => {
 app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
 });
+
+app.get("/guesser", (req, res) => {
+    res.render("guesser");
+})
+
+app.get("/safari", (req, res) => {
+    res.render("safari");
+})
 
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
