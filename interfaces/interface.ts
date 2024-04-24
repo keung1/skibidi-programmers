@@ -1,5 +1,3 @@
-import { EventLoopUtilization } from "perf_hooks";
-import internal from "stream";
 
 
 export interface Pokemon{
@@ -11,7 +9,7 @@ export interface Pokemon{
     Stats: Stat;
     abilities: Ability;
     species: string;
-    Capture: string;
+    capture: string;
     Evolutions: Evolution;
 }
 
