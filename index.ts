@@ -40,11 +40,11 @@ app.get("/comparison", (req, res) => {
 });
 
 app.get("/guesser", (req, res) => {
-    res.render("guesser");
+    res.render("pokecatcher");
 })
 
 app.get("/safari", (req, res) => {
-    res.render("safari");
+    res.render("pokecatcher");
 })
 
 app.listen(app.get("port"), () => {
