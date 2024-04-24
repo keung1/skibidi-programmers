@@ -20,6 +20,11 @@ app.get("/battle", (req, res) => {
     res.render("battle");
 });
 
+app.get("/home", (req, res) => {
+    res.render("home");
+});
+
+
 app.get("/detail", (req, res) => {
     res.render("detailedpokemon");
 });
@@ -27,7 +32,6 @@ app.get("/detail", (req, res) => {
 app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
 });
-
 
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
