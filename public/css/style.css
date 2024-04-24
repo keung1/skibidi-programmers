@@ -569,7 +569,7 @@ h1 {
     transform: scale(1.1);
 }
 
-.home-page main{
+.home-page{
     background-image: url(../assets/images/pikachu.png), url(../assets/images/bulbasaur.png), url(../assets/images/charmander.png), url(../assets/images/eevee.webp);
     background-position: top left, top right, bottom left, bottom right;
     background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
