@@ -20,6 +20,15 @@ app.get("/battle", (req, res) => {
     res.render("battle");
 });
 
+app.get("/detail", (req, res) => {
+    res.render("detailedpokemon");
+});
+
+app.get("/comparison", (req, res) => {
+    res.render("pokemoncomparison");
+});
+
+
 app.listen(app.get("port"), () => {
     console.log(`Server is running on port ${app.get("port")}`);
 });
