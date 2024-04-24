@@ -44,7 +44,7 @@ app.get("/guesser", (req, res) => {
 })
 
 app.get("/safari", (req, res) => {
-    res.render("pokecatcher");
+    res.render("pokeguesser");
 })
 
 app.listen(app.get("port"), () => {
