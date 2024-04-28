@@ -16,54 +16,13 @@
     <section id="pokemon">
       
       
-      <%for(let pokemon of Pokemons) {%>
+      <%for(let pokemon of pokemons) {%>
         <article>
-          
-          <a href=""> %> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/ <%= i %>.png" alt=""></a>
-        
+          <a href=""> %> <img src="<%= pokemon.sprites.front_default %>" alt=""></a>
           <p><%=pokemon.name %></p>
         </article>
         <% } %>
 
-      <article>
-       <a href="detailedpokemon.html"> <img src="/assets/images/001.png" alt=""></a>
-        <p>Bulbasaur</p>
-      </article>
-
-      <article>
-       <a href=""> <img src="/assets/images/002.png" alt=""></a>
-        <p>Ivysaur</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/003.png" alt=""> </a>
-        <p>Venusaur</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/004.png" alt=""> </a>
-        <p>Charmander</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/005.png" alt="">  </a>
-        <p>Charmeleon</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/006.png" alt=""> </a>
-        <p>Charizard</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/007.png" alt=""> </a>
-        <p>Squirtle</p>
-      </article>
-
-      <article>
-        <a href=""> <img src="/assets/images/008.png" alt=""> </a>
-        <p>Wartortle</p>
-      </article>
     </section>
   </main>
 
