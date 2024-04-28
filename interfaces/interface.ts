@@ -11,7 +11,6 @@ export interface Pokemon{
     species: string;
     capture: string;
     Evolutions: Evolution;
-    sprites: Sprite
     sprites: Sprite;
 }
 
