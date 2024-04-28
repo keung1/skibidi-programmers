@@ -3,18 +3,22 @@
     <main class = "pokeguesser_main">
         <h1>Wie is deze pokémon?</h1>
         <section class = "pokeguesser_bg">
-            
+            <img src = "<%= pokemonGuess.image %>" alt = "pokemonToGuessBlack" id = "pokeguesser_black">
         </section>
-        <form action="" method ="get">
-            <label for = "guessName">Naam: </label>
-            <input id = "guess_input">
-            <button id = "guess_button"  value = "raden">Raad</button>
+        <form action="/guesser" method ="post">
+            <label for = "guess">Naam: </label>
+            <input type = "text" name="guess" id = "guess_input">
+            <button type = "submit" id = "guess_button"  value = "raden">Raad</button>
         </form>
-        <section id = "container_pokeguesser_image">
-            <article class = "pokeguesser_image">
-                
-            </article>
-        </section>
+        <% if (pokemonGuess.succes) { %>
+            <section id = "container_pokeguesser_image">
+                <button class = "close_button"><a href = "/restart">X</a></button>
+                <article class = "pokeguesser_image">
+                    <p>Je hebt juist geraden!</p><br>
+                    <img src = "<%= pokemonGuess.image %>" alt = "pokemonToGuess"  width="300" height="300" id = "pokeguesser_answer">
+                </article>
+            </section>
+        <% } %>
     </main>
 
-<%- include("partials/header") %>
+<%- include("partials/footer") %>

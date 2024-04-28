@@ -1,27 +1,38 @@
 import express from "express";
 import ejs from "ejs";
 
+
 const app = express();
 
 app.set("view engine", "ejs");
 app.set("port", 3000);
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
+interface Pokemon {
+    id: number,
+    name: string,
+    height: number,
+    weight: number,
+    sprites: Sprite
+}
 
+interface Sprite {
+    front_default: string,
+    back_default: string
+    other: Other
+}
 
-app.get('/', async (req, res) => {
-    try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
-        const data = await response.json();
-        const pokemonList = data.results;
-        res.render('index', { pokemonList });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving Pokémon data');
-    }
-});
+interface Other {
+    'official-artwork': OfficialArt
+}
 
+interface OfficialArt {
+    front_default: string,
+    front_shiny: string
+}
 
+let pokemons: Pokemon[] = [];
 
 app.get("/", (req, res) => {
     res.render("index");
@@ -54,14 +65,65 @@ app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
 });
 
-app.get("/guesser", (req, res) => {
-    res.render("pokeguesser");
+/*-------------------------- pokeguesser -------------------------- */
+let pokemonAnswer: Pokemon;
+
+function randomPokemon() {
+    let randomId: number = Math.floor(Math.random() * 151) + 1;
+    let randomPokemon = {} as Pokemon;
+    for(let i: number = 0; i < pokemons.length; i++) {
+        if (i === randomId - 1) {
+            randomPokemon = pokemons[i];
+        };
+    }; 
+    pokemonAnswer = randomPokemon;
+};
+
+app.get("/restart", (req, res) => {
+    randomPokemon();
+    res.redirect("/guesser");
 });
+
+app.get("/guesser", (req, res) => {   
+    let answer: boolean = false;
+    res.render("pokeguesser", {
+        pokemonGuess: {
+            name: pokemonAnswer.name,
+            image: pokemonAnswer.sprites.other["official-artwork"].front_default,
+            succes: answer
+        }
+    });
+});
+
+app.post("/guesser", (req, res) => {
+    let guess: string = req.body.guess;
+    let answer: boolean = false;
+    if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
+        answer = true;
+    }
+    res.render("pokeguesser", {
+        pokemonGuess: {
+            name: pokemonAnswer.name,
+            image: pokemonAnswer.sprites.other["official-artwork"].front_default,
+            succes: answer
+        }
+    });
+});
+
+/*-------------------------- pokecatcher -------------------------- */
 
 app.get("/safari", (req, res) => {
+
     res.render("pokecatcher");
+
 });
 
-app.listen(app.get("port"), () => {
+app.listen(app.get("port"), async () => {
+    for(let i = 1; i <= 151; i++) {
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+        let pokemon: Pokemon = await response.json();
+        pokemons.push(pokemon);
+    }
+    randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
