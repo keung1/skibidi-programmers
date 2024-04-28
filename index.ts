@@ -1,6 +1,6 @@
 import express from "express";
 import ejs from "ejs";
-import {Pokemon} from "./interfaces/interface"
+import {Pokemon} from "./interfaces/interface";
 
 const app = express();
 

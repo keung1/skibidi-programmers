@@ -11,6 +11,7 @@ export interface Pokemon{
     species: string;
     capture: string;
     Evolutions: Evolution;
+    sprites: Sprite
     sprites: Sprite;
 }
 
@@ -27,6 +28,21 @@ export interface Stat{
 }
 export interface Evolution{
     name:string;
+}
+
+export interface Sprite {
+    front_default: string,
+    back_default: string
+    other: Other
+}
+
+export interface Other {
+    'official-artwork': OfficialArt
+}
+
+export interface OfficialArt {
+    front_default: string,
+    front_shiny: string
 }
 
 
