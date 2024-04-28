@@ -22,10 +22,7 @@ export interface Type{
 }
 export interface Stat{
     base_stat: number;
-    Stat_name: Name;
-}
-export interface Name{
-    name: string;
+    Stat_name: string;
 }
 export interface Evolution{
     name:string;

@@ -14,6 +14,17 @@
     </form>
 
     <section id="pokemon">
+      
+      
+      <%for(let pokemon of Pokemons) {%>
+        <article>
+          
+          <a href=""> %> <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/ <%= i %>.png" alt=""></a>
+        
+          <p><%=pokemon.name %></p>
+        </article>
+        <% } %>
+
       <article>
        <a href="detailedpokemon.html"> <img src="/assets/images/001.png" alt=""></a>
         <p>Bulbasaur</p>

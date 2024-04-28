@@ -1,5 +1,6 @@
 import express from "express";
 import ejs from "ejs";
+import {Pokemon} from "./interfaces/interface";
 
 const app = express();
 
@@ -7,21 +8,7 @@ app.set("view engine", "ejs");
 app.set("port", 3000);
 app.use(express.static("public"));
 
-
-
-app.get('/', async (req, res) => {
-    try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100');
-        const data = await response.json();
-        const pokemonList = data.results;
-        res.render('index', { pokemonList });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Error retrieving Pokémon data');
-    }
-});
-
-
+let Pokemons: Pokemon[] ;
 
 app.get("/", (req, res) => {
     res.render("index");
@@ -31,8 +18,22 @@ app.get("/forgot", (req, res) => {
     res.render("forgot");
 });
 
-app.get("/pokedex", (req, res) => {
-    res.render("pokedex");
+app.get("/pokedex", async(req, res) => {
+    try {
+        
+    for(let i=1; i <100; i++){
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
+    
+        const data = await response.json();
+        Pokemons = data.results;
+        res.render('pokedex', { Pokemons, i });
+    }
+    
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Error retrieving Pokémon data');
+    }
+
 });
 
 app.get("/battle", (req, res) => {
