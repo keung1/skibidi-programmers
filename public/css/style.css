@@ -996,6 +996,7 @@ h1 {
     top: 4rem;
     width: 300px;
     height: 300px;
+    filter: brightness(0%)
 }
 
 .pokeguesser_bg {
@@ -1048,7 +1049,7 @@ h1 {
     min-height: 100%;
     position: fixed;
     top: 0;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2;
@@ -1056,8 +1057,8 @@ h1 {
 
 #container_pokeguesser_image .close_button {
     position: absolute;
-    padding-left: 20rem;
-    padding-bottom: 22rem;
+    padding-left: 18rem;
+    padding-bottom: 20rem;
     font-family: "Roboto-Regular";
 }
 
@@ -1139,8 +1140,9 @@ h1 {
     }
 
     #container_pokeguesser_image .close_button {
-        padding-left: 18rem;
-        padding-bottom: 20rem;
+        padding-left: 15rem;
+        padding-bottom: 17rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -1519,10 +1521,20 @@ ol > li{
     height: 1240px;
 }
 
-.popup_catch {
+#spawn_one {
     position: relative;
-    left: 10rem;
-    top: 20rem;
+    left: 7rem;
+    top: 21rem;
+}
+
+#spawn_two {
+    position: relative;
+    left: 30rem;
+    top: 25rem;
+}
+
+#spawn_three {
+    
 }
 
 #container_pokevanger_image{
