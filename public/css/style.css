@@ -1774,24 +1774,26 @@ ol > li{
 /*--------detailed-----------*/
 
 #details h1{
-    margin-left: 33%;
+    width: fit-content;
+    margin: auto;
 }
 
-#Detail{
-    margin:  0 auto;
+#detail{
+    margin: auto;
     width: 85%;
     display: flex;
     flex-wrap: wrap;
     background-color: rgb(194, 191, 191);
     border-radius: 10px;
+    font-family: "Pokémon-Classic";
 }
 
-#Detail >article>article> form > input{
+#detail >article>article> form > input{
     width: 15rem;
     border-radius: 10px ;
 }
 
-#Detail >article>article> form > button{
+#detail >article>article> form > button{
    
     margin-top: 1rem;
     margin-left: 20%;
@@ -1802,33 +1804,33 @@ ol > li{
 }
 
 
-#Detail > article:nth-child(1){
+#detail > article:nth-child(1){
     display: flex;
 }
 
-#Detail >article> article:nth-child(2){
+#detail >article> article:nth-child(2){
     margin-left: 50%;
 }
 
 
-#Detail > article{
+#detail > article{
    margin: 10rem;
    margin-bottom: 0;
    margin-top: 0;
    width: 40%;
 }
 
-#Detail > article > h2{
+#detail > article > h2{
     margin-left: 20%;
 }
 
 
-#Detail > article > ol > li{
+#detail > article > ol > li{
     width: 100%;
     
 }
 
-#Detail-foto{
+#detail-foto{
     width: 150%;
     margin-left: -20%;
 }
