@@ -37,7 +37,7 @@ app.get("/myteam", (req,res) => {
 });
 
 app.get("/detail", (req, res) => {
-    res.render("detailedpokemon");
+    res.render("detailed");
 });
 
 app.get("/comparison", (req, res) => {
