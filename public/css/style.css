@@ -1778,6 +1778,11 @@ ol > li{
     margin: auto;
 }
 
+#details h2{
+    font-weight: bold;
+    font-size: 2rem;
+}
+
 #detail{
     margin: auto;
     width: 85%;
@@ -1791,16 +1796,22 @@ ol > li{
 #detail >article>article> form > input{
     width: 15rem;
     border-radius: 10px ;
+    background-color: var(--bg-color);
+}
+
+#detail >article>article> form > input::placeholder{
+    color: #ccc;
 }
 
 #detail >article>article> form > button{
    
     margin-top: 1rem;
-    margin-left: 20%;
+    margin-left: 15%;
     background-color:var( --bg-color);
     border-radius: 10px;
     font-size: 15px;
-    width: 7rem;
+    width: fit-content;
+    padding: 5px;
 }
 
 
@@ -1827,7 +1838,6 @@ ol > li{
 
 #detail > article > ol > li{
     width: 100%;
-    
 }
 
 #detail-foto{
@@ -1855,9 +1865,10 @@ ol > li{
 }
 
 #detail-list > ol >li{
-    width: 7rem;
+    width: 13rem;
     padding: 2px;
     margin-bottom: 1rem;
+    margin-right: 5rem;
 }
 
 #detail.values > li{
