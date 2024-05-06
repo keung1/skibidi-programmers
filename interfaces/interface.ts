@@ -1,6 +1,7 @@
 
 
 export interface Pokemon{
+    _id?: Object;
     id: string;
     name: string;
     height: number;
@@ -29,11 +30,9 @@ export interface Evolution{
     name:string;
 }
 
-
-
 export interface Sprite {
     front_default: string,
-    back_default: string
+    back_default: string,
     other: Other
 }
 

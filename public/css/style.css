@@ -1192,7 +1192,7 @@ select{
 #pokemon img{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
-    
+    width: 200px;
     transition: transform 0.3s ease;
 }
 

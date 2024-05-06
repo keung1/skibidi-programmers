@@ -1,11 +1,13 @@
 import express from "express";
 import ejs from "ejs";
-import {Pokemon} from "./interfaces/interface"
+import {Pokemon} from "./interfaces/interface";
+import { connect, getPokemons } from "./database";
+import dotenv from "dotenv";
 
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("port", 3000);
+app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
@@ -22,7 +24,7 @@ app.get("/forgot", (req, res) => {
 });
 
 app.get("/pokedex", async(req, res) => {
-        res.render('pokedex', { pokemons });
+    res.render('pokedex', { pokemons });
 });
 
 app.get("/battle", (req, res) => {
@@ -98,11 +100,15 @@ app.get("/safari", (req, res) => {
 });
 
 app.listen(app.get("port"), async () => {
+/*
     for(let i = 1; i <= 151; i++) {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         let pokemon: Pokemon = await response.json();
         pokemons.push(pokemon);
     }
+*/
+    await connect();
+    pokemons = await getPokemons(); 
     randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
