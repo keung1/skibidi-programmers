@@ -23,9 +23,26 @@ app.get("/forgot", (req, res) => {
     res.render("forgot");
 });
 
+/*--------pokedex-------*/ 
+
+
 app.get("/pokedex", async(req, res) => {
     res.render('pokedex', { pokemons });
 });
+
+app.get("/filter", (req, res) => {
+    const queryParam = req.query.query;
+    const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokedex');
+  }
+      const filtered = pokemons.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    res.render('pokedex', { pokemons: filtered, query });
+  });
+
 
 app.get("/battle", (req, res) => {
     res.render("battle");
@@ -38,9 +55,25 @@ app.get("/myteam", (req,res) => {
     res.render("myteam");
 });
 
+/*--------detail------ */
+
+
 app.get("/detail", (req, res) => {
-    res.render("detailedpokemon");
-});
+
+    res.render('detailedpokemon', { pokemon:pokemons });
+  });
+
+
+
+app.get("/detail/:id", (req, res) => {
+    const id = req.params.id;
+    const pokemon = pokemons.filter(obj => obj.id === id);
+    console.log(pokemon)
+    res.render('detailedpokemon', { pokemon:pokemons });
+  });
+
+
+
 
 app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
@@ -108,7 +141,8 @@ app.listen(app.get("port"), async () => {
     }
 */
     await connect();
-    pokemons = await getPokemons(); 
+    pokemons = await getPokemons();
+    
     randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
