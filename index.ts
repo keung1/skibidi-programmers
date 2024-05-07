@@ -60,7 +60,7 @@ app.get("/myteam", (req,res) => {
 
 app.get("/detail", (req, res) => {
 
-    res.render('detailedpokemon', { pokemon:pokemons });
+    res.render('detailed', { pokemon:pokemons });
   });
 
 
@@ -69,9 +69,8 @@ app.get("/detail/:id", (req, res) => {
     const id = req.params.id;
     const pokemon = pokemons.filter(obj => obj.id === id);
     console.log(pokemon)
-    res.render('detailedpokemon', { pokemon:pokemons });
+    res.render('detailed', { pokemon:pokemons });
   });
-
 
 
 
