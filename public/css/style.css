@@ -1529,12 +1529,20 @@ ol > li{
 
 #spawn_two {
     position: relative;
-    left: 30rem;
+    left: 23rem;
     top: 25rem;
 }
 
 #spawn_three {
-    
+    position: relative;
+    left: 53rem;
+    top: 23rem;
+}
+
+#spawn_four {
+    position: relative;
+    left: 42rem;
+    top: 66rem;
 }
 
 #container_pokevanger_image{

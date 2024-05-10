@@ -115,11 +115,11 @@ function randomPokemon() {
             randomPokemon = pokemons[i];
         };
     }; 
-    pokemonAnswer = randomPokemon;
+    return randomPokemon;
 };
 
 app.get("/restart", (req, res) => {
-    randomPokemon();
+    pokemonAnswer = randomPokemon();
     res.redirect("/guesser");
 });
 
@@ -152,8 +152,33 @@ app.post("/guesser", (req, res) => {
 /*-------------------------- pokecatcher -------------------------- */
 
 app.get("/safari", (req, res) => {
-
-    res.render("pokecatcher");
+    let pokemonSpawns: Pokemon[] = [];
+    for(let i = 0; i < 4; i++) {
+        let spawn: Pokemon = randomPokemon();
+        pokemonSpawns.push(spawn);
+    }
+    res.render("pokecatcher", {
+        spawn1: {
+            name: pokemonSpawns[0].name,
+            sprite: pokemonSpawns[0].sprites.front_default,
+            image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+        },
+        spawn2: {
+            name: pokemonSpawns[1].name,
+            sprite: pokemonSpawns[1].sprites.front_default,
+            image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+        },
+        spawn3: {
+            name: pokemonSpawns[2].name,
+            sprite: pokemonSpawns[2].sprites.front_default,
+            image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+        },
+        spawn4: {
+            name: pokemonSpawns[3].name,
+            sprite: pokemonSpawns[3].sprites.front_default,
+            image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+        },
+    });
 
 });
 
@@ -166,8 +191,8 @@ app.listen(app.get("port"), async () => {
     }
 */
     await connect();
-    pokemons = await getPokemons();
-    randomPokemon();
+    pokemons = await getPokemons(); 
+    pokemonAnswer = randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
 
