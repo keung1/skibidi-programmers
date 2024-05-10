@@ -60,16 +60,16 @@ app.get("/myteam", (req,res) => {
 
 app.get("/detail", (req, res) => {
 
-    res.render('detailed', { pokemon:pokemons });
+    res.render('detailed', {pokemon:pokemons });
   });
 
-
-
 app.get("/detail/:id", (req, res) => {
-    const id = req.params.id;
-    const pokemon = pokemons.filter(obj => obj.id === id);
-    console.log(pokemon)
-    res.render('detailed', { pokemon:pokemons });
+    const id  = "2";
+    const pokemon = pokemons.find(obj => obj.id ===id);
+    
+
+
+    res.render('detailed', { pokemon : pokemon   });   
   });
 
 
@@ -141,7 +141,6 @@ app.listen(app.get("port"), async () => {
 */
     await connect();
     pokemons = await getPokemons();
-    
     randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
