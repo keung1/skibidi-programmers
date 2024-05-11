@@ -1,5 +1,6 @@
 import express from "express";
 import ejs from "ejs";
+import {Pokemon} from "./interfaces/interface";
 
 const app = express();
 
@@ -24,9 +25,35 @@ app.get("/pokedex", async(req, res) => {
         res.render('pokedex', { pokemons });
 });
 
+
+/*-----------------------battle-----------------------*/
 app.get("/battle", (req, res) => {
-    res.render("battle");
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+    const randomPokemon = pokemons[randomIndex];
+    
+    const pokemonWithImage = {
+        ...randomPokemon,
+        image: randomPokemon.sprites.other["official-artwork"].front_default
+    };
+
+    res.render("battle", { randomPokemon: pokemonWithImage });
 });
+
+/*async function addImageToPokemon(pokemon: Pokemon): Promise<Pokemon> {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        const pokemonData = await response.json();
+        const officialArtworkUrl = pokemonData.sprites.other["official-artwork"].front_default;
+        return { ...pokemon, image: officialArtworkUrl };
+    } catch (error) {
+        console.error('Error fetching Pokémon data:', error);
+        return pokemon;
+    }
+}
+
+addImageToPokemon();
+
+*/
 app.get("/home", (req, res) => {
     res.render("home");
 });
@@ -96,8 +123,6 @@ app.get("/safari", (req, res) => {
 
 });
 
-
-
 app.listen(app.get("port"), async () => {
     for(let i = 1; i <= 151; i++) {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
@@ -107,3 +132,7 @@ app.listen(app.get("port"), async () => {
     randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
+
+
+
+/*----------------------------battle------------------------*/

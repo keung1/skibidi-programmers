@@ -4,8 +4,8 @@
     <div class="container">
         <h1>Pokémon Battler</h1>
         
-        <section id="search">
-            <button type="button" class="random-opponent">Random</button>
+        <section id="search" action="/search" method="post">
+            <button id="randomButton" type="button" class="random-opponent">Random</button>
             <input type="text" placeholder="Type Pokemon Naam">
             <button class="submit" type="submit">Zoek</button>
         </section>
@@ -40,33 +40,31 @@
             </div>
             <div class="opponent-pokemon">
                 <div class="opponent-image">
-                <h2>Tegenstander Pokémon</h2>
-                    <img id="charmander" src="assets/images/charmander.png" alt="Pikachu">
+                    <h2>Tegenstander Pokémon</h2>
+                    <img src="<%= randomPokemon.image %>" alt="<%= randomPokemon.name %>">
                 </div>
-                <div class="opponent-info">
-                    <h2>Naam: Charmander</h2>
-                    <article class = "opponent-info-stat">
-                        <h3>8</h3>
-                        <p>Level</p>
-                    </article>
-                    <article class = "opponent-info-stat">
-                        <h3>18</h3>
-                        <p>Aanval</p>
-                    </article>
-                    <article class = "opponent-info-stat">
-                        <h3>8</h3>
-                        <p>Verdediging</p>
-                    </article>
-                    <article class = "opponent-info-stat">
-                        <h3><span id="opponent-hp">90</span></h3>
-                        <p>HP</p>
-                    </article>
-                    <div class="opponent-life">
-                    </div>
-                </div>
+            <div class="opponent-info">
+                <h2>Naam: <%= randomPokemon.name %></h2>
+                <article class="opponent-info-stat">
+                    <h3><%= randomPokemon.level %></h3>
+                    <p>Level</p>
+                </article>
+                <article class="opponent-info-stat">
+                    <h3><%= randomPokemon.attack %></h3>
+                    <p>Aanval</p>
+                </article>
+                <article class="opponent-info-stat">
+                    <h3><%= randomPokemon.defense %></h3>
+                    <p>Verdediging</p>
+                </article>
+                <article class="opponent-info-stat">
+                    <h3><%= randomPokemon.hp %></h3>
+                    <p>HP</p>
+                </article>
             </div>
         </div>
-        <a class="attack-btn"><img id="attack-btn" src="assets/images/Pokeball-3.png"></a>
+    </div>
+    <a class="attack-btn"><img id="attack-btn" src="assets/images/Pokeball-3.png"></a>
         
         <div class="result" id="result"></div>
     </div>
