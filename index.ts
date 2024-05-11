@@ -1,11 +1,13 @@
 import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
+import { connect, getPokemons } from "./database";
+import dotenv from "dotenv";
 
 const app = express();
 
 app.set("view engine", "ejs");
-app.set("port", 3000);
+app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
@@ -21,9 +23,26 @@ app.get("/forgot", (req, res) => {
     res.render("forgot");
 });
 
+/*--------pokedex-------*/ 
+
+
 app.get("/pokedex", async(req, res) => {
-        res.render('pokedex', { pokemons });
+    res.render('pokedex', { pokemons });
 });
+
+app.get("/filter", (req, res) => {
+    const queryParam = req.query.query;
+    const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokedex');
+  }
+      const filtered = pokemons.filter(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    res.render('pokedex', { pokemons: filtered, query });
+  });
+
 
 
 /*-----------------------battle-----------------------*/
@@ -62,9 +81,24 @@ app.get("/myteam", (req,res) => {
     res.render("myteam");
 });
 
+/*--------detail------ */
+
+
 app.get("/detail", (req, res) => {
-    res.render("detailedpokemon");
-});
+
+    res.render('detailed', {pokemon:pokemons });
+  });
+
+app.get("/detail/:id", (req, res) => {
+    const id  = "2";
+    const pokemon = pokemons.find(obj => obj.id ===id);
+    
+
+
+    res.render('detailed', { pokemon : pokemon   });   
+  });
+
+
 
 app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
@@ -124,11 +158,15 @@ app.get("/safari", (req, res) => {
 });
 
 app.listen(app.get("port"), async () => {
+/*
     for(let i = 1; i <= 151; i++) {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
         let pokemon: Pokemon = await response.json();
         pokemons.push(pokemon);
     }
+*/
+    await connect();
+    pokemons = await getPokemons();
     randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });

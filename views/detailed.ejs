@@ -4,17 +4,17 @@
 
       <h1>Pokemon info</h1>
         
-      <section id="Detail">
+      <section id="detail">
                 
 
         <article>
-                <article>
-                    <h2>Bulbasaur</h2>
-                    <img id="Detail-foto" src="/assets/images/001.png" alt="foto van Bulbasaur">
-                    <figcaption>https://pokeapi.co/</figcaption>
+            <article>
+                <h2><%= %> </h2>
+                <img id="detail-foto" src=https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png alt="foto van Bulbasaur">
+                <figcaption>https://pokeapi.co/</figcaption>
                     
                 <form action="">
-                    <input type="text">
+                    <input type="text" placeholder="bijnaam">
                     <button>geef bijnaam</button>
                 </form>
             </article>
@@ -26,9 +26,9 @@
                 <section id="detail-list">
                     <ol>
                         <li>HP</li>
-                        <li>Aanval</li>
-                        <li>Special Aanval</li>
-                        <li>Special Verdediging</li>
+                        <li>Aanval (ATK)</li>
+                        <li>Special ATK</li>
+                        <li>Special DEF</li>
                         <li>Snelheid</li>
                         
                         <li>Type: </li>
@@ -53,19 +53,18 @@
 
                         <li>GRASS POISON</li>
                         <li>Seed Pokémon</li>
-                        <li>0.7 m (2′04″)</li>
-                        <li>6.9 kg (15.2 lbs)</li>
+                        <li>0.7 m</li>
+                        <li>6.9 kg</li>
                         <li>1. Overgrow</li>
                         <li>Chlorophyll (hidden ability)</li>
                         <li>20/3/2024</li>
-                        
                     </ol>
                 </section> 
             </article>
-            </article>
+        </article>
 
 
-            <article id="evo-article">
+        <article id="evo-article">
                 
             <h2>Evolution Path</h2>
 
@@ -75,19 +74,19 @@
                     <img src="/assets/images/001.png" alt="">
                 </li>
                 <li>
-                    <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="100px"></li>
+                    <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
                  <li>
                     <img src="/assets/images/002.png" alt="">
                 </li>
                 <li>
-                    <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="100px"></li>
+                    <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
                 <li>
                     <img src="/assets/images/003.png" alt="">
                 </li>
 
             </section>
         </article>
-        </section>
+      </section>
     </main>
 
 <%- include("partials/footer") %>

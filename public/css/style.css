@@ -1192,7 +1192,7 @@ select{
 #pokemon img{
     background-color: rgb(194, 191, 191);
     border-radius: 15px;
-    
+    width: 200px;
     transition: transform 0.3s ease;
 }
 
@@ -1774,61 +1774,77 @@ ol > li{
 /*--------detailed-----------*/
 
 #details h1{
-    margin-left: 33%;
+    width: fit-content;
+    margin: auto;
 }
 
-#Detail{
-    margin:  0 auto;
+#details h2{
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#detail{
+    margin: auto;
     width: 85%;
     display: flex;
     flex-wrap: wrap;
     background-color: rgb(194, 191, 191);
     border-radius: 10px;
+    font-family: "Pokémon-Classic";
 }
 
-#Detail >article>article> form > input{
+#detail >article>article> form > input{
     width: 15rem;
     border-radius: 10px ;
+    background-color: var(--bg-color);
 }
 
-#Detail >article>article> form > button{
+#detail >article>article> form > input::placeholder{
+    color: #ccc;
+}
+
+#detail >article>article> form > button{
    
     margin-top: 1rem;
-    margin-left: 20%;
+    margin-left: 15%;
     background-color:var( --bg-color);
     border-radius: 10px;
     font-size: 15px;
-    width: 7rem;
+    width: fit-content;
+    padding: 5px;
 }
 
 
-#Detail > article:nth-child(1){
+#detail > article:nth-child(1){
     display: flex;
 }
 
-#Detail >article> article:nth-child(2){
+#detail >article> article:nth-child(2){
     margin-left: 50%;
 }
 
 
-#Detail > article{
+#detail > article{
    margin: 10rem;
    margin-bottom: 0;
    margin-top: 0;
    width: 40%;
 }
 
-#Detail > article > h2{
-    margin-left: 20%;
+#detail > article > h2{
+    margin-left: 5%;
+    width: max-content;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 
-#Detail > article > ol > li{
+#detail > article > ol > li{
     width: 100%;
-    
 }
 
-#Detail-foto{
+#detail-foto{
+    max-inline-size: 200%;
     width: 150%;
     margin-left: -20%;
 }
@@ -1842,9 +1858,15 @@ ol > li{
     display: inline;
 }
 
+#evolution > li > img{
+    width: 100%;
+}
 
 .arrow{
-    margin-top: 3rem;
+    width: 150%;
+    max-inline-size: 200%;
+    margin-right: 50px;
+    margin-top: 15px;
 }
 
 #detail-list{
@@ -1853,9 +1875,10 @@ ol > li{
 }
 
 #detail-list > ol >li{
-    width: 7rem;
+    width: 13rem;
     padding: 2px;
     margin-bottom: 1rem;
+    margin-right: 5rem;
 }
 
 #detail.values > li{
@@ -1892,52 +1915,115 @@ ol > li{
 @media screen and (max-width: 1500px) {
     
     #evolution{
-        display: flex;
+        width: 200%;
+        height: 150%;
     }
-    #Detail > article{
+    .arrow{
+        width: 100%;
+        height: 50%;
+        margin: 0;
+    }
+    #detail > article{
         margin: 5rem;
-     }
-
+    }
+     #detail-list > ol >li {
+        margin-right: 0;
+    }
+    #detail > article > article:nth-child(2){
+        margin-left: 30%;
+    }
+    #evolution > li > img{
+        height: 40%;
+    }
 }
 
 @media screen and (max-width: 1150px) {
-
-     
     #evolution{
         display: flex;
         flex-direction: column;
-        margin-left: 30%;
+        width: 100%;
     }
-    #Detail > article{
+    #detail > article > h2 {
+        width: fit-content;
+        margin-left: 20%;
+        text-align: center;
+    }
+    #evolution > li > img{
+        height: 100%;
+    }
+    .arrow{
+        transform: rotate(90deg);
+        width: 100%;
+        height: 400px;
+        margin: 0;
+        /*margin-top: -20%;*/
+        margin-bottom: -40%;
+    }
+    #detail-foto{
+        width: 100%;
+        margin-left: 0;
+    }
+    
+    #evolution{
+        margin-left: 10%;
+    }
+    #detail > article{
         margin: 5rem;
      }
-
-    .arrow{
-       transform: rotate(90deg);
-       margin-left: 40%;
+    #detail > article:nth-child(1){
+        flex-direction: column;
+        align-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0;
     }
 }
 
 @media screen and (max-width: 900px) {
 
-    #Detail-foto{
+    #detail-foto{
         width: 100%;
+        margin-left: 0;
     }
 
      #evolution{
          display: flex;
          flex-direction: column;
+         flex-wrap: wrap;
          margin-left: 30%;
      }
 
      .arrow{
         transform: rotate(90deg);
-        margin-left: 40%;
      }
 }
 
 @media screen and (max-width: 1000px) {
+    #detail-foto{
+        width: 90%;
+    }
+
     .home-page main {
         background-image: none;
+    }
+
+    #detail{
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .arrow{
+        margin-bottom: -10%;
+        margin-top: -20%;
+    }
+    #detail > article > article:nth-child(2){
+        margin-right: 20%;
+    }
+    #detail>article{
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #evolution{
+        margin-left: 0;
     }
 }
