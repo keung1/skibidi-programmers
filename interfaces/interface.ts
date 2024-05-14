@@ -6,7 +6,7 @@ export interface Pokemon{
     name: string;
     height: number;
     weight: number;
-    types: Type;
+    types: Types[];
     Stats: Stat;
     abilities: Ability;
     species: string;
@@ -19,9 +19,14 @@ export interface Pokemon{
 export interface Ability{
     name: string;
 }
-export interface Type{
+export interface Types{
+    type: Type;
+}
+
+export interface Type {
     name: string;
 }
+
 export interface Stat{
     base_stat: number;
     Stat_name: string;

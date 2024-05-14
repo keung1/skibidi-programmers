@@ -150,37 +150,92 @@ app.post("/guesser", (req, res) => {
 });
 
 /*-------------------------- pokecatcher -------------------------- */
-
+let pokemonSpawns: Pokemon[] = [];
 app.get("/safari", (req, res) => {
-    let pokemonSpawns: Pokemon[] = [];
+    let check: boolean = false;
     for(let i = 0; i < 4; i++) {
         let spawn: Pokemon = randomPokemon();
         pokemonSpawns.push(spawn);
     }
     res.render("pokecatcher", {
         spawn1: {
+            id: pokemonSpawns[0].id,
             name: pokemonSpawns[0].name,
             sprite: pokemonSpawns[0].sprites.front_default,
             image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
         },
         spawn2: {
+            id: pokemonSpawns[1].id,
             name: pokemonSpawns[1].name,
             sprite: pokemonSpawns[1].sprites.front_default,
             image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
         },
         spawn3: {
+            id: pokemonSpawns[2].id,
             name: pokemonSpawns[2].name,
             sprite: pokemonSpawns[2].sprites.front_default,
             image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
         },
         spawn4: {
+            id: pokemonSpawns[3].id,
             name: pokemonSpawns[3].name,
             sprite: pokemonSpawns[3].sprites.front_default,
             image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
         },
+        spawn: {
+            succes: check
+        }
     });
 
 });
+
+app.post("/safari", (req, res) => {
+    let checkSpawn: string = req.body.spawn_check;
+    let check: boolean = true;
+    // let spawn = {} as Pokemon;
+    let spawn: Pokemon | undefined = pokemons.find(pokemon => pokemon.id == checkSpawn); 
+    /*
+    for(let i: number = 0; i < 151; i++) {
+        if (pokemons[i].id == checkSpawn) {
+            spawn = pokemons[i];
+        }
+    }
+    */
+    if (spawn != undefined) {
+        res.render("pokecatcher", {
+            spawn: {
+                name: spawn.name,
+                sprite: spawn.sprites.front_default,
+                type1: spawn.types[0].type.name,
+                succes: check
+            },
+            spawn1: {
+                id: pokemonSpawns[0].id,
+                name: pokemonSpawns[0].name,
+                sprite: pokemonSpawns[0].sprites.front_default,
+                image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+            },
+            spawn2: {
+                id: pokemonSpawns[1].id,
+                name: pokemonSpawns[1].name,
+                sprite: pokemonSpawns[1].sprites.front_default,
+                image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+            },
+            spawn3: {
+                id: pokemonSpawns[2].id,
+                name: pokemonSpawns[2].name,
+                sprite: pokemonSpawns[2].sprites.front_default,
+                image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+            },
+            spawn4: {
+                id: pokemonSpawns[3].id,
+                name: pokemonSpawns[3].name,
+                sprite: pokemonSpawns[3].sprites.front_default,
+                image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+            }
+        })
+    }
+})
 
 app.listen(app.get("port"), async () => {
 /*

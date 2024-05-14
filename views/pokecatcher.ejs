@@ -4,27 +4,41 @@
         <h2>Gotta Catch 'Em All</h2>
         <section id = "pokevanger_bgcontainer">
             <div id = "pokevanger_bg">
-                <a id = "spawn_one"><img src="<%= spawn1.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></a>
-                <a id = "spawn_two"><img src="<%= spawn2.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></a>
-                <a id = "spawn_three"><img src="<%= spawn3.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></a>
-                <a id = "spawn_four"><img src="<%= spawn4.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></a>
+                <form action = "/safari" method = "post">
+                    <input type = "text" name = "spawn_check" value = "<%= spawn1.id %>">
+                    <button type = "submit" id = "spawn_one"><img src="<%= spawn1.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
+                </form>
+                <form action = "/safari" method = "post">
+                    <input type = "text" name = "spawn_check" value = "<%= spawn2.id %>">
+                    <button type = "submit" id = "spawn_two"><img src="<%= spawn2.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
+                </form>
+                <form action = "/safari" method = "post">
+                    <input type = "text" name = "spawn_check" value = "<%= spawn3.id %>">
+                    <button type = "submit" id = "spawn_three"><img src="<%= spawn3.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
+                </form>
+                <form action = "/safari" method = "post">
+                    <input type = "text" name = "spawn_check" value = "<%= spawn4.id %>">
+                    <button type = "submit" id = "spawn_four"><img src="<%= spawn4.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
+                </form>
             </div>
         </section>
-        <section id = "container_pokevanger_menu">
-            <article class = "pokevanger_menu">
-                <button class = "pokeball_button">
-                    <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
-                </button>
-                <h3>Ditto</h3>
-                <img src="assets/images/ditto.png" alt = "ditto sprite" class = "pokevanger_menu_image" width="300" height="300">
-                <p>Type: <span>normal</span></p>
-                <p>lv: <span>16</span></p>
-            </article>
-        </section>
+        <% if (spawn.succes) { %>
+            <section id = "container_pokevanger_menu">
+                <article class = "pokevanger_menu">
+                    <button class = "pokeball_button">
+                        <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
+                    </button>
+                    <h3><%= spawn.name %></h3>
+                    <img src="<%= spawn.sprite %>" alt = "ditto sprite" class = "pokevanger_menu_image" width="150" height="150">
+                    <p>Type: <span><%= spawn.type1 %></span></p>
+                    <p>lv: <span>16</span></p>
+                </article>
+            </section>
+        <% } %>
         <section id = "container_pokevanger_image">
             <article class = "pokevanger_image">
                 <div id = "pokevanger_bgfield">
-                    <img src="assets/images/ditto.png" alt = "ditto sprite" width="200" height="200">
+                    <img src="<%= spawn.sprite%>" alt = "ditto sprite" width="150" height="150">
                     <p id = "catch_text">Gevangen!</p>
                     <p id = "missed_text">Gemist!</p>
                     <p id = "pokeballs">pokéballs: <span id = "amount_balls">3</span></p>

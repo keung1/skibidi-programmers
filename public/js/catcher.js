@@ -1,22 +1,13 @@
 let ditto = [100, 10, 100]
 let myPokemon = [100, 20, 15]
 
-let wildPokemon = document.getElementsByClassName("popup_catch");
 let catchMenu = document.getElementById("container_pokevanger_menu");
 let pokeballButton = document.getElementsByClassName("pokeball_button");
 let popup_catch = document.getElementById("container_pokevanger_image");
 
-for (let i = 0; i < wildPokemon.length; i++) {
-    wildPokemon[i].addEventListener("click", (e) =>{
-        e.preventDefault();
-        catchMenu.style.display = "flex"
-    });
-};
-
-for (let i = 0; i < wildPokemon.length; i++) {
-    pokeballButton[i].addEventListener("click", (e) => {
+    pokeballButton[0].addEventListener("click", (e) => {
             e.preventDefault();
-            pokeballButton[i].style.backgroundColor = "green"
+            pokeballButton[0].style.backgroundColor = "green"
             catchMenu.style.display = "none";
             popup_catch.style.display = "flex";
         
@@ -26,7 +17,7 @@ for (let i = 0; i < wildPokemon.length; i++) {
         }
         */
     });
-};
+
 
 let catchButton = document.getElementById("catch_button");
 let runButton = document.getElementById("run_button");
