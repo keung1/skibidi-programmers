@@ -58,18 +58,16 @@ app.get("/myteam", (req,res) => {
 /*--------detail------ */
 
 
-app.get("/detail", (req, res) => {
-
-    res.render('detailed', {pokemon:pokemons });
-  });
-
 app.get("/detail/:id", (req, res) => {
-    const id  = "2";
-    const pokemon = pokemons.find(obj => obj.id ===id);
-    
+    const id  = req.params.id;
+    let pokemon ;
+    for(let pokemonn of pokemons){
+        if(pokemonn.id == id){
+            pokemon = pokemonn
+        }
+    }
 
-
-    res.render('detailed', { pokemon : pokemon   });   
+    res.render('detailed', {  pokemon  });   
   });
 
 

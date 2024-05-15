@@ -6,11 +6,10 @@
         
       <section id="detail">
                 
-
         <article>
             <article>
-                <h2><%= %> </h2>
-                <img id="detail-foto" src=https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png alt="foto van Bulbasaur">
+                <h2><%= pokemon.name%> </h2>
+                <img id="detail-foto" src="<%= pokemon.sprites.other["official-artwork"].front_default %>" alt="foto van Bulbasaur">
                 <figcaption>https://pokeapi.co/</figcaption>
                     
                 <form action="">
@@ -25,14 +24,15 @@
                 
                 <section id="detail-list">
                     <ol>
-                        <li>HP</li>
-                        <li>Aanval (ATK)</li>
-                        <li>Special ATK</li>
-                        <li>Special DEF</li>
-                        <li>Snelheid</li>
+                        <li>    </li>
+                        <li><%= pokemon.stats[1].stat.name %></li>
+                        <li><%= pokemon.stats[2].stat.name %></li>
+                        <li><%= pokemon.stats[3].stat.name %></li>
+                        <li><%= pokemon.stats[4].stat.name %></li>
+                        <li><%= pokemon.stats[5].stat.name %></li>
                         
+                        <li>    </li>
                         <li>Type: </li>
-                        <li>Soort:</li>
                         <li>Hoogte:</li>
                         <li>Gewicht:</li>
                         <li>Capaciteiten:</li>
@@ -45,15 +45,17 @@
                     </ol>
 
                     <ol id="detail-values">
-                        <li>40</li>
-                        <li>20</li>
-                        <li>40</li>
-                        <li>30</li>
-                        <li>30</li>
+                        <li>    </li>
+                        <li><%= pokemon.stats[1].base_stat %></li>
+                        <li><%= pokemon.stats[2].base_stat %></li>
+                        <li><%= pokemon.stats[3].base_stat %></li>
+                        <li><%= pokemon.stats[4].base_stat %></li>
+                        <li>    </li>
+                        <li><%= pokemon.stats[5].base_stat %></li>
 
-                        <li>GRASS POISON</li>
-                        <li>Seed Pokémon</li>
-                        <li>0.7 m</li>
+                        <li></li>
+                        <li><%= pokemon.types[0].type.name %></li>
+                        <li><%= pokemon.height %> m</li>
                         <li>6.9 kg</li>
                         <li>1. Overgrow</li>
                         <li>Chlorophyll (hidden ability)</li>
@@ -71,7 +73,7 @@
             <section id="evolution">
 
                 <li>
-                    <img src="/assets/images/001.png" alt="">
+                    <img src="<%= pokemon.sprites.other["official-artwork"].front_default %>" alt="">
                 </li>
                 <li>
                     <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
