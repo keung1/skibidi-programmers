@@ -58,21 +58,9 @@ app.get("/battle", (req, res) => {
     res.render("battle", { randomPokemon: pokemonWithImage });
 });
 
-/*async function addImageToPokemon(pokemon: Pokemon): Promise<Pokemon> {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-        const pokemonData = await response.json();
-        const officialArtworkUrl = pokemonData.sprites.other["official-artwork"].front_default;
-        return { ...pokemon, image: officialArtworkUrl };
-    } catch (error) {
-        console.error('Error fetching Pokémon data:', error);
-        return pokemon;
-    }
-}
 
-addImageToPokemon();
 
-*/
+
 app.get("/home", (req, res) => {
     res.render("home");
 });
@@ -173,4 +161,3 @@ app.listen(app.get("port"), async () => {
 
 
 
-/*----------------------------battle------------------------*/
