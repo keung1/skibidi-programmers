@@ -1521,6 +1521,10 @@ ol > li{
     height: 1240px;
 }
 
+#pokevanger_bg form input {
+    display: none;
+}
+
 #spawn_one {
     position: relative;
     left: 7rem;
@@ -1529,12 +1533,20 @@ ol > li{
 
 #spawn_two {
     position: relative;
-    left: 30rem;
-    top: 25rem;
+    left: 27rem;
+    top: 21rem;
 }
 
 #spawn_three {
-    
+    position: relative;
+    left: 66rem;
+    top: 11rem;
+}
+
+#spawn_four {
+    position: relative;
+    left: 58rem;
+    top: 48rem;
 }
 
 #container_pokevanger_image{
@@ -1557,7 +1569,7 @@ ol > li{
     min-width: 100vw;
     min-height: 100%;
     position: fixed;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -1584,17 +1596,17 @@ ol > li{
 
 .pokevanger_menu_image {
     position: relative;
-    top: -4.5rem;
+    top: 0.5rem;
     z-index: 1;
 }
 
 .pokevanger_menu h3 {
     position: relative;
+    text-transform: capitalize;
 }
 
 .pokevanger_menu p {
     position: relative;
-    bottom: 8rem;
 }
 
 #container_confirmation_release {
@@ -1657,7 +1669,7 @@ ol > li{
     flex-wrap: wrap;
     justify-content:space-around;
     align-items: center;
-    padding: 20px;
+    padding: 13px;
     border-radius: 1rem;
 }
 
@@ -1673,11 +1685,13 @@ ol > li{
 
 #pokevanger_bgfield img {
     position: relative;
+    left: 1.5rem;
+    top: 0.5rem;
 }
 
 #catch_text {
-    left: 4.3rem;
-    bottom: 12rem;
+    left: 3.5rem;
+    bottom: 9rem;
     font-size: 10px;
     position: relative;
     display: none;
@@ -1688,8 +1702,8 @@ ol > li{
 }
 
 #missed_text {
-    left: 4.3rem;
-    bottom: 12rem;
+    left: 4rem;
+    bottom: 9rem;
     font-size: 10px;
     position: relative;
     display: none;
@@ -1701,7 +1715,7 @@ ol > li{
 
 #pokeballs {
     left: 0.1rem;
-    bottom: 1.5rem;
+    bottom: -1.5rem;
     font-size: 10px;
     position: relative;
     display: block;
@@ -1717,6 +1731,7 @@ ol > li{
 }
 
 #run_button img {
+    position: relative;
     width: 110px;
     height: 42px;
 }

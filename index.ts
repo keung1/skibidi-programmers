@@ -44,9 +44,35 @@ app.get("/filter", (req, res) => {
   });
 
 
+
+/*-----------------------battle-----------------------*/
 app.get("/battle", (req, res) => {
-    res.render("battle");
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+    const randomPokemon = pokemons[randomIndex];
+    
+    const pokemonWithImage = {
+        ...randomPokemon,
+        image: randomPokemon.sprites.other["official-artwork"].front_default
+    };
+
+    res.render("battle", { randomPokemon: pokemonWithImage });
 });
+
+/*async function addImageToPokemon(pokemon: Pokemon): Promise<Pokemon> {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        const pokemonData = await response.json();
+        const officialArtworkUrl = pokemonData.sprites.other["official-artwork"].front_default;
+        return { ...pokemon, image: officialArtworkUrl };
+    } catch (error) {
+        console.error('Error fetching Pokémon data:', error);
+        return pokemon;
+    }
+}
+
+addImageToPokemon();
+
+*/
 app.get("/home", (req, res) => {
     res.render("home");
 });
@@ -87,11 +113,11 @@ function randomPokemon() {
             randomPokemon = pokemons[i];
         };
     }; 
-    pokemonAnswer = randomPokemon;
+    return randomPokemon;
 };
 
 app.get("/restart", (req, res) => {
-    randomPokemon();
+    pokemonAnswer = randomPokemon();
     res.redirect("/guesser");
 });
 
@@ -122,12 +148,92 @@ app.post("/guesser", (req, res) => {
 });
 
 /*-------------------------- pokecatcher -------------------------- */
-
+let pokemonSpawns: Pokemon[] = [];
 app.get("/safari", (req, res) => {
-
-    res.render("pokecatcher");
+    let check: boolean = false;
+    for(let i = 0; i < 4; i++) {
+        let spawn: Pokemon = randomPokemon();
+        pokemonSpawns.push(spawn);
+    }
+    res.render("pokecatcher", {
+        spawn1: {
+            id: pokemonSpawns[0].id,
+            name: pokemonSpawns[0].name,
+            sprite: pokemonSpawns[0].sprites.front_default,
+            image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+        },
+        spawn2: {
+            id: pokemonSpawns[1].id,
+            name: pokemonSpawns[1].name,
+            sprite: pokemonSpawns[1].sprites.front_default,
+            image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+        },
+        spawn3: {
+            id: pokemonSpawns[2].id,
+            name: pokemonSpawns[2].name,
+            sprite: pokemonSpawns[2].sprites.front_default,
+            image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+        },
+        spawn4: {
+            id: pokemonSpawns[3].id,
+            name: pokemonSpawns[3].name,
+            sprite: pokemonSpawns[3].sprites.front_default,
+            image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+        },
+        spawn: {
+            succes: check
+        }
+    });
 
 });
+
+app.post("/safari", (req, res) => {
+    let checkSpawn: string = req.body.spawn_check;
+    let check: boolean = true;
+    // let spawn = {} as Pokemon;
+    let spawn: Pokemon | undefined = pokemons.find(pokemon => pokemon.id == checkSpawn); 
+    /*
+    for(let i: number = 0; i < 151; i++) {
+        if (pokemons[i].id == checkSpawn) {
+            spawn = pokemons[i];
+        }
+    }
+    */
+    if (spawn != undefined) {
+        res.render("pokecatcher", {
+            spawn: {
+                name: spawn.name,
+                sprite: spawn.sprites.front_default,
+                type1: spawn.types[0].type.name,
+                succes: check
+            },
+            spawn1: {
+                id: pokemonSpawns[0].id,
+                name: pokemonSpawns[0].name,
+                sprite: pokemonSpawns[0].sprites.front_default,
+                image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+            },
+            spawn2: {
+                id: pokemonSpawns[1].id,
+                name: pokemonSpawns[1].name,
+                sprite: pokemonSpawns[1].sprites.front_default,
+                image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+            },
+            spawn3: {
+                id: pokemonSpawns[2].id,
+                name: pokemonSpawns[2].name,
+                sprite: pokemonSpawns[2].sprites.front_default,
+                image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+            },
+            spawn4: {
+                id: pokemonSpawns[3].id,
+                name: pokemonSpawns[3].name,
+                sprite: pokemonSpawns[3].sprites.front_default,
+                image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+            }
+        })
+    }
+})
 
 app.listen(app.get("port"), async () => {
 /*
@@ -138,7 +244,11 @@ app.listen(app.get("port"), async () => {
     }
 */
     await connect();
-    pokemons = await getPokemons();
-    randomPokemon();
+    pokemons = await getPokemons(); 
+    pokemonAnswer = randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
+
+
+
+/*----------------------------battle------------------------*/
