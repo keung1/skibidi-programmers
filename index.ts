@@ -96,11 +96,26 @@ app.get("/detail/:id", (req, res) => {
     res.render('detailed', {  pokemon  });   
   });
 
+/*-------------------------- comparison -------------------------- */
 
 
 app.get("/comparison", (req, res) => {
     res.render("pokemoncomparison");
 });
+
+
+app.get("/comparison/filter", (req, res) => {
+    const queryParam = req.query.pokemon1;
+    const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokemoncomparison');
+  }
+      const filtered = pokemons.find(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    res.render('pokemoncomparison', { pokemon: filtered, query });
+  });
 
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
