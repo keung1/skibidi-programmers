@@ -80,3 +80,15 @@ export interface OfficialArt {
     front_default: string,
     front_shiny: string
 }
+
+export interface User {
+    _id?: Object,
+    name: string,
+    password?: string,
+    pokemon_collection?: Pokemon[],
+}
+
+export interface FlashMessage {
+    type: "error" | 'succes',
+    message: string
+}
