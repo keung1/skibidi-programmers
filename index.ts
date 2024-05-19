@@ -46,17 +46,45 @@ app.get("/filter", (req, res) => {
 
 
 /*-----------------------battle-----------------------*/
-app.get("/battle", (req, res) => {
-    const randomIndex = Math.floor(Math.random() * pokemons.length);
-    const randomPokemon = pokemons[randomIndex];
-    
-    const pokemonWithImage = {
-        ...randomPokemon,
-        image: randomPokemon.sprites.other["official-artwork"].front_default
-    };
+app.get("/battle", async (req, res) => {
+    try {
+        const allPokemons = await getPokemons();
 
-    res.render("battle", { randomPokemon: pokemonWithImage });
+        const randomIndex = Math.floor(Math.random() * allPokemons.length);
+        const randomPokemon = allPokemons[randomIndex];
+
+        const pokemonWithImage = {
+            ...randomPokemon,
+            image: randomPokemon.sprites.other["official-artwork"].front_default
+        };
+
+        res.render("battle", { randomPokemon: pokemonWithImage });
+    } catch (error) {
+        console.error('Fout bij het ophalen van Pokémon voor de battle:', error);
+        res.status(500).send('Er is een fout opgetreden bij het ophalen van Pokémon voor de battle');
+    }
 });
+
+
+app.get('/random-pokemon', async (req, res) => {
+    try {
+        const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
+        const data = await response.json();
+        const randomIndex = Math.floor(Math.random() * data.results.length);
+        const randomPokemonUrl = data.results[randomIndex].url;
+
+        const pokemonResponse = await fetch(randomPokemonUrl);
+        const pokemonData = await pokemonResponse.json();
+
+        
+
+        res.json(randomPokemon);
+    } catch (error) {
+        console.error('Fout bij het ophalen van een willekeurige Pokémon:', error);
+        res.status(500).json({ error: 'Er is een fout opgetreden bij het ophalen van een willekeurige Pokémon' });
+    }
+});
+
 
 
 
