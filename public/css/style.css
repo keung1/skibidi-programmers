@@ -804,6 +804,35 @@ h1 {
     margin-left: 69%;
 }
 
+.succes {
+    position: fixed;
+    z-index: 2;
+    top: 2rem;
+    left: 46%;
+    color: #ccc;
+    background-color: #1D9BF0;
+    border-radius: 10px;
+    padding: 10px;
+    animation: welcomeMessage 0s ease-in 4s forwards;
+}
+
+.error {
+    position: fixed;
+    z-index: 2;
+    top: 2rem;
+    left: 46%;
+    color: #ccc;
+    background-color: #c21300;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+@keyframes welcomeMessage {
+    to {
+        display: none;
+    }
+}
+
 @media screen and (max-width: 900px) {
     .landing_header h1 {
         font-size: 2.5rem;

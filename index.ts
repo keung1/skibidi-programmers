@@ -1,8 +1,15 @@
 import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
-import { connect, getPokemons } from "./database";
+import {User} from "./interfaces/interface";
+import { connect, getPokemons, login, registerUser } from "./database";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import session from "./session";
+import { register } from "module";
+import { flashMiddleware } from "./middleware/flashMiddleware";
+import { secureMiddleware } from "./middleware/secureMiddleware";
+import { nextTick } from "process";
 
 const app = express();
 
@@ -10,18 +17,76 @@ app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(session);
+app.use(flashMiddleware);
 
 
 let pokemons: Pokemon[] = [];
+const saltRounds: number = 10;
 
+app.get("/", secureMiddleware, async(req, res) => {
+    res.render("index", {
+        loggedIn: true
+    });
+})
 
-app.get("/", (req, res) => {
-    res.render("index");
+app.post("/logout", async(req, res) => {
+    req.session.destroy(() =>{
+        res.redirect("/");
+    });
+})
+
+app.post("/", async (req, res, next) => {
+    if (req.body.username) {
+        const username: string = req.body.username;
+        console.log(username);
+        const password: string = req.body.password;
+        console.log(password);
+        try {
+            let user: User | undefined =  await login(username, password);
+            console.log(user)
+            console.log("-")
+            if (user) {
+                delete user.password;
+                req.session.user = user;
+                req.session.message = {type: "succes", message: `Welkom ${user.name}`};
+                res.redirect("/");
+            }
+        } catch (e: any) {
+            req.session.message = {type: "error", message: `Login mislukt`};
+            res.redirect("/");
+        }
+    }
+    else {
+        next();
+    }
 });
+
+app.post("/", async (req, res) => {
+    const username_signin: string = req.body.username_signin;
+    const password_signin: string = (req.body.password_signin).toString();
+        try {
+            let hashedPassword: string = await bcrypt.hash(password_signin, saltRounds);
+            console.log(await bcrypt.compare(password_signin, hashedPassword));
+            console.log(hashedPassword);
+            await registerUser(username_signin, hashedPassword);
+            res.redirect("/");
+        }
+        catch {
+            res.redirect("/");
+        }
+});
+
 
 app.get("/forgot", (req, res) => {
     res.render("forgot");
 });
+
+/*--------home-----------*/
+app.get("/home", secureMiddleware, async(req, res) => {
+    res.render("home", {user: req.session.user});
+});
+
 
 /*--------pokedex-------*/ 
 
@@ -165,7 +230,7 @@ app.post("/guesser", (req, res) => {
 
 /*-------------------------- pokecatcher -------------------------- */
 let pokemonSpawns: Pokemon[] = [];
-app.get("/safari", (req, res) => {
+app.get("/safari",secureMiddleware , (req, res) => {
     let check: boolean = false;
     for(let i = 0; i < 4; i++) {
         let spawn: Pokemon = randomPokemon();
@@ -203,18 +268,12 @@ app.get("/safari", (req, res) => {
 
 });
 
-app.post("/safari", (req, res) => {
+let spawn = {} as Pokemon | undefined;
+
+app.post("/safari",secureMiddleware , (req, res) => {
     let checkSpawn: string = req.body.spawn_check;
     let check: boolean = true;
-    // let spawn = {} as Pokemon;
-    let spawn: Pokemon | undefined = pokemons.find(pokemon => pokemon.id == checkSpawn); 
-    /*
-    for(let i: number = 0; i < 151; i++) {
-        if (pokemons[i].id == checkSpawn) {
-            spawn = pokemons[i];
-        }
-    }
-    */
+    spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     if (spawn != undefined) {
         res.render("pokecatcher", {
             spawn: {
@@ -247,21 +306,19 @@ app.post("/safari", (req, res) => {
                 sprite: pokemonSpawns[3].sprites.front_default,
                 image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
             }
-        })
-    }
+        });
+    };
+});
+
+app.post("/trycatch", (req, res) => {
+
 })
 
 app.listen(app.get("port"), async () => {
-/*
-    for(let i = 1; i <= 151; i++) {
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
-        let pokemon: Pokemon = await response.json();
-        pokemons.push(pokemon);
-    }
-*/
     await connect();
     pokemons = await getPokemons(); 
     pokemonAnswer = randomPokemon();
+    console.log(pokemonAnswer);
     console.log(`Server is running on port ${app.get("port")}`);
 });
 
