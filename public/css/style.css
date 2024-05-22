@@ -1585,7 +1585,7 @@ ol > li{
     min-width: 100vw;
     min-height: 100%;
     position: fixed;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
 }

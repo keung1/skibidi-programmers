@@ -5,6 +5,7 @@ let catchMenu = document.getElementById("container_pokevanger_menu");
 let pokeballButton = document.getElementsByClassName("pokeball_button");
 let popup_catch = document.getElementById("container_pokevanger_image");
 
+/*
     pokeballButton[0].addEventListener("click", (e) => {
             e.preventDefault();
             pokeballButton[0].style.backgroundColor = "green"
@@ -15,7 +16,7 @@ let popup_catch = document.getElementById("container_pokevanger_image");
         else if (pokeballButton[i].style.backgroundColor === "green") {
             e.preventDefault();
         }
-        */
+        
     });
 
 
@@ -25,7 +26,7 @@ let catchText = document.getElementById("catch_text");
 let missText = document.getElementById("missed_text");
 let amountBalls = document.getElementById("amount_balls");
 let pokeballs = +(amountBalls).innerHTML
-
+/*
 function catchPokemon(e) {
     e.preventDefault();
     let defense = ditto[2];
@@ -53,6 +54,7 @@ function catchPokemon(e) {
         }
     }
 };
+*/
 
 runButton.addEventListener("click", (e) => {
     popup_catch.style.display = "none";

@@ -86,6 +86,7 @@ export interface User {
     name: string,
     password?: string,
     pokemon_collection?: Pokemon[],
+    current_pokemon?: Pokemon
 }
 
 export interface FlashMessage {
