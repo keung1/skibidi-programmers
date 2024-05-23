@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { connect, getPokemons, login, registerUser } from "./database";
+import { addPokemon, connect, getPokemons, login, registerUser } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
@@ -37,13 +37,10 @@ app.post("/logout", async(req, res) => {
 app.post("/", async (req, res, next) => {
     if (req.body.username) {
         const username: string = req.body.username;
-        console.log(username);
         const password: string = req.body.password;
-        console.log(password);
         try {
             let user: User | undefined =  await login(username, password);
-            console.log(user)
-            console.log("-")
+            console.log(user);
             if (user) {
                 delete user.password;
                 req.session.user = user;
@@ -62,12 +59,11 @@ app.post("/", async (req, res, next) => {
 
 app.post("/", async (req, res) => {
     const username_signin: string = req.body.username_signin;
-    const password_signin: string = (req.body.password_signin).toString();
+    const password_signin: string = req.body.password_signin;
+    console.log(username_signin);
+    console.log(password_signin);
         try {
-            let hashedPassword: string = await bcrypt.hash(password_signin, saltRounds);
-            console.log(await bcrypt.compare(password_signin, hashedPassword));
-            console.log(hashedPassword);
-            await registerUser(username_signin, hashedPassword);
+            await registerUser(username_signin, password_signin);
             res.redirect("/");
         }
         catch {
@@ -369,7 +365,7 @@ app.get("/catchMenu", (req, res) => {
     };
 });
 
-app.post("/catchMenu", (req, res) => {
+app.post("/catchMenu", async(req, res) => {
     let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
     let catchProbability: number = 0
     if (spawnBaseDEF != undefined) {
@@ -387,6 +383,7 @@ app.post("/catchMenu", (req, res) => {
         pokeballs = 3;
         req.session.user?.pokemon_collection?.push(spawn!);
         console.log(req.session.user?.pokemon_collection);
+        await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
         res.redirect("/safari");
     }
     else {
@@ -396,7 +393,6 @@ app.post("/catchMenu", (req, res) => {
             res.redirect("/safari");
         }
     }
-    res.redirect("/catchMenu");
 });
 
 app.listen(app.get("port"), async () => {
