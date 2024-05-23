@@ -8,6 +8,7 @@ import bcrypt from "bcrypt";
 import session from "./session";
 import { flashMiddleware } from "./middleware/flashMiddleware";
 import { secureMiddleware } from "./middleware/secureMiddleware";
+import { currentPokemonMiddleware } from "./middleware/currentPokemonMiddleware";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(session);
 app.use(flashMiddleware);
+app.use(currentPokemonMiddleware);
 
 
 let pokemons: Pokemon[] = [];
@@ -287,6 +289,7 @@ app.post("/safari",secureMiddleware , (req, res) => {
     catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
     spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     if (spawn != undefined) {
+        spawn!.level = catchLevel;
         res.render("pokecatcher", {
             spawn: {
                 name: spawn.name,
@@ -394,6 +397,10 @@ app.post("/catchMenu", async(req, res) => {
         }
     }
 });
+
+app.post("/currentPokemon", (req, res) => {
+    
+})
 
 app.listen(app.get("port"), async () => {
     await connect();

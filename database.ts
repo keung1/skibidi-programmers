@@ -44,7 +44,8 @@ export async function registerUser(name: string, password: string) {
     await userCollection.insertOne({
         name: name,
         password: await bcrypt.hash(password, saltRounds),
-        pokemon_collection: pokemonCollection
+        pokemon_collection: pokemonCollection,
+        current_pokemon: undefined
     })
 }
 

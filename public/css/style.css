@@ -188,6 +188,31 @@ ul li a img {
     background-color: #e87373;
 }
 
+#current_pokemon_menu_container {
+    font-family: "Pokémon-Classic"; 
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+    min-width: 100vw;
+    min-height: 100%;
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#current_pokemon_menu {
+    height: 350px;
+    width: 300px;
+    background: #ccc;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 20px 20px;
+    border-radius: 1rem;
+}
+
 @media screen and (max-width: 1253px) {
     .nav_menu_content{
         height: 100vh;

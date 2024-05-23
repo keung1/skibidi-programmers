@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/fonts.css">
     <script src="/js/menu.js" defer></script>
     <script src="/js/catcher.js" defer></script>
+    <script src="/js/currentPokemon.js" defer></script>
 
     <title>Pokédex</title>
 </head>
@@ -35,7 +36,7 @@
       </ul>
 
       <section class="presentPoke">
-          <a href="/pokedex" class="noPresentPoke">?</a>
+          <button class="noPresentPoke">?</button>
       </section>
 
       <section id = "container_nav_menu">
@@ -51,4 +52,13 @@
     </section>
       
   </nav>
-  </header>
+<section id = "current_pokemon_menu_container">
+    <div id = "current_pokemon_menu">
+        <% for(let myPokemon of myPokemons) { %>
+        <form action = "/currentPokemon" method = "post">
+            <button><%= myPokemon.name %> <%= myPokemon.level %></button>
+        </form>
+        <% } %>
+    </div>
+</section>
+</header>

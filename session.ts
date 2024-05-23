@@ -20,7 +20,8 @@ mongoStore.on("error", (error) => {
 declare module 'express-session' {
     export interface SessionData {
         user?: User;
-        message?: FlashMessage
+        message?: FlashMessage;
+        myPokemons?: Pokemon[];
     }
 }
 
