@@ -25,6 +25,7 @@
                 <section id="detail-list">
                     <ol>
                         <li>    </li>
+                        <li><%= pokemon.stats[0].stat.name %></li>
                         <li><%= pokemon.stats[1].stat.name %></li>
                         <li><%= pokemon.stats[2].stat.name %></li>
                         <li><%= pokemon.stats[3].stat.name %></li>
@@ -38,7 +39,6 @@
                         <li>Capaciteiten:</li>
                         <li>    </li>
                         <li>    </li>
-                        <li>    </li>
                         <li>Gevangen op:</li>
                             
                         
@@ -46,6 +46,7 @@
 
                     <ol id="detail-values">
                         <li>    </li>
+                        <li><%= pokemon.stats[0].base_stat %></li>
                         <li><%= pokemon.stats[1].base_stat %></li>
                         <li><%= pokemon.stats[2].base_stat %></li>
                         <li><%= pokemon.stats[3].base_stat %></li>
@@ -57,7 +58,8 @@
                         <li><%= pokemon.types[0].type.name %></li>
                         <li><%= pokemon.height %> m</li>
                         <li><%= pokemon.weight %> kg</li>
-                        <li><%= pokemon.abilities %></li>
+                        <li><%= pokemon.abilities[0].ability.name%></li>
+                        <li><%= pokemon.abilities[1].ability.name%></li>
                         <li>20/3/2024</li>
                     </ol>
                 </section> 

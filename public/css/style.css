@@ -1204,9 +1204,10 @@ select{
     margin: 0 auto;
 }
 
-#pokemon > article > p{
+.pokedexnaam{
+    font-family: "Pokémon-Classic";
     margin-top: 10%;
-    margin-left: 30%;
+    margin-left: 5%;
     font-size: 20px;
 }
 
@@ -1337,7 +1338,7 @@ input{
     margin-left: 15%;
   }
 
-.Pokemons > h3{
+.vergelijkingnaam{
     margin-left: 25%;
     font-size: large ;
     margin-bottom: 1rem;

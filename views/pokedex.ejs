@@ -20,7 +20,7 @@
       <%for(let pokemon of pokemons) {%>
         <article>
           <a class="pokemon-image" href="/detail/<%= pokemon.id %>"> %> <img src="<%= pokemon.sprites.other["official-artwork"].front_default %> " alt=""></a>
-          <p><%=pokemon.name %></p>
+          <p class="pokedexnaam"><%=pokemon.name %></p>
         </article>
       <% } %>
 

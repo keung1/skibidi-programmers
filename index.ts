@@ -179,13 +179,32 @@ app.get("/detail/:id", (req, res) => {
 
 /*-------------------------- comparison -------------------------- */
 
+let pokemon1 = {} as Pokemon
+let pokemon2 = {} as Pokemon
 
 app.get("/comparison", (req, res) => {
-    res.render("pokemoncomparison");
+
+    
+
+    for(let pokemonn of pokemons){
+        if(pokemonn.name == "bulbasaur"){
+         pokemon1 = pokemonn
+        }
+    }
+
+
+    for(let pokemonn of pokemons){
+        if(pokemonn.name == "charizard"){
+         pokemon2 = pokemonn
+        }
+    }
+
+      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2 });
 });
 
 
-app.get("/comparison/filter", (req, res) => {
+
+app.get("/filterpoke", (req, res) => {
     const queryParam = req.query.pokemon1;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
     
@@ -195,9 +214,34 @@ app.get("/comparison/filter", (req, res) => {
       const filtered = pokemons.find(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
     );
-    res.render('pokemoncomparison', { pokemon: filtered, query });
+    if (filtered !== undefined){
+        pokemon1 = filtered;
+    }
+    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2});
   });
 
+
+  
+  app.get("/filterpoke2", (req, res) => {
+
+    const queryParam2 = req.query.pokemon2;
+    const query = Array.isArray(queryParam2) ? queryParam2[0] : queryParam2;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokemoncomparison');
+  }
+
+      const filtered2 = pokemons.find(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    if (filtered2 !== undefined){
+        pokemon2 = filtered2;
+    }
+
+
+    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1});
+  });
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
 
