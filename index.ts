@@ -2,14 +2,12 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { connect, getPokemons, login, registerUser } from "./database";
+import { addPokemon, connect, getPokemons, login, registerUser } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
-import { register } from "module";
 import { flashMiddleware } from "./middleware/flashMiddleware";
 import { secureMiddleware } from "./middleware/secureMiddleware";
-import { nextTick } from "process";
 
 const app = express();
 
@@ -39,13 +37,10 @@ app.post("/logout", async(req, res) => {
 app.post("/", async (req, res, next) => {
     if (req.body.username) {
         const username: string = req.body.username;
-        console.log(username);
         const password: string = req.body.password;
-        console.log(password);
         try {
             let user: User | undefined =  await login(username, password);
-            console.log(user)
-            console.log("-")
+            console.log(user);
             if (user) {
                 delete user.password;
                 req.session.user = user;
@@ -64,12 +59,11 @@ app.post("/", async (req, res, next) => {
 
 app.post("/", async (req, res) => {
     const username_signin: string = req.body.username_signin;
-    const password_signin: string = (req.body.password_signin).toString();
+    const password_signin: string = req.body.password_signin;
+    console.log(username_signin);
+    console.log(password_signin);
         try {
-            let hashedPassword: string = await bcrypt.hash(password_signin, saltRounds);
-            console.log(await bcrypt.compare(password_signin, hashedPassword));
-            console.log(hashedPassword);
-            await registerUser(username_signin, hashedPassword);
+            await registerUser(username_signin, password_signin);
             res.redirect("/");
         }
         catch {
@@ -289,6 +283,7 @@ app.post("/guesser", (req, res) => {
 
 /*-------------------------- pokecatcher -------------------------- */
 let pokemonSpawns: Pokemon[] = [];
+let catchLevel: number = 0;
 app.get("/safari",secureMiddleware , (req, res) => {
     let check: boolean = false;
     for(let i = 0; i < 4; i++) {
@@ -332,6 +327,8 @@ let spawn = {} as Pokemon | undefined;
 app.post("/safari",secureMiddleware , (req, res) => {
     let checkSpawn: string = req.body.spawn_check;
     let check: boolean = true;
+    let maxLevel: number = 10;
+    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
     spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     if (spawn != undefined) {
         res.render("pokecatcher", {
@@ -339,7 +336,50 @@ app.post("/safari",secureMiddleware , (req, res) => {
                 name: spawn.name,
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
-                succes: check
+                level: catchLevel,
+                succes: check,
+                succes2: false
+            },
+            spawn1: {
+                id: pokemonSpawns[0].id,
+                name: pokemonSpawns[0].name,
+                sprite: pokemonSpawns[0].sprites.front_default,
+                image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+            },
+            spawn2: {
+                id: pokemonSpawns[1].id,
+                name: pokemonSpawns[1].name,
+                sprite: pokemonSpawns[1].sprites.front_default,
+                image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+            },
+            spawn3: {
+                id: pokemonSpawns[2].id,
+                name: pokemonSpawns[2].name,
+                sprite: pokemonSpawns[2].sprites.front_default,
+                image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+            },
+            spawn4: {
+                id: pokemonSpawns[3].id,
+                name: pokemonSpawns[3].name,
+                sprite: pokemonSpawns[3].sprites.front_default,
+                image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+            }
+        });
+    };
+});
+let pokeballs: number = 3;
+let spawnDEF: number | undefined = 0;
+app.get("/catchMenu", (req, res) => {
+    if (spawn != undefined) {
+        res.render("pokecatcher", {
+            spawn: {
+                name: spawn.name,
+                sprite: spawn.sprites.front_default,
+                type1: spawn.types[0].type.name,
+                level: catchLevel,
+                succes: true,
+                succes2: true,
+                pokeballs: pokeballs
             },
             spawn1: {
                 id: pokemonSpawns[0].id,
@@ -369,15 +409,40 @@ app.post("/safari",secureMiddleware , (req, res) => {
     };
 });
 
-app.post("/trycatch", (req, res) => {
-
-})
+app.post("/catchMenu", async(req, res) => {
+    let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
+    let catchProbability: number = 0
+    if (spawnBaseDEF != undefined) {
+        spawnDEF = ((spawnBaseDEF * 2) * catchLevel) / 100;
+        if (req.session.user?.current_pokemon) {
+            let myBaseATT: number = req.session.user.current_pokemon.stats[1].base_stat; 
+            let myATT: number = ((myBaseATT * 2) * catchLevel) / 100;
+            catchProbability = (100 - spawnDEF + myATT)/100;
+        } else {
+            catchProbability = (100 - spawnDEF)/100
+        }
+    }
+    let randNumb: number = Math.random() 
+    if (randNumb < catchProbability) {    
+        pokeballs = 3;
+        req.session.user?.pokemon_collection?.push(spawn!);
+        console.log(req.session.user?.pokemon_collection);
+        await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
+        res.redirect("/safari");
+    }
+    else {
+        pokeballs--
+        if (pokeballs === 0) {
+            pokeballs = 3;
+            res.redirect("/safari");
+        }
+    }
+});
 
 app.listen(app.get("port"), async () => {
     await connect();
     pokemons = await getPokemons(); 
     pokemonAnswer = randomPokemon();
-    console.log(pokemonAnswer);
     console.log(`Server is running on port ${app.get("port")}`);
 });
 

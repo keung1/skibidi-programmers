@@ -25,25 +25,28 @@
         <% if (spawn.succes) { %>
             <section id = "container_pokevanger_menu">
                 <article class = "pokevanger_menu">
+                    <form action = "catchMenu" method = "get">
                     <button class = "pokeball_button">
                         <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
                     </button>
+                    </form>
                     <h3><%= spawn.name %></h3>
                     <img src="<%= spawn.sprite %>" alt = "ditto sprite" class = "pokevanger_menu_image" width="150" height="150">
                     <p>Type: <span><%= spawn.type1 %></span></p>
-                    <p>lv: <span>16</span></p>
+                    <p>lv: <span><%= spawn.level%></span></p>
                 </article>
             </section>
         <% } %>
+        <% if (spawn.succes2) { %>
         <section id = "container_pokevanger_image">
             <article class = "pokevanger_image">
                 <div id = "pokevanger_bgfield">
                     <img src="<%= spawn.sprite%>" alt = "ditto sprite" width="150" height="150">
                     <p id = "catch_text">Gevangen!</p>
                     <p id = "missed_text">Gemist!</p>
-                    <p id = "pokeballs">pokéballs: <span id = "amount_balls">3</span></p>
+                    <p id = "pokeballs">pokéballs: <span id = "amount_balls"><%= spawn.pokeballs %></span></p>
                 </div>
-                <form action = "/trycatch" method = "post">
+                <form action = "/catchMenu" method = "post">
                 <button type = "submit" id = "catch_button">
                     <img src="assets/images/iconPokeball.webp" alt = "pokeball">
                 </button>
@@ -53,6 +56,7 @@
                 </button>
             </article>
         </section>
+        <% } %>
         <section id = "container_confirmation_release">
             <form class = "confirmation_release">
                 <p>Ben je zeker dat je deze pokémon wil vrijlaten?</p>

@@ -40,9 +40,10 @@ export async function getPokemons() {
 
 export async function registerUser(name: string, password: string) {
     let pokemonCollection: Pokemon[] = [];
+    console.log(await bcrypt.hash(password, saltRounds));
     await userCollection.insertOne({
         name: name,
-        password: password,
+        password: await bcrypt.hash(password, saltRounds),
         pokemon_collection: pokemonCollection
     })
 }
@@ -61,6 +62,10 @@ export async function login(name: string, password: string) {
                 throw new Error("foute inlog gegevens");
             }
         }
+}
+
+export async function addPokemon(user: User, pokemon: Pokemon[]) {
+    await userCollection.updateOne({name: user.name}, { $set: { pokemon_collection: pokemon}} )
 }
 
 export async function connect() {
