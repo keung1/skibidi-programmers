@@ -44,7 +44,8 @@ export async function registerUser(name: string, password: string) {
     await userCollection.insertOne({
         name: name,
         password: await bcrypt.hash(password, saltRounds),
-        pokemon_collection: pokemonCollection
+        pokemon_collection: pokemonCollection,
+        current_pokemon: undefined
     })
 }
 
@@ -65,7 +66,11 @@ export async function login(name: string, password: string) {
 }
 
 export async function addPokemon(user: User, pokemon: Pokemon[]) {
-    await userCollection.updateOne({name: user.name}, { $set: { pokemon_collection: pokemon}} )
+    await userCollection.updateOne({name: user.name}, {$set: { pokemon_collection: pokemon}} )
+}
+
+export async function setCurrentPokemon(user: User, pokemon: Pokemon) {
+    await userCollection.updateOne({name: user.name}, {$set: { current_pokemon: pokemon }})
 }
 
 export async function connect() {
