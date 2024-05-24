@@ -105,46 +105,162 @@ app.get("/filter", (req, res) => {
   });
 
 
+/*-------------------------- battle -------------------------- */
+function calculateHealthPercentage(currentHp: number, maxHp: number): number {
+    return Math.round((currentHp / maxHp) * 100);
+}
 
-/*-----------------------battle-----------------------*/
-app.get("/battle", async (req, res) => {
+function updatePokemonHealth(targetPokemon: any, damage: number): number {
+    targetPokemon.hp = Math.max(0, targetPokemon.hp - damage);
+    return calculateHealthPercentage(targetPokemon.hp, targetPokemon.maxHp);
+}
+
+app.get("/battle", (req: express.Request & { session: { ownPokemon?: Pokemon & { image?: string, level?: number, attack?: number, defense?: number, hp?: number, maxHp?: number }, opponentPokemon?: Pokemon & { image?: string, level?: number, attack?: number, defense?: number, hp?: number, maxHp?: number } } }, res) => {
+    let ownPokemon = req.session.ownPokemon;
+    const resultMessage = req.query.resultMessage || '';
+
+    if (!ownPokemon) {
+        const ownRandomIndex = Math.floor(Math.random() * pokemons.length);
+        const ownRandomPokemon = pokemons[ownRandomIndex];
+        ownPokemon = {
+            ...ownRandomPokemon,
+            image: ownRandomPokemon.sprites.other["official-artwork"].front_default,
+            level: ownRandomPokemon.stats[0].base_stat,
+            attack: ownRandomPokemon.stats[1].base_stat,
+            defense: ownRandomPokemon.stats[2].base_stat,
+            hp: ownRandomPokemon.stats[0].base_stat,
+            maxHp: ownRandomPokemon.stats[0].base_stat 
+        };
+        req.session.ownPokemon = ownPokemon;
+    }
+
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+    const randomPokemon = pokemons[randomIndex];
+    const randomPokemonWithImage = {
+        ...randomPokemon,
+        image: randomPokemon.sprites.other["official-artwork"].front_default,
+        level: randomPokemon.stats[0].base_stat,
+        attack: randomPokemon.stats[1].base_stat,
+        defense: randomPokemon.stats[2].base_stat,
+        hp: randomPokemon.stats[0].base_stat,
+        maxHp: randomPokemon.stats[0].base_stat
+    };
+
+    req.session.opponentPokemon = randomPokemonWithImage;
+
+    if (ownPokemon.hp !== undefined && ownPokemon.maxHp !== undefined && randomPokemonWithImage.hp !== undefined && randomPokemonWithImage.maxHp !== undefined) {
+        const ownPokemonHealth = calculateHealthPercentage(ownPokemon.hp, ownPokemon.maxHp);
+        const randomPokemonHealth = calculateHealthPercentage(randomPokemonWithImage.hp, randomPokemonWithImage.maxHp);
+
+        res.render("battle", { ownPokemon, randomPokemon: randomPokemonWithImage, resultMessage, ownPokemonHealth, randomPokemonHealth });
+    } else {
+        res.render("battle", { ownPokemon, randomPokemon: randomPokemonWithImage, resultMessage, ownPokemonHealth: 100, randomPokemonHealth: 100 });
+    }
+});
+
+
+
+
+
+app.post("/search", async (req, res) => {
     try {
-        const allPokemons = await getPokemons();
+        const pokemonName = req.body.pokemonName.trim().toLowerCase();
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        
+        if (!response.ok) {
+            throw new Error('Pokemon not found');
+        }
 
-        const randomIndex = Math.floor(Math.random() * allPokemons.length);
-        const randomPokemon = allPokemons[randomIndex];
+        const data = await response.json();
 
-        const pokemonWithImage = {
-            ...randomPokemon,
-            image: randomPokemon.sprites.other["official-artwork"].front_default
+        const opponentPokemon = {
+            name: data.name,
+            image: data.sprites.other['official-artwork'].front_default,
+            level: data.base_experience,
+            attack: data.stats[1].base_stat,
+            defense: data.stats[2].base_stat,
+            hp: data.stats[0].base_stat,
+            maxHp: data.stats[0].base_stat
         };
 
-        res.render("battle", { randomPokemon: pokemonWithImage });
-    } catch (error) {
-        console.error('Fout bij het ophalen van Pokémon voor de battle:', error);
-        res.status(500).send('Er is een fout opgetreden bij het ophalen van Pokémon voor de battle');
-    }
-});
-
-
-app.get('/random-pokemon', async (req, res) => {
-    try {
-        const response = await fetch('https://pokeapi.co/api/v2/pokemon/');
-        const data = await response.json();
-        const randomIndex = Math.floor(Math.random() * data.results.length);
-        const randomPokemonUrl = data.results[randomIndex].url;
-
-        const pokemonResponse = await fetch(randomPokemonUrl);
-        const pokemonData = await pokemonResponse.json();
-
+        (req.session as any).opponentPokemon = opponentPokemon;
         
+        const ownRandomIndex = Math.floor(Math.random() * pokemons.length);
+        const ownRandomPokemon = pokemons[ownRandomIndex];
+        const ownRandomPokemonWithImage = {
+            ...ownRandomPokemon,
+            image: ownRandomPokemon.sprites.other['official-artwork'].front_default,
+            level: ownRandomPokemon.stats[0].base_stat,
+            attack: ownRandomPokemon.stats[1].base_stat,
+            defense: ownRandomPokemon.stats[2].base_stat,
+            hp: ownRandomPokemon.stats[0].base_stat,
+            maxHp: ownRandomPokemon.stats[0].base_stat
+        };
 
-        res.json(randomPokemon);
+        const ownPokemonHealth = calculateHealthPercentage(ownRandomPokemonWithImage.hp, ownRandomPokemonWithImage.maxHp);
+        const randomPokemonHealth = calculateHealthPercentage(opponentPokemon.hp, opponentPokemon.maxHp);
+
+
+        res.render("battle", { ownPokemon: ownRandomPokemonWithImage, randomPokemon: opponentPokemon, ownPokemonHealth, randomPokemonHealth, resultMessage: '' });
     } catch (error) {
-        console.error('Fout bij het ophalen van een willekeurige Pokémon:', error);
-        res.status(500).json({ error: 'Er is een fout opgetreden bij het ophalen van een willekeurige Pokémon' });
+        console.error("Error:", (error as Error).message);
+        res.render("battle", { ownPokemon: null, randomPokemon: null, ownPokemonHealth: 100, randomPokemonHealth: 100, resultMessage: (error as Error).message });
     }
 });
+
+
+
+
+app.post("/battle/attack", (req, res) => {
+    const ownPokemon = (req.session as any).ownPokemon;
+    let opponentPokemon = (req.session as any).opponentPokemon;
+    let battlesLeft = (req.session as any).battlesLeft || 5; 
+
+    if (!ownPokemon) {
+        return res.render("battle", { ownPokemon: null, randomPokemon: null, resultMessage: "Er ontbreekt een Pokémon om mee te vechten." });
+    }
+
+   
+
+    const ownPokemonPower = ownPokemon.attack + ownPokemon.level - opponentPokemon.defense;
+    const opponentPokemonPower = opponentPokemon.attack + opponentPokemon.level - ownPokemon.defense;
+
+    let resultMessage = '';
+    const damageToOpponent = Math.round(Math.random() * 10);
+    const damageToOwn = Math.round(Math.random() * 10);
+
+
+    if (ownPokemonPower > opponentPokemonPower) {
+        resultMessage = `${ownPokemon.name} heeft een goede aanval uitgevoerd!`;
+        updatePokemonHealth(opponentPokemon, damageToOpponent);
+    } else if (ownPokemonPower < opponentPokemonPower) {
+        resultMessage = `${opponentPokemon.name} heeft een goede aanval uitgevoerd!`;
+        updatePokemonHealth(ownPokemon, damageToOwn);
+    } else {
+        resultMessage = "Het is een gelijkspel!";
+    }
+
+    
+
+    const ownPokemonHealth = calculateHealthPercentage(ownPokemon.hp, ownPokemon.maxHp);
+    const randomPokemonHealth = calculateHealthPercentage(opponentPokemon.hp, opponentPokemon.maxHp);
+
+    battlesLeft--;
+    
+    (req.session as any).battlesLeft = battlesLeft;
+    (req.session as any).opponentPokemon = opponentPokemon;
+
+    res.render("battle", { ownPokemon, randomPokemon: opponentPokemon, resultMessage, ownPokemonHealth, randomPokemonHealth, battlesLeft });
+
+});
+
+
+
+
+
+
+
+
 
 
 

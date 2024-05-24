@@ -4,97 +4,120 @@
         <h1>Pokémon Battler</h1>
         
         <section id="search" action="/search" method="post">
-            <button id="randomButton" type="button" class="random-opponent">Random</button>
-            <input type="text" placeholder="Type Pokémon Naam">
-            <button class="submit" type="submit">Zoek</button>
+            <form id="randomForm" action="/battle" method="get">
+                <button id="randomButton" type="submit" class="random-opponent">Random</button>
+            </form>
+            <form id="searchForm" action="/search" method="post">
+                <input type="text" name="pokemonName" id="pokemonNameInput" placeholder="Type Pokémon Naam">
+                <button class="submit" type="submit">Zoek</button>
+            </form>
         </section>
         
         <div class="pokemon-container">
-            <div class="player-pokemon">
-                <div class="player-image">
-                    <h2>Jouw Pokémon</h2>
-                    <img id="playerImage" src="assets/images/pikachu.png" alt="Pikachu">
+            <% if (ownPokemon) { %>
+                <div class="player-pokemon">
+                    <div class="player-image">
+                        <h2>Jouw Pokémon</h2>
+                        <img id="playerImage" src="<%= ownPokemon.image %>" alt="<%= ownPokemon.name %>">
+                    </div>
+                    <div class="player-info">
+                        <h2>Naam: <%= ownPokemon.name %></h2>
+                        <article class="player-info-stat">
+                            <h3><%= ownPokemon.level %></h3>
+                            <p>Level</p>
+                        </article>
+                        <article class="player-info-stat">
+                            <h3><%= ownPokemon.attack %></h3>
+                            <p>Aanval</p>
+                        </article>
+                        <article class="player-info-stat">
+                            <h3><%= ownPokemon.defense %></h3>
+                            <p>Verdediging</p>
+                        </article>
+                        <article class="player-info-stat">
+                            <h3><%= ownPokemon.hp %></h3>
+                            <p>HP</p>
+                        </article>
+                        <div class="pokemon-health-bar">
+                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar own-health" style="width: <%= ownPokemonHealth %>%;"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="player-info">
-                    <h2>Naam: Pikachu</h2>
-                    <article class="player-info-stat">
-                        <h3>8</h3>
-                        <p>Level</p>
-                    </article>
-                    <article class="player-info-stat">
-                        <h3>18</h3>
-                        <p>Aanval</p>
-                    </article>
-                    <article class="player-info-stat">
-                        <h3>8</h3>
-                        <p>Verdediging</p>
-                    </article>
-                    <article class="player-info-stat">
-                        <h3><span id="playerHP">90</span></h3>
-                        <p>HP</p>
-                    </article>
-                </div>
-            </div>
+            <% } %>
             
-            <div class="opponent-pokemon">
-                <div class="opponent-image">
-                    <h2>Tegenstander Pokémon</h2>
-                    <img id="opponentImage" src="" alt="">
+            <% if (randomPokemon) { %>
+                <div class="opponent-pokemon">
+                    <div class="opponent-image">
+                        <h2>Tegenstander Pokémon</h2>
+                        <img id="opponentImage" src="<%= randomPokemon.image %>" alt="<%= randomPokemon.name %>">
+                    </div>
+                    <div class="opponent-info">
+                        <h2>Naam: <%= randomPokemon.name %></h2>
+                        <article class="opponent-info-stat">
+                            <h3><%= randomPokemon.level %></h3>
+                            <p>Level</p>
+                        </article>
+                        <article class="opponent-info-stat">
+                            <h3><%= randomPokemon.attack %></h3>
+                            <p>Aanval</p>
+                        </article>
+                        <article class="opponent-info-stat">
+                            <h3><%= randomPokemon.defense %></h3>
+                            <p>Verdediging</p>
+                        </article>
+                        <article class="opponent-info-stat">
+                            <h3><%= randomPokemon.hp %></h3>
+                            <p>HP</p>
+                        </article>
+                         <div class="pokemon-health-bar">
+                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar opponent-health" style="width: <%= randomPokemonHealth %>%;"></div>
+                        </div>
+                    </div>
+                    
                 </div>
-                <div class="opponent-info">
-                    <h2>Naam: <span id="opponentName"></span></h2>
-                    <article class="opponent-info-stat">
-                        <h3 id="opponentLevel">0</h3>
-                        <p>Level</p>
-                    </article>
-                    <article class="opponent-info-stat">
-                        <h3 id="opponentAttack">0</h3>
-                        <p>Aanval</p>
-                    </article>
-                    <article class="opponent-info-stat">
-                        <h3 id="opponentDefense">0</h3>
-                        <p>Verdediging</p>
-                    </article>
-                    <article class="opponent-info-stat">
-                        <h3 id="opponentHP">0</h3>
-                        <p>HP</p>
-                    </article>
-                </div>
-                <div id="opponentContainer">
-                    <% if (opponentHTML) { %>
-                        <%= opponentHTML %>
-                    <% } else { %>
-                        <p>Geen tegenstander beschikbaar</p>
-                    <% } %>
-                </div>
-            </div>
+            <% } %>
         </div>
+
+        <form id="attackForm" action="/battle/attack" method="post">
+            <button type="submit" class="attack-btn">
+                <img id="attack-btn" src="assets/images/Pokeball-3.png" alt="Attack">
+            </button>
+        </form>
+
+        <% if (resultMessage) { %>
+            <section id="container_battle_result">
+                <button class="close_button"><a href="/battle">X</a></button>
+                <article class="battle_result_message">
+                    <p><%= resultMessage %></p>
+                </article>
+            </section>
+        <% } %>
         
-        <a type="submit" class="attack-btn"><img id="attack-btn" src="assets/images/Pokeball-3.png"></a>
         
-        <div class="result" id="result"></div>
+        
+        
+
+        
     </div>
 </main>
-
 <%- include("partials/footer") %>
 
-<script>
-    document.getElementById('randomButton').addEventListener('click', async function() {
-        try {
-            const response = await fetch('/random-pokemon');
-            const randomPokemon = await response.json();
-            displayOpponent(randomPokemon);
-        } catch (error) {
-            console.error('Fout bij het ophalen van een willekeurige Pokémon:', error);
-        }
-    });
 
-    function displayOpponent(opponent) {
-        document.getElementById('opponentImage').src = opponent.image;
-        document.getElementById('opponentName').innerText = opponent.name;
-        document.getElementById('opponentLevel').innerText = opponent.level;
-        document.getElementById('opponentAttack').innerText = opponent.attack;
-        document.getElementById('opponentDefense').innerText = opponent.defense;
-        document.getElementById('opponentHP').innerText = opponent.hp;
-    }
+<script>
+    document.getElementById('attackForm').addEventListener('submit', function(event) {
+        event.preventDefault();  
+
+        const playerImage = document.getElementById('playerImage');
+        const opponentImage = document.getElementById('opponentImage');
+
+        playerImage.classList.add('shake-animation');
+        opponentImage.classList.add('shake-animation');
+
+        setTimeout(() => {
+            playerImage.classList.remove('shake-animation');
+            opponentImage.classList.remove('shake-animation');
+            
+            event.target.submit();
+        }, 500); 
+    });
 </script>
