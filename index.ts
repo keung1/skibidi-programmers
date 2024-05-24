@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { addPokemon, connect, getPokemons, login, registerUser } from "./database";
+import { addPokemon, connect, getPokemons, login, registerUser, setCurrentPokemon } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
@@ -214,6 +214,7 @@ app.get("/restart", (req, res) => {
 });
 
 app.get("/guesser", (req, res) => {   
+    pokemonAnswer = randomPokemon();
     let answer: boolean = false;
     res.render("pokeguesser", {
         pokemonGuess: {
@@ -385,7 +386,6 @@ app.post("/catchMenu", async(req, res) => {
     if (randNumb < catchProbability) {    
         pokeballs = 3;
         req.session.user?.pokemon_collection?.push(spawn!);
-        console.log(req.session.user?.pokemon_collection);
         await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
         res.redirect("/safari");
     }
@@ -398,14 +398,22 @@ app.post("/catchMenu", async(req, res) => {
     }
 });
 
-app.post("/currentPokemon", (req, res) => {
-    
-})
+app.post("/currentPokemon", async(req, res) => {
+    let currentPokemonId: string = req.body.currentPokemon;
+    let currentPokemon: Pokemon | undefined = req.session.user?.pokemon_collection?.find((pokemon) => {
+        return pokemon.id == currentPokemonId;
+    });
+    console.log(currentPokemon);
+    if(currentPokemon != undefined) {
+        req.session.current = currentPokemon;
+        await setCurrentPokemon(req.session.user!, currentPokemon);
+    }
+    res.redirect('back');
+});
 
 app.listen(app.get("port"), async () => {
     await connect();
     pokemons = await getPokemons(); 
-    pokemonAnswer = randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
 
