@@ -14,32 +14,32 @@
         </section>
         
         <div class="pokemon-container">
-            <% if (ownPokemon) { %>
+            <% if (currentPokemon) { %>
                 <div class="player-pokemon">
                     <div class="player-image">
                         <h2>Jouw Pokémon</h2>
-                        <img id="playerImage" src="<%= ownPokemon.image %>" alt="<%= ownPokemon.name %>">
+                        <img id="playerImage" src="<%= currentPokemon.image %>" alt="<%= currentPokemon.name %>">
                     </div>
                     <div class="player-info">
-                        <h2>Naam: <%= ownPokemon.name %></h2>
+                        <h2>Naam: <%= currentPokemon.name %></h2>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.level %></h3>
+                            <h3><%= currentPokemon.level %></h3>
                             <p>Level</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.attack %></h3>
+                            <h3><%= currentPokemon.attack %></h3>
                             <p>Aanval</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.defense %></h3>
+                            <h3><%= currentPokemon.defense %></h3>
                             <p>Verdediging</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.hp %></h3>
+                            <h3><%= currentPokemon.hp %></h3>
                             <p>HP</p>
                         </article>
                         <div class="pokemon-health-bar">
-                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar own-health" style="width: <%= ownPokemonHealth %>%;"></div>
+                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar own-health" style="width: <%= currentPokemonHealth %>%;"></div>
                         </div>
                     </div>
                 </div>
@@ -78,11 +78,13 @@
             <% } %>
         </div>
 
-        <form id="attackForm" action="/battle/attack" method="post">
-            <button type="submit" class="attack-btn">
-                <img id="attack-btn" src="assets/images/Pokeball-3.png" alt="Attack">
-            </button>
-        </form>
+        <% if (currentPokemon.hp > 0 && randomPokemon.hp > 0) { %>
+            <form id="attackForm" action="/battle/attack" method="post">
+                <button type="submit" class="attack-btn">
+                    <img id="attack-btn" src="assets/images/Pokeball-3.png" alt="Attack">
+                </button>
+            </form>
+        <% } %>
 
         <% if (resultMessage) { %>
             <section id="container_battle_result">
