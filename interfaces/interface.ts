@@ -13,6 +13,7 @@ export interface Pokemon{
     capture: string;
     Evolutions: Evolution;
     sprites: Sprite;
+    level?: number;
 }
 
 export interface species{
