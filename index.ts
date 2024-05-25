@@ -386,8 +386,8 @@ app.get("/safari",secureMiddleware , (req, res) => {
 
 let spawn = {} as Pokemon | undefined;
 
-app.post("/spawnMenu",secureMiddleware , async(req, res) => {
-    let checkSpawn: string = req.body.spawn_check;
+app.get("/safari/:id",secureMiddleware , async(req, res) => {
+    let checkSpawn: string = req.params.id;
     let maxLevel: number = 10;
     catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
     spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
@@ -439,9 +439,9 @@ app.post("/confirmationRelease", async(req, res) => {
         await removePokemon(req.session.user!, spawn!);
     }
     else if (no) {
-        res.redirect("/safari");
+        res.redirect("back");
     }
-    res.redirect("/safari");
+    res.redirect(`/safari/${spawn?.id}`);
 })
 
 let pokeballs: number = 3;

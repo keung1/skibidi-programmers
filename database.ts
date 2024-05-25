@@ -82,7 +82,7 @@ export async function checkPokemons(user: User, pokemon: Pokemon) {
 }
 
 export async function removePokemon(user: User, pokemon: Pokemon) {
-    await userCollection.updateOne({name: user.name}, { $pull: {"pokemon_collection.name": pokemon.name}});
+   console.log(await userCollection.aggregate([{$match: {name: user.name}}, {$indexOfArray: {"pokemon_collection.name": pokemon.name}}]));
 }
 
 export async function connect() {

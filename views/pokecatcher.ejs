@@ -4,19 +4,19 @@
         <h2>Gotta Catch 'Em All</h2>
         <section id = "pokevanger_bgcontainer">
             <div id = "pokevanger_bg">
-                <form action = "/spawnMenu" method = "post">
+                <form action = "/safari/<%= spawn1.id%>" method = "get">
                     <input type = "text" name = "spawn_check" value = "<%= spawn1.id %>">
                     <button type = "submit" id = "spawn_one"><img src="<%= spawn1.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
                 </form>
-                <form action = "/spawnMenu" method = "post">
+                <form action = "/safari/<%= spawn2.id%>" method = "get">
                     <input type = "text" name = "spawn_check" value = "<%= spawn2.id %>">
                     <button type = "submit" id = "spawn_two"><img src="<%= spawn2.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
                 </form>
-                <form action = "/spawnMenu" method = "post">
+                <form action = "/safari/<%= spawn3.id%>" method = "get">
                     <input type = "text" name = "spawn_check" value = "<%= spawn3.id %>">
                     <button type = "submit" id = "spawn_three"><img src="<%= spawn3.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
                 </form>
-                <form action = "/spawnMenu" method = "post">
+                <form action = "/safari/<%= spawn4.id%>" method = "get">
                     <input type = "text" name = "spawn_check" value = "<%= spawn4.id %>">
                     <button type = "submit" id = "spawn_four"><img src="<%= spawn4.sprite%>" alt = "ditto sprite" class = "pokemon_catch"></button>
                 </form>
@@ -25,16 +25,16 @@
         <% if (spawn.succes) { %>
             <section id = "container_pokevanger_menu">
                 <article class = "pokevanger_menu">
-                    <form action = "catchMenu" method = "get">
+                    <form action = "/catchMenu" method = "get">
                     <% if (!spawn.caught) { %>
                     <button class = "pokeball_button_red">
-                        <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
+                        <img src="<%= spawn.id %>/assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
                     </button>
                     <% } %>
                     </form>
                     <% if (spawn.caught) { %>
                         <button class = "pokeball_button_green">
-                            <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
+                            <img src="<%= spawn.id %>/assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
                         </button>
                     <% } %>
                     <h3><%= spawn.name %></h3>
@@ -65,11 +65,11 @@
         </section>
         <% } %>
         <section id = "container_confirmation_release">
-            <form action = "/confirmationRelease" method = "post" class = "confirmation_release">
+            <div class = "confirmation_release">
                 <p>Ben je zeker dat je deze pokémon wil vrijlaten?</p>
-                <input type = "submit" name = "yes" value = "Yes">
-                <input type = "submit" name = "no" value = "No">
-            </form>
+                <button id = "yes">ja</button>
+                <button id = "no">nee</button>
+            </div>
         </section>
     </main>
 
