@@ -73,6 +73,18 @@ export async function setCurrentPokemon(user: User, pokemon: Pokemon) {
     await userCollection.updateOne({name: user.name}, {$set: { current_pokemon: pokemon }})
 }
 
+export async function checkPokemons(user: User, pokemon: Pokemon) {
+    if (await userCollection.findOne({name: user.name, "pokemon_collection.name": pokemon.name})) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export async function removePokemon(user: User, pokemon: Pokemon) {
+    await userCollection.deleteOne({name: user.name, "pokemon_collection.name": pokemon.name});
+}
+
 export async function connect() {
     try {
         await client.connect();

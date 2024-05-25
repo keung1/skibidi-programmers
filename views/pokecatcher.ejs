@@ -26,10 +26,17 @@
             <section id = "container_pokevanger_menu">
                 <article class = "pokevanger_menu">
                     <form action = "catchMenu" method = "get">
-                    <button class = "pokeball_button">
+                    <% if (!spawn.caught) { %>
+                    <button class = "pokeball_button_red">
                         <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
                     </button>
+                    <% } %>
                     </form>
+                    <% if (spawn.caught) { %>
+                        <button class = "pokeball_button_green">
+                            <img src="assets/images/iconPokeball.webp" alt = "pokeball" width="40" height="40">
+                        </button>
+                    <% } %>
                     <h3><%= spawn.name %></h3>
                     <img src="<%= spawn.sprite %>" alt = "ditto sprite" class = "pokevanger_menu_image" width="150" height="150">
                     <p>Type: <span><%= spawn.type1 %></span></p>
@@ -58,10 +65,10 @@
         </section>
         <% } %>
         <section id = "container_confirmation_release">
-            <form class = "confirmation_release">
+            <form action = "/confirmationRelease" method = "post" class = "confirmation_release">
                 <p>Ben je zeker dat je deze pokémon wil vrijlaten?</p>
-                <input type = "button" value = "Yes">
-                <input type = "button" value = "No">
+                <input type = "button" name = "yes" value = "Yes">
+                <input type = "button" name = "no" value = "No">
             </form>
         </section>
     </main>

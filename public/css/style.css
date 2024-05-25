@@ -1705,11 +1705,20 @@ ol > li{
     border-radius: 1rem;
 }
 
-.pokeball_button {
+.pokeball_button_red {
     position: relative;
     left: 6rem;
     height: 40px;
     background-color: red;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.pokeball_button_green {
+    position: relative;
+    left: 6rem;
+    height: 40px;
+    background-color: green;
     border-radius: 50%;
     z-index: 2;
 }

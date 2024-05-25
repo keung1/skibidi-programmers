@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { addPokemon, connect, getPokemons, login, registerUser, setCurrentPokemon } from "./database";
+import { addPokemon, checkPokemons, connect, getPokemons, login, registerUser, removePokemon, setCurrentPokemon } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
@@ -347,6 +347,7 @@ let pokemonSpawns: Pokemon[] = [];
 let catchLevel: number = 0;
 app.get("/safari",secureMiddleware , (req, res) => {
     let check: boolean = false;
+    //pokemonSpawns = [];
     for(let i = 0; i < 4; i++) {
         let spawn: Pokemon = randomPokemon();
         pokemonSpawns.push(spawn);
@@ -385,12 +386,12 @@ app.get("/safari",secureMiddleware , (req, res) => {
 
 let spawn = {} as Pokemon | undefined;
 
-app.post("/safari",secureMiddleware , (req, res) => {
+app.post("/safari",secureMiddleware , async(req, res) => {
     let checkSpawn: string = req.body.spawn_check;
-    let check: boolean = true;
     let maxLevel: number = 10;
     catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
     spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
+    let caught: boolean = await checkPokemons(req.session.user!, spawn!)
     if (spawn != undefined) {
         spawn!.level = catchLevel;
         res.render("pokecatcher", {
@@ -399,8 +400,9 @@ app.post("/safari",secureMiddleware , (req, res) => {
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
                 level: catchLevel,
-                succes: check,
-                succes2: false
+                succes: true,
+                succes2: false,
+                caught: caught
             },
             spawn1: {
                 id: pokemonSpawns[0].id,
@@ -429,6 +431,18 @@ app.post("/safari",secureMiddleware , (req, res) => {
         });
     };
 });
+
+app.post("/confirmationRelease", async(req, res) => {
+    let yes: string = req.body.yes;
+    let no: string = req.body.no;
+    if (yes) {
+        await removePokemon(req.session.user!, spawn!)
+    }
+    else if (no) {
+        res.redirect("/safari")
+    }
+})
+
 let pokeballs: number = 3;
 let spawnDEF: number | undefined = 0;
 app.get("/catchMenu", (req, res) => {
@@ -439,7 +453,7 @@ app.get("/catchMenu", (req, res) => {
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
                 level: catchLevel,
-                succes: true,
+                succes: false,
                 succes2: true,
                 pokeballs: pokeballs
             },
