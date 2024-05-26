@@ -41,6 +41,11 @@
                     <img src="<%= spawn.sprite %>" alt = "ditto sprite" class = "pokevanger_menu_image" width="150" height="150">
                     <p>Type: <span><%= spawn.type1 %></span></p>
                     <p>lv: <span><%= spawn.level%></span></p>
+                    <form action = "/run" method = "post"> 
+                        <button type = "submit" id = "run_button">
+                            <img src = "<%= spawn.id %>/assets/images/pokemonRunButton.webp" alt = "run">
+                        </button>
+                        </form>
                 </article>
             </section>
         <% } %>
@@ -58,17 +63,19 @@
                     <img src="assets/images/iconPokeball.webp" alt = "pokeball">
                 </button>
                 </form>
-                <button id = "run_button">
+                <form action = "/run" method = "post"> 
+                <button type = "submit" id = "run_button">
                     <img src = "assets/images/pokemonRunButton.webp" alt = "run">
                 </button>
+                </form>
             </article>
         </section>
         <% } %>
         <section id = "container_confirmation_release">
-            <form class = "confirmation_release" action = "confirmationRelease" method = "post">
+            <form class = "confirmation_release" action = "/confirmationRelease" method = "post">
                 <p>Ben je zeker dat je deze pokémon wil vrijlaten?</p>
-                <input id = "yes" name = "yes" value = "ja">
-                <button id = "no">nee</button>
+                <input type = "submit" id = "yes" name = "yes" value = "ja">
+                <input type = "submit" id = "yes" name = "no" value = "nee">
             </form>
         </section>
     </main>

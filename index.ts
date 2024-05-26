@@ -328,9 +328,9 @@ app.get("/guesser", async(req, res) => {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer,
-            myPokemons: user?.pokemon_collection
-        }
+            succes: answer
+        },
+        myPokemons: user?.pokemon_collection
     });
 });
 
@@ -345,9 +345,9 @@ app.post("/guesser", async(req, res) => {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer,
-            myPokemons: user?.pokemon_collection
-        }
+            succes: answer
+        },
+        myPokemons: user?.pokemon_collection
     });
 });
 
@@ -449,11 +449,14 @@ app.get("/safari/:id",secureMiddleware , async(req, res) => {
 
 app.post("/confirmationRelease", async(req, res) => {
     let yes: string = req.body.yes;
+    let no: string = req.body.no;
     if (yes) {
         await removePokemon(req.session.user!, spawn!);
+        res.redirect(`/safari/${spawn?.id}`);
+    } else {
+        res.redirect(`/safari/${spawn?.id}`);
     }
-    res.redirect(`/safari/:${spawn?.id}`);
-})
+});
 
 let pokeballs: number = 3;
 let spawnDEF: number | undefined = 0;
@@ -500,6 +503,7 @@ app.get("/catchMenu", async(req, res) => {
 });
 
 app.post("/catchMenu", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
     let catchProbability: number = 0
     if (spawnBaseDEF != undefined) {
@@ -515,8 +519,8 @@ app.post("/catchMenu", async(req, res) => {
     let randNumb: number = Math.random() 
     if (randNumb < catchProbability) {    
         pokeballs = 3;
-        req.session.user?.pokemon_collection?.push(spawn!);
-        await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
+        user?.pokemon_collection?.push(spawn!);
+        await addPokemon(req.session.user!, user?.pokemon_collection!);
         res.redirect("/safari");
     }
     else {
@@ -527,6 +531,10 @@ app.post("/catchMenu", async(req, res) => {
         }
     }
 });
+
+app.post("/run", (req, res) => {
+    res.redirect("/safari");
+})
 
 app.post("/currentPokemon", async(req, res) => {
     let currentPokemonId: string = req.body.currentPokemon;
