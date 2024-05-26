@@ -69,8 +69,8 @@ export async function addPokemon(user: User, pokemon: Pokemon[]) {
     await userCollection.updateOne({name: user.name}, {$set: { pokemon_collection: pokemon}} )
 }
 
-export async function setCurrentPokemon(user: User, pokemon: Pokemon) {
-    await userCollection.updateOne({name: user.name}, {$set: { current_pokemon: pokemon }})
+export async function getUser(user: User) {
+    return await userCollection.findOne({name: user.name});
 }
 
 export async function checkPokemons(user: User, pokemon: Pokemon) {
@@ -82,7 +82,13 @@ export async function checkPokemons(user: User, pokemon: Pokemon) {
 }
 
 export async function removePokemon(user: User, pokemon: Pokemon) {
-   console.log(await userCollection.aggregate([{$match: {name: user.name}}, {$indexOfArray: {"pokemon_collection.name": pokemon.name}}]));
+    let currentUser: User | null = await userCollection.findOne({name: user.name});
+    let currentPokemons: Pokemon[] | undefined = currentUser?.pokemon_collection;
+    let removeIndex: number | undefined = currentPokemons?.findIndex((pokemons)=> {
+        return pokemons.name == pokemon.name;
+    });
+    currentPokemons?.splice(removeIndex!, 1);
+    await userCollection.updateOne({name: user.name}, {$set: {pokemon_collection: currentPokemons}})
 }
 
 export async function connect() {

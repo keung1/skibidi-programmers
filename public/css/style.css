@@ -1773,7 +1773,7 @@ ol > li{
     margin-bottom: 1rem;
 }
 
-.confirmation_release button{
+.confirmation_release button, .confirmation_release input{
     width: 60px;
     border-radius: 10px;
     margin: 3px;
