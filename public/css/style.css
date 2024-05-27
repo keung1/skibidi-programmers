@@ -137,19 +137,15 @@ ul li a img {
 
 .presentPoke img{
     width: 70px;
-    max-height: 70px;
-    background-color: var(--tertiary-color);
-    border-radius: 60px;
-    border: 3px solid var(--bg-color);
-    margin-left: 70px;
-    margin-bottom: -15px;
+    margin: 5px 0 -7px 0;
 }
 
 .presentPoke p{
-    font-weight: bold;
-    color: var(--bg-color);
-    margin-bottom: 10px;
-    margin-top: 0;
+    margin: 9px 0px -7px 0px;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    padding-left: 5px;
 }
 
 .noPresentPoke{
@@ -160,10 +156,11 @@ ul li a img {
     border-radius: 60px;
     border: 3px solid var(--bg-color);
     padding: 1px;
-    padding-left: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-bottom: 5px;
     padding-top: 0;
-    margin-top: 100px;
+    margin-top: 10px;
     text-decoration: none;
 }
 
@@ -1811,20 +1808,20 @@ ol > li{
     background-repeat: no-repeat;
     background-position: 50% 65%;
     border: 2px solid #000000;
+    position: relative;
 }
 
 #pokevanger_bgfield img {
-    position: relative;
+    position: absolute;
     left: 1.5rem;
     top: 0.5rem;
 }
 
 #catch_text {
-    left: 3.5rem;
-    bottom: 9rem;
+    left: 30.9%;
+    bottom: 97%;
     font-size: 10px;
-    position: relative;
-    display: none;
+    position: absolute;
     font-family: "Pokémon-Classic"; 
     width: 0;
     height: 0;
@@ -1832,11 +1829,10 @@ ol > li{
 }
 
 #missed_text {
-    left: 4rem;
-    bottom: 9rem;
+    left: 430.9%;
+    bottom: 97%;
     font-size: 10px;
-    position: relative;
-    display: none;
+    position: absolute;
     font-family: "Pokémon-Classic"; 
     width: 0;
     height: 0;
@@ -1844,14 +1840,11 @@ ol > li{
 }
 
 #pokeballs {
-    left: 0.1rem;
-    bottom: -1.5rem;
+    left: 4%;
+    bottom: 4%;
     font-size: 10px;
-    position: relative;
-    display: block;
+    position: absolute;
     font-family: "Pokémon-Classic"; 
-    width: 0;
-    height: 0;
     white-space: nowrap;
 }
 

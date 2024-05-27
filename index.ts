@@ -9,6 +9,7 @@ import session from "./session";
 import { flashMiddleware } from "./middleware/flashMiddleware";
 import { secureMiddleware } from "./middleware/secureMiddleware";
 import { currentPokemonMiddleware } from "./middleware/currentPokemonMiddleware";
+import { promisify } from "util";
 
 const app = express();
 
@@ -17,8 +18,9 @@ app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(session);
-app.use(flashMiddleware);
 app.use(currentPokemonMiddleware);
+app.use(flashMiddleware);
+
 
 
 let pokemons: Pokemon[] = [];
@@ -452,7 +454,13 @@ app.post("/confirmationRelease", async(req, res) => {
     let no: string = req.body.no;
     if (yes) {
         await removePokemon(req.session.user!, spawn!);
-        res.redirect(`/safari/${spawn?.id}`);
+        if (res.locals.current.name == spawn!.name) {
+            req.session.current = undefined;
+        }
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect(`/safari/${spawn?.id}`);
+        });
     } else {
         res.redirect(`/safari/${spawn?.id}`);
     }
@@ -460,6 +468,7 @@ app.post("/confirmationRelease", async(req, res) => {
 
 let pokeballs: number = 3;
 let spawnDEF: number | undefined = 0;
+let succes: string = "none";
 app.get("/catchMenu", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     if (spawn != undefined) {
@@ -497,7 +506,8 @@ app.get("/catchMenu", async(req, res) => {
                 sprite: pokemonSpawns[3].sprites.front_default,
                 image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
             },
-            myPokemons: user?.pokemon_collection
+            myPokemons: user?.pokemon_collection,
+            succes: succes
         });
     };
 });
@@ -505,7 +515,7 @@ app.get("/catchMenu", async(req, res) => {
 app.post("/catchMenu", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
-    let catchProbability: number = 0
+    let catchProbability: number = 0;
     if (spawnBaseDEF != undefined) {
         spawnDEF = ((spawnBaseDEF * 2) * catchLevel) / 100;
         if (req.session.user?.current_pokemon) {
@@ -518,34 +528,51 @@ app.post("/catchMenu", async(req, res) => {
     }
     let randNumb: number = Math.random() 
     if (randNumb < catchProbability) {    
-        pokeballs = 3;
+        pokeballs--;
         user?.pokemon_collection?.push(spawn!);
         await addPokemon(req.session.user!, user?.pokemon_collection!);
-        res.redirect("/safari");
+        succes = "succes";
+        res.redirect("/catchMenu");
     }
     else {
-        pokeballs--
+        pokeballs--;
         if (pokeballs === 0) {
-            pokeballs = 3;
-            res.redirect("/safari");
+            succes = "missed";
+            res.redirect("/catchMenu");
         }
     }
 });
 
 app.post("/run", (req, res) => {
+    succes = "none"
+    pokeballs = 3;
     res.redirect("/safari");
 })
 
 app.post("/currentPokemon", async(req, res) => {
     let currentPokemonId: string = req.body.currentPokemon;
-    let user: User | null = await getUser(req.session.user!);
-    let currentPokemon: Pokemon | undefined = user!.pokemon_collection?.find((pokemon) => {
-        return pokemon.id == currentPokemonId;
-    });
-    if(currentPokemon != undefined) {
-        req.session.current = currentPokemon;
+    if (currentPokemonId == "none") {
+        req.session.current = undefined;
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect("back");
+        });
+    } else {
+        let user: User | null = await getUser(req.session.user!);
+        let currentPokemon: Pokemon | undefined = user!.pokemon_collection?.find((pokemon) => {
+            return pokemon.id == currentPokemonId;
+        });
+        if(currentPokemon != undefined) {
+            req.session.current = currentPokemon;
+            
+            console.log("-" + currentPokemon.name)
+            console.log("=" + req.session.current.name)
+        }
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect("back");
+        });
     }
-    res.redirect('back');
 });
 
 app.listen(app.get("port"), async () => {

@@ -53,15 +53,26 @@
         <section id = "container_pokevanger_image">
             <article class = "pokevanger_image">
                 <div id = "pokevanger_bgfield">
-                    <img src="<%= spawn.sprite%>" alt = "ditto sprite" width="150" height="150">
-                    <p id = "catch_text">Gevangen!</p>
-                    <p id = "missed_text">Gemist!</p>
+                    <% if(succes == "none") { %>
+                        <img src="<%= spawn.sprite%>" alt = "pokemon sprite" width="150" height="150">
+                    <% } %>
+                    <% if(succes == "succes") { %>
+                        <p id = "catch_text">Gevangen!</p>
+                    <% } %>
+                    <% if(succes == "missed") { %>
+                        <p id = "missed_text"><%= spawn.name %> escaped!</p>
+                    <% } %>
                     <p id = "pokeballs">pokéballs: <span id = "amount_balls"><%= spawn.pokeballs %></span></p>
                 </div>
                 <form action = "/catchMenu" method = "post">
-                <button type = "submit" id = "catch_button">
-                    <img src="assets/images/iconPokeball.webp" alt = "pokeball">
-                </button>
+                <% if(succes == "none") { %>
+                    <button type = "submit" id = "catch_button">
+                <% } %>
+                <% if(succes != "none") { %>
+                    <button type = "button" id = "catch_button">
+                <% } %>
+                        <img src="assets/images/iconPokeball.webp" alt = "pokeball">
+                    </button>
                 </form>
                 <form action = "/run" method = "post"> 
                 <button type = "submit" id = "run_button">
