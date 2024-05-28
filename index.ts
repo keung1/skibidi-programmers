@@ -41,7 +41,7 @@ app.post("/", async (req, res, next) => {
         const username: string = req.body.username;
         const password: string = req.body.password;
         try {
-            let user: User | undefined =  await login(username, password);
+            let user: User | undefined =  await login(username, password);  
             console.log(user);
             if (user) {
                 delete user.password;
