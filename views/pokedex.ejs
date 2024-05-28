@@ -1,6 +1,6 @@
 <%- include("partials/header") %>
 
-<main id="pokedex">
+<main name="dex" id="pokedex">
 
     <h1>Pokédex</h1>
 
@@ -16,6 +16,7 @@
 
     <section id="pokemon">
       
+          <button onclick="topFunction()" href="#pokemon" id="myBtn" title="Go to top" >top</button>
       
       <%for(let pokemon of pokemons) {%>
         <article>
