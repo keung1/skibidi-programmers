@@ -27,6 +27,7 @@ let pokemons: Pokemon[] = [];
 const saltRounds: number = 10;
 
 app.get("/", secureMiddleware, async(req, res) => {
+    
     res.render("index", {
         loggedIn: true
     });
@@ -101,6 +102,8 @@ app.get("/pokedex", async(req, res) => {
 });
 
 app.get("/filter", async(req, res) => {
+
+    
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
     let user: User | null = await getUser(req.session.user!);
@@ -226,7 +229,9 @@ app.post("/battle/attack", (req, res) => {
 /*--------detail------ */
 
 
-app.get("/detail/:id", (req, res) => {
+app.get("/detail/:id", async(req, res) => {
+    
+    let user: User | null = await getUser(req.session.user!);
     const id  = req.params.id;
     let pokemon ;
     for(let pokemonn of pokemons){
@@ -235,7 +240,7 @@ app.get("/detail/:id", (req, res) => {
         }
     }
 
-    res.render('detailed', {  pokemon  });   
+    res.render('detailed', {  pokemon , myPokemons: user?.pokemon_collection });   
   });
 
 /*-------------------------- comparison -------------------------- */
@@ -243,9 +248,10 @@ app.get("/detail/:id", (req, res) => {
 let pokemon1 = {} as Pokemon
 let pokemon2 = {} as Pokemon
 
-app.get("/comparison", (req, res) => {
+app.get("/comparison", async(req, res) => {
 
     
+    let user: User | null = await getUser(req.session.user!);
 
     for(let pokemonn of pokemons){
         if(pokemonn.name == "bulbasaur"){
@@ -276,14 +282,16 @@ app.get("/comparison", (req, res) => {
         }
     }
 
-      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2, classname : classname, clas : clas });
+      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2, classname : classname, clas : clas, myPokemons: user?.pokemon_collection });
 });
 
 let classname: string;
 
 let clas : string;
 
-app.get("/filterpoke", (req, res) => {
+app.get("/filterpoke", async(req, res) => {
+    
+    let user: User | null = await getUser(req.session.user!);
     const queryParam = req.query.pokemon1;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
     
@@ -311,11 +319,14 @@ app.get("/filterpoke", (req, res) => {
         }
         
     }
-    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2, classname: classname, clas : clas});
+    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2, classname: classname, clas : clas,
+        myPokemons: user?.pokemon_collection});
   });
 
   
-  app.get("/filterpoke2", (req, res) => {
+  app.get("/filterpoke2", async(req, res) => {
+
+    let user: User | null = await getUser(req.session.user!);
 
     const queryParam2 = req.query.pokemon2;
     const query = Array.isArray(queryParam2) ? queryParam2[0] : queryParam2;
@@ -349,7 +360,8 @@ app.get("/filterpoke", (req, res) => {
         
     }
 
-    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1, clas : clas, classname : classname});
+    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1, clas : clas, classname : classname, 
+        myPokemons: user?.pokemon_collection});
   });
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
