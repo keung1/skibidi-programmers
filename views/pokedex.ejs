@@ -11,8 +11,7 @@
 
     <form role="search" action=" /filter" method="GET"  id="zoek-pokemon">
       <input type="text" placeholder="Search.." name="query">
-      
-  <button type="submit">Search</button>
+      <button type="submit">Search</button>
     </form>
 
     <section id="pokemon">
@@ -22,7 +21,7 @@
       <%for(let pokemon of pokemons) {%>
         <article>
           <a class="pokemon-image" href="/detail/<%= pokemon.id %>"> %> <img src="<%= pokemon.sprites.other["official-artwork"].front_default %> " alt=""></a>
-          <p><%=pokemon.name %></p>
+          <p class="pokedexnaam"><%=pokemon.name %></p>
         </article>
       <% } %>
 

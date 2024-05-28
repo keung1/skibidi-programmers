@@ -9,60 +9,67 @@
       <section  id="vergelijking">
 
             <article class="Pokemons"> 
-                <form>
-                    <input type="text" placeholder="Search.." name="search">
+                <form  role="search" action="/filterpoke" method="GET" id="pokemon1">
+                    <input type="text" placeholder="Search.." name="pokemon1">
+                    <button type="submit"> zoek</button>
                 </form>
-                <img src="/assets/images/001.png" alt="">
-                <h3>Bulbasaur</h3>
+                <img src="<%= pokemon1.sprites.other["official-artwork"].front_default %>" alt="">
+                <h3 class="vergelijkingnaam"><%= pokemon1.name %></h3>
                 
                 
                 <section class="list">
                     <ol>
                         <li>Type: </li>
-                        <li>HP</li>
-                        <li>Attack</li>
-                        <li>Special Attack</li>
-                        <li>Special Defense</li>
-                        <li>Speed</li>
+                        <li><%= pokemon1.stats[0].stat.name %></li>
+                        <li><%= pokemon1.stats[1].stat.name %></li>
+                        <li><%= pokemon1.stats[2].stat.name %></li>
+                        <li><%= pokemon1.stats[3].stat.name %></li>
+                        <li><%= pokemon1.stats[4].stat.name %></li>
+                        <li><%= pokemon1.stats[5].stat.name %></li>
                     </ol>
 
                     <ol class="values">
-                        <li>Grass/Poison</li>
-                        <li class="more">40 / +10</li>
-                        <li class="less">20 / -20</li>
-                        <li class="more">40 / +10</li>
-                        <li class="less">30 / -10</li>
-                        <li class="even">30 </li>
-                        <li class="even">40</li>
+                        <li><%= pokemon1.types[0].type.name %></li>
+                          
+                            <li class="less"><%= pokemon1.stats[0].base_stat %></li>
+                        <li><%= pokemon1.stats[1].base_stat %></li>
+                        <li><%= pokemon1.stats[2].base_stat %></li>
+                        <li><%= pokemon1.stats[3].base_stat %></li>
+                        <li><%= pokemon1.stats[4].base_stat %></li>
+                        <li>    </li>
+                        <li><%= pokemon1.stats[5].base_stat %></li>
                     </ol>
                 </section>     
             </article>
 
             <article class="Pokemons">
-                <form>
-                    <input type="text" placeholder="Search.." name="search">
-                </form>
-                <img src="/assets/images/004.png" alt="">
-                <h3>Charmander</h3>
+                <form  role="search" action="/filterpoke2" method="GET" id="pokemon2">
+                    <input type="text" placeholder="Search.." name="pokemon2">
+                    <button type="submit"> zoek</button>
+                <img src="<%= pokemon2.sprites.other["official-artwork"].front_default  %>" alt="">
+                <h3 class="vergelijkingnaam"><%=  pokemon2.name %></h3>
 
                 <section class="list">
                     <ol>
                         <li>Type: </li>
-                        <li>HP</li>
-                        <li>Attack</li>
-                        <li>Special Attack</li>
-                        <li>Special Defense</li>
-                        <li>Speed</li>
+
+                        <li><%= pokemon2.stats[0].stat.name %></li>
+                        <li><%= pokemon2.stats[1].stat.name %></li>
+                        <li><%= pokemon2.stats[2].stat.name %></li>
+                        <li><%= pokemon2.stats[3].stat.name %></li>
+                        <li><%= pokemon2.stats[4].stat.name %></li>
+                        <li><%= pokemon2.stats[5].stat.name %></li>
                     </ol>
 
                     <ol class="values">
-                        <li>Fire</li>
-                        <li class="less">30 / -10</li>
-                        <li class="more">40 / +20</li>
-                        <li class="less">30 / -10</li>
-                        <li class="more">40 / +10</li>
-                        <li class="even">30</li>
-                        <li class="even">40</li>
+                        <li><%= pokemon2.types[0].type.name %>></li>
+                        <li><%= pokemon2.stats[0].base_stat %></li>
+                        <li><%= pokemon2.stats[1].base_stat %></li>
+                        <li><%= pokemon2.stats[2].base_stat %></li>
+                        <li><%= pokemon2.stats[3].base_stat %></li>
+                        <li><%= pokemon2.stats[4].base_stat %></li>
+                        <li>    </li>
+                        <li><%= pokemon2.stats[5].base_stat %></li>
                     </ol>
                 </section>            
             </article>

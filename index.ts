@@ -1,8 +1,14 @@
 import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
-import { connect, getPokemons } from "./database";
+import {User} from "./interfaces/interface";
+import { addPokemon, connect, getPokemons, login, registerUser, setCurrentPokemon } from "./database";
 import dotenv from "dotenv";
+import bcrypt from "bcrypt";
+import session from "./session";
+import { flashMiddleware } from "./middleware/flashMiddleware";
+import { secureMiddleware } from "./middleware/secureMiddleware";
+import { currentPokemonMiddleware } from "./middleware/currentPokemonMiddleware";
 
 const app = express();
 
@@ -10,18 +16,73 @@ app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(session);
+app.use(flashMiddleware);
+app.use(currentPokemonMiddleware);
 
 
 let pokemons: Pokemon[] = [];
+const saltRounds: number = 10;
 
+app.get("/", secureMiddleware, async(req, res) => {
+    res.render("index", {
+        loggedIn: true
+    });
+})
 
-app.get("/", (req, res) => {
-    res.render("index");
+app.post("/logout", async(req, res) => {
+    req.session.destroy(() =>{
+        res.redirect("/");
+    });
+})
+
+app.post("/", async (req, res, next) => {
+    if (req.body.username) {
+        const username: string = req.body.username;
+        const password: string = req.body.password;
+        try {
+            let user: User | undefined =  await login(username, password);  
+            console.log(user);
+            if (user) {
+                delete user.password;
+                req.session.user = user;
+                req.session.message = {type: "succes", message: `Welkom ${user.name}`};
+                res.redirect("/");
+            }
+        } catch (e: any) {
+            req.session.message = {type: "error", message: `Login mislukt`};
+            res.redirect("/");
+        }
+    }
+    else {
+        next();
+    }
 });
+
+app.post("/", async (req, res) => {
+    const username_signin: string = req.body.username_signin;
+    const password_signin: string = req.body.password_signin;
+    console.log(username_signin);
+    console.log(password_signin);
+        try {
+            await registerUser(username_signin, password_signin);
+            res.redirect("/");
+        }
+        catch {
+            res.redirect("/");
+        }
+});
+
 
 app.get("/forgot", (req, res) => {
     res.render("forgot");
 });
+
+/*--------home-----------*/
+app.get("/home", secureMiddleware, async(req, res) => {
+    res.render("home", {user: req.session.user});
+});
+
 
 /*--------pokedex-------*/ 
 
@@ -44,35 +105,167 @@ app.get("/filter", (req, res) => {
   });
 
 
-
-/*-----------------------battle-----------------------*/
-app.get("/battle", (req, res) => {
-    const randomIndex = Math.floor(Math.random() * pokemons.length);
-    const randomPokemon = pokemons[randomIndex];
-    
-    const pokemonWithImage = {
-        ...randomPokemon,
-        image: randomPokemon.sprites.other["official-artwork"].front_default
-    };
-
-    res.render("battle", { randomPokemon: pokemonWithImage });
-});
-
-/*async function addImageToPokemon(pokemon: Pokemon): Promise<Pokemon> {
-    try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
-        const pokemonData = await response.json();
-        const officialArtworkUrl = pokemonData.sprites.other["official-artwork"].front_default;
-        return { ...pokemon, image: officialArtworkUrl };
-    } catch (error) {
-        console.error('Error fetching Pokémon data:', error);
-        return pokemon;
-    }
+/*-------------------------- battle -------------------------- */
+function calculateHealthPercentage(currentHp: number, maxHp: number): number {
+    return Math.round((currentHp / maxHp) * 100);
 }
 
-addImageToPokemon();
+function updatePokemonHealth(targetPokemon: any, damage: number): number {
+    targetPokemon.hp = Math.max(0, targetPokemon.hp - damage);
+    return calculateHealthPercentage(targetPokemon.hp, targetPokemon.maxHp);
+}
 
-*/
+app.get("/battle", (req: express.Request & { session: { ownPokemon?: Pokemon & { image?: string, level?: number, attack?: number, defense?: number, hp?: number, maxHp?: number }, opponentPokemon?: Pokemon & { image?: string, level?: number, attack?: number, defense?: number, hp?: number, maxHp?: number } } }, res) => {
+    let ownPokemon = req.session.ownPokemon;
+    const resultMessage = req.query.resultMessage || '';
+
+    if (!ownPokemon) {
+        const ownRandomIndex = Math.floor(Math.random() * pokemons.length);
+        const ownRandomPokemon = pokemons[ownRandomIndex];
+        ownPokemon = {
+            ...ownRandomPokemon,
+            image: ownRandomPokemon.sprites.other["official-artwork"].front_default,
+            level: ownRandomPokemon.stats[0].base_stat,
+            attack: ownRandomPokemon.stats[1].base_stat,
+            defense: ownRandomPokemon.stats[2].base_stat,
+            hp: ownRandomPokemon.stats[0].base_stat,
+            maxHp: ownRandomPokemon.stats[0].base_stat 
+        };
+        req.session.ownPokemon = ownPokemon;
+    }
+
+    const randomIndex = Math.floor(Math.random() * pokemons.length);
+    const randomPokemon = pokemons[randomIndex];
+    const randomPokemonWithImage = {
+        ...randomPokemon,
+        image: randomPokemon.sprites.other["official-artwork"].front_default,
+        level: randomPokemon.stats[0].base_stat,
+        attack: randomPokemon.stats[1].base_stat,
+        defense: randomPokemon.stats[2].base_stat,
+        hp: randomPokemon.stats[0].base_stat,
+        maxHp: randomPokemon.stats[0].base_stat
+    };
+
+    req.session.opponentPokemon = randomPokemonWithImage;
+
+    if (ownPokemon.hp !== undefined && ownPokemon.maxHp !== undefined && randomPokemonWithImage.hp !== undefined && randomPokemonWithImage.maxHp !== undefined) {
+        const ownPokemonHealth = calculateHealthPercentage(ownPokemon.hp, ownPokemon.maxHp);
+        const randomPokemonHealth = calculateHealthPercentage(randomPokemonWithImage.hp, randomPokemonWithImage.maxHp);
+
+        res.render("battle", { ownPokemon, randomPokemon: randomPokemonWithImage, resultMessage, ownPokemonHealth, randomPokemonHealth });
+    } else {
+        res.render("battle", { ownPokemon, randomPokemon: randomPokemonWithImage, resultMessage, ownPokemonHealth: 100, randomPokemonHealth: 100 });
+    }
+});
+
+
+
+
+
+app.post("/search", async (req, res) => {
+    try {
+        const pokemonName = req.body.pokemonName.trim().toLowerCase();
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        
+        if (!response.ok) {
+            throw new Error('Pokemon not found');
+        }
+
+        const data = await response.json();
+
+        const opponentPokemon = {
+            name: data.name,
+            image: data.sprites.other['official-artwork'].front_default,
+            level: data.base_experience,
+            attack: data.stats[1].base_stat,
+            defense: data.stats[2].base_stat,
+            hp: data.stats[0].base_stat,
+            maxHp: data.stats[0].base_stat
+        };
+
+        (req.session as any).opponentPokemon = opponentPokemon;
+        
+        const ownRandomIndex = Math.floor(Math.random() * pokemons.length);
+        const ownRandomPokemon = pokemons[ownRandomIndex];
+        const ownRandomPokemonWithImage = {
+            ...ownRandomPokemon,
+            image: ownRandomPokemon.sprites.other['official-artwork'].front_default,
+            level: ownRandomPokemon.stats[0].base_stat,
+            attack: ownRandomPokemon.stats[1].base_stat,
+            defense: ownRandomPokemon.stats[2].base_stat,
+            hp: ownRandomPokemon.stats[0].base_stat,
+            maxHp: ownRandomPokemon.stats[0].base_stat
+        };
+
+        const ownPokemonHealth = calculateHealthPercentage(ownRandomPokemonWithImage.hp, ownRandomPokemonWithImage.maxHp);
+        const randomPokemonHealth = calculateHealthPercentage(opponentPokemon.hp, opponentPokemon.maxHp);
+
+
+        res.render("battle", { ownPokemon: ownRandomPokemonWithImage, randomPokemon: opponentPokemon, ownPokemonHealth, randomPokemonHealth, resultMessage: '' });
+    } catch (error) {
+        console.error("Error:", (error as Error).message);
+        res.render("battle", { ownPokemon: null, randomPokemon: null, ownPokemonHealth: 100, randomPokemonHealth: 100, resultMessage: (error as Error).message });
+    }
+});
+
+
+
+
+app.post("/battle/attack", (req, res) => {
+    const ownPokemon = (req.session as any).ownPokemon;
+    let opponentPokemon = (req.session as any).opponentPokemon;
+    let battlesLeft = (req.session as any).battlesLeft || 5; 
+
+    if (!ownPokemon) {
+        return res.render("battle", { ownPokemon: null, randomPokemon: null, resultMessage: "Er ontbreekt een Pokémon om mee te vechten." });
+    }
+
+   
+
+    const ownPokemonPower = ownPokemon.attack + ownPokemon.level - opponentPokemon.defense;
+    const opponentPokemonPower = opponentPokemon.attack + opponentPokemon.level - ownPokemon.defense;
+
+    let resultMessage = '';
+    const damageToOpponent = Math.round(Math.random() * 10);
+    const damageToOwn = Math.round(Math.random() * 10);
+
+
+    if (ownPokemonPower > opponentPokemonPower) {
+        resultMessage = `${ownPokemon.name} heeft een goede aanval uitgevoerd!`;
+        updatePokemonHealth(opponentPokemon, damageToOpponent);
+    } else if (ownPokemonPower < opponentPokemonPower) {
+        resultMessage = `${opponentPokemon.name} heeft een goede aanval uitgevoerd!`;
+        updatePokemonHealth(ownPokemon, damageToOwn);
+    } else {
+        resultMessage = "Het is een gelijkspel!";
+    }
+
+    
+
+    const ownPokemonHealth = calculateHealthPercentage(ownPokemon.hp, ownPokemon.maxHp);
+    const randomPokemonHealth = calculateHealthPercentage(opponentPokemon.hp, opponentPokemon.maxHp);
+
+    battlesLeft--;
+    
+    (req.session as any).battlesLeft = battlesLeft;
+    (req.session as any).opponentPokemon = opponentPokemon;
+
+    res.render("battle", { ownPokemon, randomPokemon: opponentPokemon, resultMessage, ownPokemonHealth, randomPokemonHealth, battlesLeft });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get("/home", (req, res) => {
     res.render("home");
 });
@@ -96,12 +289,71 @@ app.get("/detail/:id", (req, res) => {
     res.render('detailed', {  pokemon  });   
   });
 
+/*-------------------------- comparison -------------------------- */
 
+let pokemon1 = {} as Pokemon
+let pokemon2 = {} as Pokemon
 
 app.get("/comparison", (req, res) => {
-    res.render("pokemoncomparison");
+
+    
+
+    for(let pokemonn of pokemons){
+        if(pokemonn.name == "bulbasaur"){
+         pokemon1 = pokemonn
+        }
+    }
+
+
+    for(let pokemonn of pokemons){
+        if(pokemonn.name == "charizard"){
+         pokemon2 = pokemonn
+        }
+    }
+
+      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2 });
 });
 
+
+
+app.get("/filterpoke", (req, res) => {
+    const queryParam = req.query.pokemon1;
+    const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokemoncomparison');
+  }
+      const filtered = pokemons.find(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    if (filtered !== undefined){
+        pokemon1 = filtered;
+    }
+    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2});
+  });
+
+
+  
+  app.get("/filterpoke2", (req, res) => {
+
+    const queryParam2 = req.query.pokemon2;
+    const query = Array.isArray(queryParam2) ? queryParam2[0] : queryParam2;
+    
+    if (typeof query !== 'string') {
+      return res.redirect('/pokemoncomparison');
+  }
+
+      const filtered2 = pokemons.find(pokemon =>
+        pokemon.name.toLowerCase().includes(query.toLowerCase())
+    );
+    
+    if (filtered2 !== undefined){
+        pokemon2 = filtered2;
+    }
+
+
+    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1});
+  });
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
 
@@ -122,6 +374,7 @@ app.get("/restart", (req, res) => {
 });
 
 app.get("/guesser", (req, res) => {   
+    pokemonAnswer = randomPokemon();
     let answer: boolean = false;
     res.render("pokeguesser", {
         pokemonGuess: {
@@ -149,7 +402,8 @@ app.post("/guesser", (req, res) => {
 
 /*-------------------------- pokecatcher -------------------------- */
 let pokemonSpawns: Pokemon[] = [];
-app.get("/safari", (req, res) => {
+let catchLevel: number = 0;
+app.get("/safari",secureMiddleware , (req, res) => {
     let check: boolean = false;
     for(let i = 0; i < 4; i++) {
         let spawn: Pokemon = randomPokemon();
@@ -187,25 +441,24 @@ app.get("/safari", (req, res) => {
 
 });
 
-app.post("/safari", (req, res) => {
+let spawn = {} as Pokemon | undefined;
+
+app.post("/safari",secureMiddleware , (req, res) => {
     let checkSpawn: string = req.body.spawn_check;
     let check: boolean = true;
-    // let spawn = {} as Pokemon;
-    let spawn: Pokemon | undefined = pokemons.find(pokemon => pokemon.id == checkSpawn); 
-    /*
-    for(let i: number = 0; i < 151; i++) {
-        if (pokemons[i].id == checkSpawn) {
-            spawn = pokemons[i];
-        }
-    }
-    */
+    let maxLevel: number = 10;
+    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
+    spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     if (spawn != undefined) {
+        spawn!.level = catchLevel;
         res.render("pokecatcher", {
             spawn: {
                 name: spawn.name,
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
-                succes: check
+                level: catchLevel,
+                succes: check,
+                succes2: false
             },
             spawn1: {
                 id: pokemonSpawns[0].id,
@@ -231,24 +484,98 @@ app.post("/safari", (req, res) => {
                 sprite: pokemonSpawns[3].sprites.front_default,
                 image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
             }
-        })
+        });
+    };
+});
+let pokeballs: number = 3;
+let spawnDEF: number | undefined = 0;
+app.get("/catchMenu", (req, res) => {
+    if (spawn != undefined) {
+        res.render("pokecatcher", {
+            spawn: {
+                name: spawn.name,
+                sprite: spawn.sprites.front_default,
+                type1: spawn.types[0].type.name,
+                level: catchLevel,
+                succes: true,
+                succes2: true,
+                pokeballs: pokeballs
+            },
+            spawn1: {
+                id: pokemonSpawns[0].id,
+                name: pokemonSpawns[0].name,
+                sprite: pokemonSpawns[0].sprites.front_default,
+                image: pokemonSpawns[0].sprites.other["official-artwork"].front_default,
+            },
+            spawn2: {
+                id: pokemonSpawns[1].id,
+                name: pokemonSpawns[1].name,
+                sprite: pokemonSpawns[1].sprites.front_default,
+                image: pokemonSpawns[1].sprites.other["official-artwork"].front_default,
+            },
+            spawn3: {
+                id: pokemonSpawns[2].id,
+                name: pokemonSpawns[2].name,
+                sprite: pokemonSpawns[2].sprites.front_default,
+                image: pokemonSpawns[2].sprites.other["official-artwork"].front_default,
+            },
+            spawn4: {
+                id: pokemonSpawns[3].id,
+                name: pokemonSpawns[3].name,
+                sprite: pokemonSpawns[3].sprites.front_default,
+                image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
+            }
+        });
+    };
+});
+
+app.post("/catchMenu", async(req, res) => {
+    let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
+    let catchProbability: number = 0
+    if (spawnBaseDEF != undefined) {
+        spawnDEF = ((spawnBaseDEF * 2) * catchLevel) / 100;
+        if (req.session.user?.current_pokemon) {
+            let myBaseATT: number = req.session.user.current_pokemon.stats[1].base_stat; 
+            let myATT: number = ((myBaseATT * 2) * catchLevel) / 100;
+            catchProbability = (100 - spawnDEF + myATT)/100;
+        } else {
+            catchProbability = (100 - spawnDEF)/100
+        }
     }
-})
+    let randNumb: number = Math.random() 
+    if (randNumb < catchProbability) {    
+        pokeballs = 3;
+        req.session.user?.pokemon_collection?.push(spawn!);
+        await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
+        res.redirect("/safari");
+    }
+    else {
+        pokeballs--
+        if (pokeballs === 0) {
+            pokeballs = 3;
+            res.redirect("/safari");
+        }
+    }
+});
+
+app.post("/currentPokemon", async(req, res) => {
+    let currentPokemonId: string = req.body.currentPokemon;
+    let currentPokemon: Pokemon | undefined = req.session.user?.pokemon_collection?.find((pokemon) => {
+        return pokemon.id == currentPokemonId;
+    });
+    console.log(currentPokemon);
+    if(currentPokemon != undefined) {
+        req.session.current = currentPokemon;
+        await setCurrentPokemon(req.session.user!, currentPokemon);
+    }
+    res.redirect('back');
+});
 
 app.listen(app.get("port"), async () => {
-/*
-    for(let i = 1; i <= 151; i++) {
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${i}`);
-        let pokemon: Pokemon = await response.json();
-        pokemons.push(pokemon);
-    }
-*/
     await connect();
     pokemons = await getPokemons(); 
-    pokemonAnswer = randomPokemon();
     console.log(`Server is running on port ${app.get("port")}`);
 });
 
 
 
-/*----------------------------battle------------------------*/

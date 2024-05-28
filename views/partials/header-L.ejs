@@ -19,7 +19,16 @@
             <button class = "account_dropdown_button"><i class="fa-regular fa-user"></i></button>
             <ul id = "account_buttons">
                 <li><button id = "signin_button">Registratie</button></li>
-                <li><button id = "login_button">Login</button></li>
+                <% if(!loggedIn) { %>
+                    <li><button id = "login_button">Login</button></li>
+                <% } %>
+                <% if(loggedIn) { %>
+                    <li>
+                    <form action = "/logout" method = "post">
+                        <button type = "submit">Logout</button>
+                    </form>
+                    </li>
+                <% } %>
             </ul>     
         </div>
     </header>
