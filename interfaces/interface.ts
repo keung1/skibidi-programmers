@@ -94,6 +94,6 @@ export interface User {
 }
 
 export interface FlashMessage {
-    type: "error" | 'succes',
+    type: "error" | 'succes' | 'noCurrent',
     message: string
 }

@@ -36,7 +36,7 @@
 
       <section class="presentPoke">
             <% if(!current) { %>
-            <button class="noPresentPoke">?</button>
+            <button class="noPresentPoke"><p>?</p></button>
             <% } %>
             <% if(current) { %>
                 <button class="noPresentPoke"><img src = "<%= current.sprites.front_default %>" alt = "current pokemon"></button>
@@ -57,6 +57,10 @@
   </nav>
 <section id = "current_pokemon_menu_container">
     <div id = "current_pokemon_menu">
+        <form action = "/currentPokemon" method = "post">
+            <input type = "text" name = "currentPokemon" value = "none">
+            <button>none</button>
+        </form>
         <% for(let myPokemon of myPokemons) { %>
         <form action = "/currentPokemon" method = "post">
             <input type = "text" name = "currentPokemon" value = "<%= myPokemon.id %>">

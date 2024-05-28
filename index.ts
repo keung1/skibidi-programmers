@@ -2,13 +2,14 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { addPokemon, connect, getPokemons, login, registerUser, setCurrentPokemon } from "./database";
+import { addPokemon, checkPokemons, connect, enhancePokemon, getPokemons, getUser, login, registerUser, removePokemon } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
 import { flashMiddleware } from "./middleware/flashMiddleware";
 import { secureMiddleware } from "./middleware/secureMiddleware";
 import { currentPokemonMiddleware } from "./middleware/currentPokemonMiddleware";
+import { promisify } from "util";
 
 const app = express();
 
@@ -17,8 +18,9 @@ app.set("port", process.env.PORT || 3000);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(session);
-app.use(flashMiddleware);
 app.use(currentPokemonMiddleware);
+app.use(flashMiddleware);
+
 
 
 let pokemons: Pokemon[] = [];
@@ -80,7 +82,11 @@ app.get("/forgot", (req, res) => {
 
 /*--------home-----------*/
 app.get("/home", secureMiddleware, async(req, res) => {
-    res.render("home", {user: req.session.user});
+    let user: User | null = await getUser(req.session.user!);
+    res.render("home", {
+        user: req.session.user,
+        myPokemons: user?.pokemon_collection
+    });
 });
 
 
@@ -88,20 +94,27 @@ app.get("/home", secureMiddleware, async(req, res) => {
 
 
 app.get("/pokedex", async(req, res) => {
-    res.render('pokedex', { pokemons });
+    let user: User | null = await getUser(req.session.user!);
+    res.render('pokedex', { pokemons,
+        myPokemons: user?.pokemon_collection
+     });
 });
 
-app.get("/filter", (req, res) => {
+app.get("/filter", async(req, res) => {
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
-    
+    let user: User | null = await getUser(req.session.user!);
     if (typeof query !== 'string') {
       return res.redirect('/pokedex');
   }
       const filtered = pokemons.filter(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
     );
-    res.render('pokedex', { pokemons: filtered, query });
+    res.render('pokedex', { 
+        pokemons: filtered,
+        myPokemons: user?.pokemon_collection,
+        query 
+    });
   });
 
 
@@ -208,13 +221,7 @@ app.post("/battle/attack", (req, res) => {
 
 
 
-app.get("/home", (req, res) => {
-    res.render("home");
-});
 
-app.get("/myteam", (req,res) => {
-    res.render("myteam");
-});
 
 /*--------detail------ */
 
@@ -315,29 +322,51 @@ app.get("/restart", (req, res) => {
     res.redirect("/guesser");
 });
 
-app.get("/guesser", (req, res) => {   
+app.get("/guesser", async(req, res) => {   
+    let user: User | null = await getUser(req.session.user!);
     pokemonAnswer = randomPokemon();
-    let answer: boolean = false;
+    let oldCurrentPokemon = req.session.current;
     res.render("pokeguesser", {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer
-        }
+            succes: false
+        },
+        myPokemons: user?.pokemon_collection,
+        oldCurrent: oldCurrentPokemon
     });
 });
 
-app.post("/guesser", (req, res) => {
+app.post("/guesser", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     let guess: string = req.body.guess;
     let answer: boolean = false;
+    let oldCurrentPokemon = {} as Pokemon | undefined;
     if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
-        answer = true;
+        let currentPokemon: Pokemon | undefined = req.session.current;
+        if(currentPokemon) {
+            if (Math.random() < 0.5) {
+                currentPokemon!.stats[1].base_stat + 1;
+            }
+            else {
+                currentPokemon!.stats[2].base_stat + 1
+            }
+            await enhancePokemon(user!, currentPokemon!);
+            req.session.current = currentPokemon;
+            answer = true;
+        }
+        else {
+            answer = false;
+            req.session.message = {type: "noCurrent", message: `je hebt juist geraden maar nog geen huidige pokemon gekozen`};
+            console.log(req.session.message);
+        }
+        
     }
-    res.render("pokeguesser", {
-        pokemonGuess: {
-            name: pokemonAnswer.name,
-            image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer
+    req.session.save(function(err) {
+        if(err) { 
+            res.status(500);
+        }
+        else { res.redirect("/guesser");
         }
     });
 });
@@ -345,8 +374,10 @@ app.post("/guesser", (req, res) => {
 /*-------------------------- pokecatcher -------------------------- */
 let pokemonSpawns: Pokemon[] = [];
 let catchLevel: number = 0;
-app.get("/safari",secureMiddleware , (req, res) => {
+app.get("/safari",secureMiddleware , async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     let check: boolean = false;
+    //pokemonSpawns = [];
     for(let i = 0; i < 4; i++) {
         let spawn: Pokemon = randomPokemon();
         pokemonSpawns.push(spawn);
@@ -378,19 +409,23 @@ app.get("/safari",secureMiddleware , (req, res) => {
         },
         spawn: {
             succes: check
-        }
+        },
+        myPokemons: user?.pokemon_collection
     });
 
 });
 
 let spawn = {} as Pokemon | undefined;
 
-app.post("/safari",secureMiddleware , (req, res) => {
-    let checkSpawn: string = req.body.spawn_check;
-    let check: boolean = true;
+app.get("/safari/:id",secureMiddleware , async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
+    if (req.params.id) {
+        let checkSpawn: string = req.params.id;
+        spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
+    }
     let maxLevel: number = 10;
-    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);
-    spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
+    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);   
+    let caught: boolean = await checkPokemons(req.session.user!, spawn!)
     if (spawn != undefined) {
         spawn!.level = catchLevel;
         res.render("pokecatcher", {
@@ -399,8 +434,9 @@ app.post("/safari",secureMiddleware , (req, res) => {
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
                 level: catchLevel,
-                succes: check,
-                succes2: false
+                succes: true,
+                succes2: false,
+                caught: caught
             },
             spawn1: {
                 id: pokemonSpawns[0].id,
@@ -425,13 +461,34 @@ app.post("/safari",secureMiddleware , (req, res) => {
                 name: pokemonSpawns[3].name,
                 sprite: pokemonSpawns[3].sprites.front_default,
                 image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
-            }
+            },
+            myPokemons: user?.pokemon_collection
         });
     };
 });
+
+app.post("/confirmationRelease", async(req, res) => {
+    let yes: string = req.body.yes;
+    let no: string = req.body.no;
+    if (yes) {
+        await removePokemon(req.session.user!, spawn!);
+        if (res.locals.current.name == spawn!.name) {
+            req.session.current = undefined;
+        }
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect(`/safari/${spawn?.id}`);
+        });
+    } else {
+        res.redirect(`/safari/${spawn?.id}`);
+    }
+});
+
 let pokeballs: number = 3;
 let spawnDEF: number | undefined = 0;
-app.get("/catchMenu", (req, res) => {
+let succes: string = "none";
+app.get("/catchMenu", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     if (spawn != undefined) {
         res.render("pokecatcher", {
             spawn: {
@@ -439,7 +496,7 @@ app.get("/catchMenu", (req, res) => {
                 sprite: spawn.sprites.front_default,
                 type1: spawn.types[0].type.name,
                 level: catchLevel,
-                succes: true,
+                succes: false,
                 succes2: true,
                 pokeballs: pokeballs
             },
@@ -466,14 +523,17 @@ app.get("/catchMenu", (req, res) => {
                 name: pokemonSpawns[3].name,
                 sprite: pokemonSpawns[3].sprites.front_default,
                 image: pokemonSpawns[3].sprites.other["official-artwork"].front_default,
-            }
+            },
+            myPokemons: user?.pokemon_collection,
+            succes: succes
         });
     };
 });
 
 app.post("/catchMenu", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     let spawnBaseDEF: number | undefined = spawn?.stats[3].base_stat;
-    let catchProbability: number = 0
+    let catchProbability: number = 0;
     if (spawnBaseDEF != undefined) {
         spawnDEF = ((spawnBaseDEF * 2) * catchLevel) / 100;
         if (req.session.user?.current_pokemon) {
@@ -486,31 +546,51 @@ app.post("/catchMenu", async(req, res) => {
     }
     let randNumb: number = Math.random() 
     if (randNumb < catchProbability) {    
-        pokeballs = 3;
-        req.session.user?.pokemon_collection?.push(spawn!);
-        await addPokemon(req.session.user!, req.session.user?.pokemon_collection!)
-        res.redirect("/safari");
+        pokeballs--;
+        user?.pokemon_collection?.push(spawn!);
+        await addPokemon(req.session.user!, user?.pokemon_collection!);
+        succes = "succes";
+        res.redirect("/catchMenu");
     }
     else {
-        pokeballs--
+        pokeballs--;
         if (pokeballs === 0) {
-            pokeballs = 3;
-            res.redirect("/safari");
+            succes = "missed";
+            res.redirect("/catchMenu");
         }
     }
 });
 
+app.post("/run", (req, res) => {
+    succes = "none"
+    pokeballs = 3;
+    res.redirect("/safari");
+})
+
 app.post("/currentPokemon", async(req, res) => {
     let currentPokemonId: string = req.body.currentPokemon;
-    let currentPokemon: Pokemon | undefined = req.session.user?.pokemon_collection?.find((pokemon) => {
-        return pokemon.id == currentPokemonId;
-    });
-    console.log(currentPokemon);
-    if(currentPokemon != undefined) {
-        req.session.current = currentPokemon;
-        await setCurrentPokemon(req.session.user!, currentPokemon);
+    if (currentPokemonId == "none") {
+        req.session.current = undefined;
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect("back");
+        });
+    } else {
+        let user: User | null = await getUser(req.session.user!);
+        let currentPokemon: Pokemon | undefined = user!.pokemon_collection?.find((pokemon) => {
+            return pokemon.id == currentPokemonId;
+        });
+        if(currentPokemon != undefined) {
+            req.session.current = currentPokemon;
+            
+            console.log("-" + currentPokemon.name)
+            console.log("=" + req.session.current.name)
+        }
+        req.session.save(function(err) {
+            if(err) res.status(500);
+            else res.redirect("back");
+        });
     }
-    res.redirect('back');
 });
 
 app.listen(app.get("port"), async () => {
