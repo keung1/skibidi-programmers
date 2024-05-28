@@ -311,10 +311,28 @@ app.get("/comparison", (req, res) => {
         }
     }
 
-      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2 });
+    
+    for(let i = 0; i < 6; i++){
+        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
+            classname = "more";
+            clas = "less";
+        }
+        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
+            classname = "less";
+            clas = "more";
+        }
+        else{
+            classname = "even"
+            clas = "even"
+        }
+    }
+
+      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2, classname : classname, clas : clas });
 });
 
+let classname: string;
 
+let clas : string;
 
 app.get("/filterpoke", (req, res) => {
     const queryParam = req.query.pokemon1;
@@ -329,9 +347,23 @@ app.get("/filterpoke", (req, res) => {
     if (filtered !== undefined){
         pokemon1 = filtered;
     }
-    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2});
+    for(let i = 0; i < 6; i++){
+        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
+            classname = "more";
+            clas = "less";
+        }
+        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
+            classname = "less";
+            clas = "more";
+        }
+        else{
+            classname = "even"
+            clas = "even"
+        }
+        
+    }
+    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2, classname: classname, clas : clas});
   });
-
 
   
   app.get("/filterpoke2", (req, res) => {
@@ -352,7 +384,23 @@ app.get("/filterpoke", (req, res) => {
     }
 
 
-    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1});
+    for(let i = 0; i < 6; i++){
+        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
+            classname = "more";
+            clas = "less";
+        }
+        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
+            classname = "less";
+            clas = "more";
+        }
+        else{
+            classname = "even"
+            clas = "even"
+        }
+        
+    }
+
+    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1, clas : clas, classname : classname});
   });
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
