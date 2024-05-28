@@ -91,6 +91,16 @@ export async function removePokemon(user: User, pokemon: Pokemon) {
     await userCollection.updateOne({name: user.name}, {$set: {pokemon_collection: currentPokemons}})
 }
 
+export async function enhancePokemon(user: User, pokemon: Pokemon) {
+    let currentUser: User | null = await userCollection.findOne({name: user.name});
+    let currentPokemons: Pokemon[] | undefined = currentUser?.pokemon_collection;
+    let currentIndex: number | undefined = currentPokemons?.findIndex((pokemons)=> {
+        return pokemons.name == pokemon.name;
+    });
+    currentPokemons![currentIndex!] = pokemon;
+    await userCollection.updateOne({name: user.name}, {$set: {pokemon_collection: currentPokemons}})
+}
+
 export async function connect() {
     try {
         await client.connect();

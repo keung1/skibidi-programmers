@@ -1187,9 +1187,15 @@ h1 {
     align-items: center;
     padding: 20px;
     border-radius: 1rem;
-    background-color: #3a3a3a;
-    color: white;
+    background-color: #ccc;
+    color: #202020;
     font-family: "Roboto-Regular";
+    box-shadow: 
+    -4px 0 0 -2px,
+    -8px 0 0 -4px,
+    4px 0 0 -2px,
+    8px 0 0 -4px;
+
 }
 
 @media screen and (max-width: 900px) {

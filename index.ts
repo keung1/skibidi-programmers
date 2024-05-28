@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { addPokemon, checkPokemons, connect, getPokemons, getUser, login, registerUser, removePokemon } from "./database";
+import { addPokemon, checkPokemons, connect, enhancePokemon, getPokemons, getUser, login, registerUser, removePokemon } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
@@ -325,14 +325,15 @@ app.get("/restart", (req, res) => {
 app.get("/guesser", async(req, res) => {   
     let user: User | null = await getUser(req.session.user!);
     pokemonAnswer = randomPokemon();
-    let answer: boolean = false;
+    let oldCurrentPokemon = req.session.current;
     res.render("pokeguesser", {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer
+            succes: false
         },
-        myPokemons: user?.pokemon_collection
+        myPokemons: user?.pokemon_collection,
+        oldCurrent: oldCurrentPokemon
     });
 });
 
@@ -340,16 +341,33 @@ app.post("/guesser", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     let guess: string = req.body.guess;
     let answer: boolean = false;
+    let oldCurrentPokemon = {} as Pokemon | undefined;
     if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
-        answer = true;
+        let currentPokemon: Pokemon | undefined = req.session.current;
+        if(currentPokemon) {
+            if (Math.random() < 0.5) {
+                currentPokemon!.stats[1].base_stat + 1;
+            }
+            else {
+                currentPokemon!.stats[2].base_stat + 1
+            }
+            await enhancePokemon(user!, currentPokemon!);
+            req.session.current = currentPokemon;
+            answer = true;
+        }
+        else {
+            answer = false;
+            req.session.message = {type: "noCurrent", message: `je hebt juist geraden maar nog geen huidige pokemon gekozen`};
+            console.log(req.session.message);
+        }
+        
     }
-    res.render("pokeguesser", {
-        pokemonGuess: {
-            name: pokemonAnswer.name,
-            image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: answer
-        },
-        myPokemons: user?.pokemon_collection
+    req.session.save(function(err) {
+        if(err) { 
+            res.status(500);
+        }
+        else { res.redirect("/guesser");
+        }
     });
 });
 
