@@ -377,8 +377,14 @@ function randomPokemon() {
     return randomPokemon;
 };
 
+let raiseAtt: boolean = false;
+let raiseDef: boolean = false;
+let answer: boolean = false;
 app.get("/restart", (req, res) => {
     pokemonAnswer = randomPokemon();
+    raiseAtt = false;
+    raiseDef = false;
+    answer = false;
     res.redirect("/guesser");
 });
 
@@ -390,26 +396,29 @@ app.get("/guesser", async(req, res) => {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: false
+            succes: answer
         },
         myPokemons: user?.pokemon_collection,
-        oldCurrent: oldCurrentPokemon
+        oldCurrent: oldCurrentPokemon,
+        attack: raiseAtt,
+        defense: raiseDef
     });
 });
 
 app.post("/guesser", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     let guess: string = req.body.guess;
-    let answer: boolean = false;
     let oldCurrentPokemon = {} as Pokemon | undefined;
     if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
         let currentPokemon: Pokemon | undefined = req.session.current;
         if(currentPokemon) {
             if (Math.random() < 0.5) {
                 currentPokemon!.stats[1].base_stat + 1;
+                raiseAtt = true;
             }
             else {
                 currentPokemon!.stats[2].base_stat + 1
+                raiseDef = true;
             }
             await enhancePokemon(user!, currentPokemon!);
             req.session.current = currentPokemon;
