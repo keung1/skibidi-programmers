@@ -235,6 +235,11 @@ app.post("/battle/attack", async(req, res) => {
 
 /*--------detail------ */
 
+let evolutionChain: any[] = [];
+
+let evo1 : Pokemon;
+let evo2: Pokemon;
+let evo3 : Pokemon;
 
 app.get("/detail/:id", async(req, res) => {
     
@@ -244,11 +249,45 @@ app.get("/detail/:id", async(req, res) => {
     for(let pokemonn of pokemons){
         if(pokemonn.id == id){
             pokemon = pokemonn
+
+
+            const speciesResponse = await fetch(pokemon.species.url);
+    const speciesData = await speciesResponse.json();
+
+    // Fetch evolution chain data
+    const evolutionResponse = await fetch(speciesData.evolution_chain.url);
+    const evolutionData = await evolutionResponse.json();
+
+    // Extract evolution chain
+    
+    let current = evolutionData.chain;
+    while (current) {
+      evolutionChain.push(current.species.name);
+      current = current.evolves_to[0];
+    }
         }
     }
 
-    res.render('detailed', {  pokemon , myPokemons: user?.pokemon_collection });   
-  });
+    console.log(evolutionChain)
+
+    for(let pokemon of pokemons){
+
+    if(evolutionChain[0] == pokemon.name ){
+        evo1 = pokemon;
+    }
+    if( evolutionChain[1] == pokemon.name ){
+        evo2 = pokemon
+    }
+    if( evolutionChain[2] == pokemon.name ){
+        evo3 = pokemon
+    }
+
+       
+
+    }
+    res.render('detailed', {  pokemon , myPokemons: user?.pokemon_collection, evolution : evolutionChain, evo1 : evo1, evo2 : evo2, evo3 : evo3});   
+    evolutionChain = [];  
+});
 
 /*-------------------------- comparison -------------------------- */
 
