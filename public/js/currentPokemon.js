@@ -7,3 +7,9 @@ for (let i = 0; i < button.length; i++) {
         container.style.display = "flex";
     });
 }
+
+window.onclick = function(event) {
+    if (event.target == container) {
+        container.style.display = "none";
+    }
+};

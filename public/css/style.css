@@ -150,7 +150,6 @@ ul li a img {
 
 .noPresentPoke{
     font-size: xx-large;
-    margin-left: 80px;
     color: #ffffff;
     background-color: var(--tertiary-color);
     border-radius: 60px;
@@ -183,6 +182,75 @@ ul li a img {
 
 .nav_menu_content a:hover {
     background-color: #e87373;
+}
+
+#current_pokemon_menu_container {
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    min-width: 100vw;
+    min-height: 100%;
+    position: fixed;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+}
+
+#current_pokemon_menu {
+    height: 400px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: white;
+    color: #202020;
+    font-family:"Pokémon-Classic";
+    border: 6.5px solid black;
+    border-radius: 1rem;
+    overflow-x: hidden;
+}
+
+#current_pokemon_menu h2 {
+    background-color: #FF0000;
+    margin-right: -10px;
+    color: white;
+    padding-bottom: 10px;
+    text-align: center;
+    border-bottom: 2px solid black ;
+    
+}
+
+#current_pokemon_menu input {
+    display: none;
+}
+
+#current_pokemon_menu button {
+    margin-left: 10px;
+}
+
+#current_pokemon_menu form:hover {
+    width: 101%;
+    background-color: #ccc;
+}
+
+#current_pokemon_menu::-webkit-scrollbar {
+    width: auto;
+}
+
+#current_pokemon_menu::-webkit-scrollbar-track {
+    border: 2px solid black;
+    border-radius: 1rem;
+}   
+#current_pokemon_menu::-webkit-scrollbar-thumb {
+    width: 20px;
+    border-radius: 1rem;
+    background-color: blue;
+    border: 2px solid black;
+}
+
+#current_pokemon_menu::-webkit-scrollbar-corner {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 @media screen and (max-width: 1253px) {
@@ -644,12 +712,6 @@ h1 {
 
     .keuzemenu h1{
         font-family: "Pokémon-Classic";
-    }
-    
-    .keuzemenu{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
     }
     
     .keuzemenu li a{
@@ -1117,31 +1179,67 @@ h1 {
     z-index: 2;
 }
 
-#container_pokeguesser_image .close_button {
+.pokeguesser_image {
+    height: 500px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #ccc;
+    color: #202020;
+    font-family:"Pokémon-Classic";
+    border: 6.5px solid black;
+    border-radius: 1rem;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.pokeguesser_image button {
     position: absolute;
-    padding-left: 18rem;
-    padding-bottom: 20rem;
-    font-family: "Roboto-Regular";
+    right: 10px;
+}
+
+.pokeguesser_image h2 {
+    position: absolute;
+    left: 20px;
+    top: 50px;
+    font-size: smaller;
+}
+
+.pokeguesser_image img {
+    position: absolute;
+    left: 60px;
+    top: 110px
 }
 
 
-.pokeguesser_image {
+#guessStats {
+    height: 180px;
+    width: 250px;
+    position: absolute;
+    background-color: rgb(107, 134, 136);
+    border: 2px solid black;
+    border-radius: 1rem;
+    left: 1.2rem;
+    bottom: 0.4rem;
+    font-size: small;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: flex-start;
     align-items: center;
-    padding: 20px;
-    border-radius: 1rem;
-    background-color: #ccc;
-    color: #202020;
-    font-family: "Roboto-Regular";
-    box-shadow: 
-    -4px 0 0 -2px,
-    -8px 0 0 -4px,
-    4px 0 0 -2px,
-    8px 0 0 -4px;
+    justify-content: center;
+}
 
+
+.guessStat {
+    width: 230px;
+    background-color: rgb(141, 178, 180);
+    border-radius: 1rem;
+    margin: 3px;
+    padding: 4px;
+}
+
+.guessStat p {
+    padding-left: 10px;
 }
 
 @media screen and (max-width: 900px) {
@@ -1157,10 +1255,6 @@ h1 {
 }
 
 @media screen and (max-width: 700px) {
-    .pokeguesser_main h2 {
-        font-size: 1rem;
-    }
-
     .pokeguesser_bg {
         width: 380px;
         height: 214px;
@@ -1999,7 +2093,7 @@ ol > li{
 /*--------media-queries-----------*/
 
 @media screen and (max-width: 600px) {
-    .keuzemenu, aside, .keuzemenu li a {
+    .keuzemenu, .keuzemenu li a {
         width: 280px;
     }
 
@@ -2015,6 +2109,12 @@ ol > li{
         background-image: none;
         display: flex;
         justify-content: center;
+    }
+
+    aside {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 #evo-article > h2{
