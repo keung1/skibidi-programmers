@@ -94,145 +94,163 @@ app.get("/home", secureMiddleware, async(req, res) => {
 
 app.get("/pokedex", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
+    let allPokemons: boolean = false;
+    for (let pokemon of pokemons) {
+        pokemon.owned = true;
+    }
     res.render('pokedex', { pokemons,
-        myPokemons: user?.pokemon_collection
-     });
+        myPokemons: user?.pokemon_collection,
+        allPokemons: allPokemons
+    });
 });
 
-app.get("/filter", async(req, res) => {
+app.get("/myPokedex", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
+    let myPokemons: Pokemon[] | undefined = user!.pokemon_collection;
+    let allPokemons: boolean = true;
+    for (let pokemon of pokemons) {
+        pokemon.owned = false;
+    }
+    if (myPokemons) {
+        for(let i: number = 0; i < myPokemons.length; i++) {
+            if (myPokemons[i].id == pokemons[parseInt(myPokemons[i].id) - 1].id) {
+                pokemons[parseInt(myPokemons[i].id) - 1].owned = true;
+            }
+            else {
+                pokemons[parseInt(myPokemons[i].id) - 1].owned = false;
+            }
+        }
+    }
+    res.render('pokedex', { pokemons,
+        myPokemons: user?.pokemon_collection,
+        allPokemons: allPokemons
+    });
+});
 
-    
+app.get("/filter", async(req, res) => {    
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
     let user: User | null = await getUser(req.session.user!);
     if (typeof query !== 'string') {
       return res.redirect('/pokedex');
-  }
+    }
       const filtered = pokemons.filter(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
     );
     res.render('pokedex', { 
         pokemons: filtered,
         myPokemons: user?.pokemon_collection,
-        query 
+        query,
+        allPokemons: true
     });
-  });
+});
 
 
 /*-------------------------- battle -------------------------- */
 let randomPokemonInstance = {} as Pokemon;
 let ownPokemon = {} as Pokemon | undefined;
-let opponentPokemon: Pokemon;
 
 app.get("/battle", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     ownPokemon = req.session.current;
-    let resultMessage = "";
+    let resultMessage = '';
+    let randomLevel: number = 0;
     
-        randomPokemonInstance = randomPokemon();
-        let image = randomPokemonInstance.sprites.other["official-artwork"].front_default;
-        let attack = randomPokemonInstance.stats[1].base_stat;
-        let defense = randomPokemonInstance.stats[2].base_stat;
-        let hp = randomPokemonInstance.stats[0].base_stat;
+    randomPokemonInstance = randomPokemon();
+    let attack = randomPokemonInstance.stats[1].base_stat;
+    let defense = randomPokemonInstance.stats[2].base_stat;
+    let hp = randomPokemonInstance.stats[0].base_stat;
 
-        req.session.opponentPokemon = opponentPokemon;
+
+    if(ownPokemon){
+        randomLevel = Math.floor(Math.random() * 10) + 1;
+    }
+        
         
     res.render("battle", { 
         ownPokemon,
-        opponentPokemon,
-        resultMessage,
+        opponentPokemon: randomPokemonInstance,
         myPokemons: user?.pokemon_collection,
-        image,
-        attack,
-        defense,
-        hp
+        resultMessage,
+        randomLevel
         });
 });
-
-// Hp = totale hp - attack + defence
 
 
 app.get("/search", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
+    let resultMessage = '';
+    let randomLevel: number = 0;
 
+    
     const ownPokemon = req.session.current;
 
     if (typeof query !== 'string') {
-        return res.render('battle', { pokemons: [], query: '', ownPokemon, opponentPokemon: undefined });
+        return res.render('battle', { pokemons: [], query: '', ownPokemon, opponentPokemon: randomPokemonInstance });
     }
 
-    const opponentPokemon = pokemons.find(pokemon =>
+    const searchedPokemon = pokemons.find(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    const randomPokemonInstance = randomPokemon();
+    if (searchedPokemon !== undefined){
+        randomPokemonInstance = searchedPokemon;
         let attack = randomPokemonInstance.stats[1].base_stat;
         let defense = randomPokemonInstance.stats[2].base_stat;
         let hp = randomPokemonInstance.stats[0].base_stat;
-
-    
+    }
 
     res.render('battle', { 
         pokemons, 
         query, 
         ownPokemon,
-        opponentPokemon,
+        opponentPokemon: randomPokemonInstance,
         myPokemons: user?.pokemon_collection,
-        defense,
-        attack,
-        hp
+        resultMessage,
+        randomLevel
     });
 });
 
-
-/*
-app.post("/battle/attack", async(req, res) => {
+app.post("/battle", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     ownPokemon = req.session.current;
+    let randomLevel: number = 0;
 
-    if (!ownPokemon || !opponentPokemon) {
+
+    if (!ownPokemon || !randomPokemonInstance) {
         res.status(400).send("Pokémon-gegevens ontbreken in de sessie");
         return;
     }
 
-    const damageToOpponent = (ownPokemon.level || 1) * (ownPokemon.attack / (opponentPokemon.defense || 1));
-    const damageToPlayer = (opponentPokemon.level || 1) * (opponentPokemon.attack / (ownPokemon.defense || 1));
+    const damageToOpponent = Math.round((ownPokemon.stats[0].base_stat) * (ownPokemon.stats[1].base_stat / randomPokemonInstance.stats[2].base_stat));
+    const damageToPlayer = Math.round((randomPokemonInstance.stats[0].base_stat) * (randomPokemonInstance.stats[1].base_stat / ownPokemon.stats[2].base_stat));
 
-
-    opponentPokemon.hp -= damageToOpponent;
-    ownPokemon.hp -= damageToPlayer;
+    randomPokemonInstance.stats[0].base_stat -= damageToOpponent;
+    ownPokemon.stats[0].base_stat -= damageToPlayer;
 
     let resultMessage = '';
-    if (ownPokemon.hp <= 0) {
-        resultMessage = "Je Pokémon is verslagen! Het is tijd om te trainen en sterker terug te komen.";
-    } else if (opponentPokemon.hp <= 0) {
-        resultMessage = "Je hebt de tegenstander verslagen! Goed gedaan!";
-    } else {
-        resultMessage = "De strijd is voorbij, maar er is geen duidelijke winnaar. Blijf trainen en probeer het opnieuw!";
-    }
+   if(randomPokemonInstance.stats[0].base_stat <= 0){
+        randomPokemonInstance.stats[0].base_stat = 0;
+        resultMessage = `${ownPokemon.name} heeft gewonnen!`;
+   }else if( ownPokemon.stats[0].base_stat <= 0){
+        ownPokemon.stats[0].base_stat = 0;
+        resultMessage = `${randomPokemonInstance.name} heeft gewonnen!`;
+   }else if(randomPokemonInstance.stats[0].base_stat <= 0 && ownPokemon.stats[0].base_stat <= 0){
+        ownPokemon.stats[0].base_stat = 0;
+        randomPokemonInstance.stats[0].base_stat = 0;
+        resultMessage = `Niemand heeft gewonnen. Het is gelijk!`;
+   }
 
     res.render("battle", {
         ownPokemon: ownPokemon, 
-        opponentPokemon: opponentPokemon, 
-        resultMessage: resultMessage,
-        myPokemons: user?.pokemon_collection
-    });
-});*/
-
-
-
-
-
-
-
-
-
-
-
-
-
+        opponentPokemon: randomPokemonInstance, 
+        myPokemons: user?.pokemon_collection,
+        resultMessage,
+        randomLevel
+        });
+});
 
 /*--------detail------ */
 
@@ -415,7 +433,6 @@ let speciald2;
 let speed2;
 
 app.get("/filterpoke", async(req, res) => {
-    
     let user: User | null = await getUser(req.session.user!);
     const queryParam = req.query.pokemon1;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
@@ -774,7 +791,12 @@ app.get("/safari/:id",secureMiddleware , async(req, res) => {
         spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     }
     let maxLevel: number = 10;
-    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);   
+    if (req.session.current){
+        catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);  
+    }
+    else {
+        catchLevel = Math.floor(Math.random() * (req.session.current!.level! - 1) + 1); 
+    } 
     let caught: boolean = await checkPokemons(req.session.user!, spawn!)
     if (spawn != undefined) {
         spawn!.level = catchLevel;
@@ -914,6 +936,7 @@ app.post("/catchMenu", async(req, res) => {
 app.post("/run", (req, res) => {
     succes = "none"
     pokeballs = 3;
+    pokemonSpawns = [];
     res.redirect("/safari");
 })
 

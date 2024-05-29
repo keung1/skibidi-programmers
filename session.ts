@@ -22,7 +22,6 @@ declare module 'express-session' {
         user?: User;
         message?: FlashMessage;
         current?: Pokemon;
-        opponentPokemon?: Pokemon;
     }
 }
 

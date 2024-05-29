@@ -1,26 +1,32 @@
 <%- include("partials/header") %>
 
 <main name="dex" id="pokedex">
-
     <h1>Pokédex</h1>
-
-    <select name="" id="select-pokemon">
-      <option value="0">Jouw Pokémon</option>
-      <option value="1">Alle Pokémon</option>
-    </select>
-
+    <% if (!allPokemons) { %>
+      <form id = "you" action = "/myPokedex" method = "get">
+        <button id = "yourPokedex1" type = "submit">Jouw pokemons</button>
+      </form>
+    <% } %>
+    <% if (allPokemons) { %>
+      <form id = "you" action = "/pokedex" method = "get">
+        <button id = "yourPokedex1" type = "submit">Alle pokemons</button>
+      </form>
+    <% } %>
     <form role="search" action=" /filter" method="GET"  id="zoek-pokemon">
-      <input type="text" placeholder="Search.." name="query">
-      <button type="submit">Search</button>
+      <input type="text" placeholder="Zoeken.." name="query">
+      <button id = "yourPokedex" type="submit">Zoek</button>
     </form>
-
-    <section id="pokemon">
-      
+    <section id="pokemon">  
           <button onclick="topFunction()" href="#pokemon" id="myBtn" title="Go to top" >top</button>
       
       <%for(let pokemon of pokemons) {%>
         <article>
+          <% if (!pokemon.owned) { %>
+          <a class="pokemon-image" href="/detail/<%= pokemon.id %>"> %> <img class = "pokedexGrey" src="<%= pokemon.sprites.other["official-artwork"].front_default %> " alt=""></a>
+          <% } %>
+          <% if (pokemon.owned) { %>
           <a class="pokemon-image" href="/detail/<%= pokemon.id %>"> %> <img src="<%= pokemon.sprites.other["official-artwork"].front_default %> " alt=""></a>
+          <% } %>
           <p class="pokedexnaam"><%=pokemon.name %></p>
         </article>
       <% } %>

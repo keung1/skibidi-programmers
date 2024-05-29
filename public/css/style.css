@@ -136,13 +136,13 @@ ul li a img {
 }
 
 .presentPoke img{
-    width: 70px;
+    width: 50px;
     margin: 5px 0 -7px 0;
 }
 
 .presentPoke p{
     margin: 9px 0px -7px 0px;
-    width: 70px;
+    width: 50px;
     height: 70px;
     text-align: center;
     padding-left: 5px;
@@ -928,6 +928,34 @@ h1 {
     margin-left: 69%;
 }
 
+.succes {
+    background-color: blue;
+    border-radius: 5px;
+    position: fixed;
+    top: 11rem;
+    left: 46%;
+    padding: 1rem;
+    animation: cssAnimation 5s forwards;
+}
+
+#noEntry {
+    background-color: red;
+    border-radius: 5px;
+    position: fixed;
+    top: 11rem;
+    left: 46%;
+    padding: 1rem;
+    animation: cssAnimation 5s forwards;
+}
+
+@keyframes cssAnimation {
+    0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+    }
+}
 @media screen and (max-width: 900px) {
     .landing_header h1 {
         font-size: 2.5rem;
@@ -1109,7 +1137,7 @@ h1 {
     align-items: center;
 }
 
-.pokeguesser_main h2 {
+.pokeguesser_main h1 {
     font-size: 2rem;
     font-family: "Pokémon-Classic"; 
 }
@@ -1309,7 +1337,24 @@ h1 {
 }
 
 /*--------------pokedex--------------*/
+#you {
+    position: absolute;
+}
 
+#yourPokedex {
+    font-family: "Pokémon-Classic";
+    border: 1px solid black;
+    padding: 2px;
+    background-color: #EE6B2F;
+}
+
+#yourPokedex1 {
+    font-family: "Pokémon-Classic";
+    border: 1px solid black;
+    padding: 2px;
+    margin-left: 150px;
+    background-color: #EE6B2F;
+}
 
 #myBtn {
     position: fixed;
@@ -1324,6 +1369,7 @@ h1 {
     cursor: pointer;
     padding: 15px;
     border-radius: 4px;
+    font-family: "Pokémon-Classic";
   }
   
   #myBtn:hover {
@@ -1368,6 +1414,7 @@ select{
     width: 30rem;
     border-radius: 10px ;
     border: solid black 1px;
+    padding: 10px;
 }
 
 #pokemon img{
@@ -1386,7 +1433,9 @@ article{
     padding: 1rem;
 }
 
-
+.pokedexGrey {
+    filter: grayscale(1);
+}
 
 @media screen and (max-width: 1150px) {
 
@@ -1742,7 +1791,7 @@ ol > li{
     min-width: 100vw;
     min-height: 100%;
     position: fixed;
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
 }

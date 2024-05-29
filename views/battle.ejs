@@ -18,7 +18,7 @@
                 <div class="player-pokemon">
                     <div class="player-image">
                         <h2>Jouw Pokémon</h2>
-                        <img id="playerImage" src="<%= current.image %>" alt="<%= ownPokemon.name %>">
+                        <img id="playerImage" src="<%= current.sprites.other["official-artwork"].front_default %>" alt="<%= ownPokemon.name %>">
                     </div>
                     <div class="player-info">
                         <h2>Naam: <%= ownPokemon.name %></h2>
@@ -27,64 +27,84 @@
                             <p>Level</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.attack %></h3>
+                            <h3><%= current.stats[1].base_stat %></h3>
                             <p>Aanval</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.defense %></h3>
+                            <h3><%= ownPokemon.stats[2].base_stat %></h3>
                             <p>Verdediging</p>
                         </article>
                         <article class="player-info-stat">
-                            <h3><%= ownPokemon.hp %></h3>
+                            <h3><%= ownPokemon.stats[0].base_stat %></h3>
                             <p>HP</p>
                         </article>
-                        <!--<div class="pokemon-health-bar">
-                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar own-health" style="width: <%= /*currentPokemonHealth*/ %>%;"></div>
-                        </div>-->
                     </div>
                 </div>
             <% } %>
+                <% if (!ownPokemon) { %>
+                    <div class="player-pokemon">
+                        <div class="player-image">
+                            <h2>Jouw Pokémon</h2>
+                            <img id="playerImage" src="<%= current.image %>" alt="">
+                        </div>
+                        <div class="player-info">
+                            <h2>Naam: <%= ownPokemon.name %></h2>
+                            <article class="player-info-stat">
+                                <h3>?</h3>
+                                <p>Level</p>
+                            </article>
+                            <article class="player-info-stat">
+                                <h3>?</h3>
+                                <p>Aanval</p>
+                            </article>
+                            <article class="player-info-stat">
+                                <h3>?</h3>
+                                <p>Verdediging</p>
+                            </article>
+                            <article class="player-info-stat">
+                                <h3>?</h3>
+                                <p>HP</p>
+                            </article>
+                        </div>
+                    </div>
+                <% } %>
             
             <% if (opponentPokemon) { %>
                 <div class="opponent-pokemon">
                     <div class="opponent-image">
                         <h2>Tegenstander Pokémon</h2>
-                        <img id="opponentImage" src="<%= opponentPokemon.image %>" alt="<%= opponentPokemon.name %>">
+                        <img id="opponentImage" src="<%= opponentPokemon.sprites.other["official-artwork"].front_default %>" alt="<%= opponentPokemon.name %>">
                     </div>
                     <div class="opponent-info">
                         <h2>Naam: <%= opponentPokemon.name %></h2>
                         <article class="opponent-info-stat">
-                            <h3><%= opponentPokemon.level %></h3>
+                            <h3><%= randomLevel%></h3>
                             <p>Level</p>
                         </article>
                         <article class="opponent-info-stat">
-                            <h3><%= opponentPokemon.attack %></h3>
+                            <h3><%= opponentPokemon.stats[1].base_stat %></h3>
                             <p>Aanval</p>
                         </article>
                         <article class="opponent-info-stat">
-                            <h3><%= opponentPokemon.defense %></h3>
+                            <h3><%= opponentPokemon.stats[2].base_stat %></h3>
                             <p>Verdediging</p>
                         </article>
                         <article class="opponent-info-stat">
-                            <h3><%= opponentPokemon.hp %></h3>
+                            <h3><%= opponentPokemon.stats[0].base_stat %></h3>
                             <p>HP</p>
                         </article>
-                         <!-- ><div class="pokemon-health-bar">
-                            <div <% /* eslint-disable css-propertyvalueexpected */ %> class="pokemon-health-bar opponent-health" style="width: <%= /*randomPokemonHealth */%>%;"></div>
-                        </div>-->
                     </div>
                     
                 </div>
             <% } %>
         </div>
 
-            <form id="attackForm" action="/battle/attack" method="post">
+            <form id="attackForm" action="/battle" method="post">
                 <button type="submit" class="attack-btn">
                     <img id="attack-btn" src="assets/images/Pokeball-3.png" alt="Attack">
                 </button>
             </form>
 
-       
             <% if (resultMessage) { %>
                 <section id="container_battle_result">
                 <button class="close_button"><a href="/battle">X</a></button>
@@ -93,6 +113,7 @@
                 </article>
             </section>
             <% } %>
+            
         
         
         
