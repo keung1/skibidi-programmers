@@ -1,14 +1,22 @@
 
-let poke1 = document.getElementsByClassName("classname");
+var hp1 = document.getElementById("hp1");
+let a1 = document.getElementById("attack1");
+let d1 = document.getElementById("defense1");
+let spa1 = document.getElementById("speciala1");
+let spd1 = document.getElementById("speciald1");
+let speed1 = document.getElementById("speed1");
 
-let poke2 = document.getElementsByClassName("clas");
+var hp2 = document.getElementById("hp2").getElementsByTagName("li");
+let a2 = document.getElementById("attack2");
+let d2 = document.getElementById("defense2");
+let spa2 = document.getElementById("speciala2");
+let spd2 = document.getElementById("speciald2");
+let speed2 = document.getElementById("speed2");
 
-
-for(let i = 0; i < 6; i++){
-
-    if(parseInt(poke1[i].innerHTML)> parseInt(poke2[i].innerHTML)){
-        poke1.Style.backgroundColor = "green";
-        poke2.style.backgroundColor = "red"
+function compare(){
+    if(parseInt(hp1) > parseInt(hp2)){
+        hp1.setAttribute("class", "more");
+        hp2.setAttribute("class", "less");
     }
     else if(parseInt(poke1[i].innerHTML)< parseInt(poke2[i].innerHTML)){
         poke1.style.backgroundColor = "red";

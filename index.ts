@@ -2,7 +2,7 @@ import express from "express";
 import ejs from "ejs";
 import {Pokemon} from "./interfaces/interface";
 import {User} from "./interfaces/interface";
-import { addPokemon, checkPokemons, connect, enhancePokemon, getPokemons, getUser, login, registerUser, removePokemon } from "./database";
+import { addPokemon, checkPokemons, connect/*, enhancePokemon*/, getPokemons, getUser, login, registerUser, removePokemon } from "./database";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import session from "./session";
@@ -186,7 +186,7 @@ app.get("/search", async(req, res) => {
 });
 
 
-
+/*
 app.post("/battle/attack", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     ownPokemon = req.session.current;
@@ -218,7 +218,7 @@ app.post("/battle/attack", async(req, res) => {
         resultMessage: resultMessage,
         myPokemons: user?.pokemon_collection
     });
-});
+});*/
 
 
 
@@ -274,27 +274,103 @@ app.get("/comparison", async(req, res) => {
     }
 
     
-    for(let i = 0; i < 6; i++){
-        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
-            classname = "more";
-            clas = "less";
-        }
-        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
-            classname = "less";
-            clas = "more";
-        }
-        else{
-            classname = "even"
-            clas = "even"
-        }
+    
+    if(pokemon1.stats[0].base_stat > pokemon2.stats[0].base_stat){
+        hp1 = "more"
+        hp2 = "less"
+    }    
+    else if(pokemon1.stats[0].base_stat < pokemon2.stats[0].base_stat){
+        hp1 = "less"
+        hp2 = "more"
+    }
+    else{
+        hp1 = "even"
+        hp2 = "even"
+    }
+   
+    if(pokemon1.stats[1].base_stat > pokemon2.stats[1].base_stat){
+        attack1 = "more"
+        attack2 = "less"
+    }    
+    else if(pokemon1.stats[1].base_stat < pokemon2.stats[1].base_stat){
+        attack1 = "less"
+        attack2 = "more"
+    }
+    else{
+        attack1 = "even"
+        attack2 = "even"
     }
 
-      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2, classname : classname, clas : clas, myPokemons: user?.pokemon_collection });
+    if(pokemon1.stats[2].base_stat > pokemon2.stats[2].base_stat){
+        defense1 = "more"
+        defense2 = "less"
+    }    
+    else if(pokemon1.stats[2].base_stat < pokemon2.stats[2].base_stat){
+        defense1 = "less"
+        defense2 = "more"
+    }
+    else{
+        defense1 = "even"
+        defense2 = "even"
+    }
+
+    if(pokemon1.stats[3].base_stat > pokemon2.stats[3].base_stat){
+        speciala1 = "more"
+        speciala2 = "less"
+    }    
+    else if(pokemon1.stats[3].base_stat < pokemon2.stats[3].base_stat){
+        speciala1 = "less"
+        speciala2 = "more"
+    }
+    else{
+        speciala1 = "even"
+        speciala2 = "even"
+    }
+
+    if(pokemon1.stats[4].base_stat > pokemon2.stats[4].base_stat){
+        speciald1 = "more"
+        speciald2 = "less"
+    }    
+    else if(pokemon1.stats[4].base_stat < pokemon2.stats[4].base_stat){
+        speciald1 = "less"
+        speciald2 = "more"
+    }
+    else{
+        speciald1 = "even"
+        speciald2 = "even"
+    }
+
+    if(pokemon1.stats[5].base_stat > pokemon2.stats[5].base_stat){
+        speed1 = "more"
+        speed2 = "less"
+    }    
+    else if(pokemon1.stats[5].base_stat < pokemon2.stats[5].base_stat){
+        speed1 = "less"
+        speed2 = "more"
+    }
+    else{
+        speed1 = "even"
+        speed2 = "even"
+    }
+
+      res.render('pokemoncomparison', { pokemon1: pokemon1, pokemon2: pokemon2,  myPokemons: user?.pokemon_collection,
+         hp1: hp1, hp2 : hp2, attack1 : attack1, attack2 : attack2, defense1 : defense1, defense2 : defense2, speciala1 : speciala1, speciald1 : speciald1, speciala2 : speciala2, speciald2 : speciald2,
+         speed1 : speed1,speed2 : speed2 });
 });
 
-let classname: string;
+let hp1: string;
+let attack1: string;
+let defense1;
+let speciala1;
+let speciald1;
+let speed1;
 
-let clas : string;
+let hp2 : string;
+let attack2: string;
+let defense2;
+let speciala2;
+let speciald2;
+let speed2;
 
 app.get("/filterpoke", async(req, res) => {
     
@@ -311,22 +387,90 @@ app.get("/filterpoke", async(req, res) => {
     if (filtered !== undefined){
         pokemon1 = filtered;
     }
-    for(let i = 0; i < 6; i++){
-        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
-            classname = "more";
-            clas = "less";
-        }
-        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
-            classname = "less";
-            clas = "more";
-        }
-        else{
-            classname = "even"
-            clas = "even"
-        }
-        
+
+    
+    if(pokemon1.stats[0].base_stat > pokemon2.stats[0].base_stat){
+        hp1 = "more"
+        hp2 = "less"
+    }    
+    else if(pokemon1.stats[0].base_stat < pokemon2.stats[0].base_stat){
+        hp1 = "less"
+        hp2 = "more"
     }
-    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2, classname: classname, clas : clas,
+    else{
+        hp1 = "even"
+        hp2 = "even"
+    }
+   
+    if(pokemon1.stats[1].base_stat > pokemon2.stats[1].base_stat){
+        attack1 = "more"
+        attack2 = "less"
+    }    
+    else if(pokemon1.stats[1].base_stat < pokemon2.stats[1].base_stat){
+        attack1 = "less"
+        attack2 = "more"
+    }
+    else{
+        attack1 = "even"
+        attack2 = "even"
+    }
+
+    if(pokemon1.stats[2].base_stat > pokemon2.stats[2].base_stat){
+        defense1 = "more"
+        defense2 = "less"
+    }    
+    else if(pokemon1.stats[2].base_stat < pokemon2.stats[2].base_stat){
+        defense1 = "less"
+        defense2 = "more"
+    }
+    else{
+        defense1 = "even"
+        defense2 = "even"
+    }
+
+    if(pokemon1.stats[3].base_stat > pokemon2.stats[3].base_stat){
+        speciala1 = "more"
+        speciala2 = "less"
+    }    
+    else if(pokemon1.stats[3].base_stat < pokemon2.stats[3].base_stat){
+        speciala1 = "less"
+        speciala2 = "more"
+    }
+    else{
+        speciala1 = "even"
+        speciala2 = "even"
+    }
+
+    if(pokemon1.stats[4].base_stat > pokemon2.stats[4].base_stat){
+        speciald1 = "more"
+        speciald2 = "less"
+    }    
+    else if(pokemon1.stats[4].base_stat < pokemon2.stats[4].base_stat){
+        speciald1 = "less"
+        speciald2 = "more"
+    }
+    else{
+        speciald1 = "even"
+        speciald2 = "even"
+    }
+
+    if(pokemon1.stats[5].base_stat > pokemon2.stats[5].base_stat){
+        speed1 = "more"
+        speed2 = "less"
+    }    
+    else if(pokemon1.stats[5].base_stat < pokemon2.stats[5].base_stat){
+        speed1 = "less"
+        speed2 = "more"
+    }
+    else{
+        speed1 = "even"
+        speed2 = "even"
+    }
+
+
+
+    res.render('pokemoncomparison', { pokemon1: pokemon1, query, pokemon2: pokemon2, hp1: hp1, hp2 : hp2, attack1 : attack1, attack2 : attack2, defense1 : defense1, defense2 : defense2, speciala1 : speciala1, speciald1 : speciald1, speciala2 : speciala2, speciald2 : speciald2,
+        speed1 : speed1,speed2 : speed2,
         myPokemons: user?.pokemon_collection});
   });
 
@@ -350,26 +494,97 @@ app.get("/filterpoke", async(req, res) => {
         pokemon2 = filtered2;
     }
 
-
-    for(let i = 0; i < 6; i++){
-        if( pokemon1.stats[i].base_stat >  pokemon2.stats[i].base_stat ){
-            classname = "more";
-            clas = "less";
-        }
-        else if(pokemon1.stats[i].base_stat <  pokemon2.stats[i].base_stat){
-            classname = "less";
-            clas = "more";
-        }
-        else{
-            classname = "even"
-            clas = "even"
-        }
-        
+    
+    if(pokemon1.stats[0].base_stat > pokemon2.stats[0].base_stat){
+        hp1 = "more"
+        hp2 = "less"
+    }    
+    else if(pokemon1.stats[0].base_stat < pokemon2.stats[0].base_stat){
+        hp1 = "less"
+        hp2 = "more"
+    }
+    else{
+        hp1 = "even"
+        hp2 = "even"
+    }
+   
+    if(pokemon1.stats[1].base_stat > pokemon2.stats[1].base_stat){
+        attack1 = "more"
+        attack2 = "less"
+    }    
+    else if(pokemon1.stats[1].base_stat < pokemon2.stats[1].base_stat){
+        attack1 = "less"
+        attack2 = "more"
+    }
+    else{
+        attack1 = "even"
+        attack2 = "even"
     }
 
-    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1, clas : clas, classname : classname, 
-        myPokemons: user?.pokemon_collection});
+    if(pokemon1.stats[2].base_stat > pokemon2.stats[2].base_stat){
+        defense1 = "more"
+        defense2 = "less"
+    }    
+    else if(pokemon1.stats[2].base_stat < pokemon2.stats[2].base_stat){
+        defense1 = "less"
+        defense2 = "more"
+    }
+    else{
+        defense1 = "even"
+        defense2 = "even"
+    }
+
+    if(pokemon1.stats[3].base_stat > pokemon2.stats[3].base_stat){
+        speciala1 = "more"
+        speciala2 = "less"
+    }    
+    else if(pokemon1.stats[3].base_stat < pokemon2.stats[3].base_stat){
+        speciala1 = "less"
+        speciala2 = "more"
+    }
+    else{
+        speciala1 = "even"
+        speciala2 = "even"
+    }
+
+    if(pokemon1.stats[4].base_stat > pokemon2.stats[4].base_stat){
+        speciald1 = "more"
+        speciald2 = "less"
+    }    
+    else if(pokemon1.stats[4].base_stat < pokemon2.stats[4].base_stat){
+        speciald1 = "less"
+        speciald2 = "more"
+    }
+    else{
+        speciald1 = "even"
+        speciald2 = "even"
+    }
+
+    if(pokemon1.stats[5].base_stat > pokemon2.stats[5].base_stat){
+        speed1 = "more"
+        speed2 = "less"
+    }    
+    else if(pokemon1.stats[5].base_stat < pokemon2.stats[5].base_stat){
+        speed1 = "less"
+        speed2 = "more"
+    }
+    else{
+        speed1 = "even"
+        speed2 = "even"
+    }
+
+
+
+    res.render('pokemoncomparison', { pokemon2: pokemon2, query, pokemon1: pokemon1, hp1: hp1, hp2 : hp2,
+        attack1 : attack1, attack2 : attack2, defense1 : defense1, defense2 : defense2, speciala1 : speciala1, speciald1 : speciald1, speciala2 : speciala2, speciald2 : speciald2,
+        speed1 : speed1,speed2 : speed2,myPokemons: user?.pokemon_collection});
   });
+
+
+
+
+
+
 /*-------------------------- pokeguesser -------------------------- */
 let pokemonAnswer: Pokemon;
 
@@ -434,9 +649,9 @@ app.post("/guesser", async(req, res) => {
                 raiseDef = true;
             }
             
-            await enhancePokemon(user!, currentPokemon!);
+            /*await enhancePokemon(user!, currentPokemon!);
             req.session.current = currentPokemon;
-            answer = true;
+            answer = true;*/
         }
         else {
             answer = false;
