@@ -22,24 +22,24 @@
                     <div id = "guessStats">
                         <h3>Jouw stats</h3>
                         <article class = "guessStat">
-                            <p>Hp: 100</p>
+                            <p>Hp: <%= oldCurrent.stats[0].base_stat %></p>
                         </article>
                         <article class = "guessStat">
-                            <p>Att: 100
+                            <p>Att: <%= oldCurrent.stats[1].base_stat %>
                                 <% if(attack) { %>
-                                    (+1)
+                                    -> <%= current.stats[1].base_stat %>
                                 <% } %>
                             </p>
                         </article>
                         <article class = "guessStat">
-                            <p>Def: 100
+                            <p>Def: <%= oldCurrent.stats[2].base_stat %>
                                 <% if(defense) { %>
-                                    (+1)
+                                    -> <%= current.stats[2].base_stat %>
                                 <% } %>
                             </p>
                         </article>
                         <article class = "guessStat">
-                            <p>Speed: 100</p>
+                            <p>Speed: <%= oldCurrent.stats[5].base_stat %></p>
                         </article>
                     </div>
                 </article>

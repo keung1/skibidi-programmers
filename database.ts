@@ -97,6 +97,8 @@ export async function enhancePokemon(user: User, pokemon: Pokemon) {
     let currentIndex: number | undefined = currentPokemons?.findIndex((pokemons)=> {
         return pokemons.name == pokemon.name;
     });
+    console.log("-" + pokemon);
+    console.log("-" + currentPokemons![currentIndex!]);
     currentPokemons![currentIndex!] = pokemon;
     await userCollection.updateOne({name: user.name}, {$set: {pokemon_collection: currentPokemons}})
 }

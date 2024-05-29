@@ -150,7 +150,6 @@ ul li a img {
 
 .noPresentPoke{
     font-size: xx-large;
-    margin-left: 80px;
     color: #ffffff;
     background-color: var(--tertiary-color);
     border-radius: 60px;
@@ -192,7 +191,7 @@ ul li a img {
     min-height: 100%;
     position: fixed;
     top: 0;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 2;
@@ -715,12 +714,6 @@ h1 {
         font-family: "Pokémon-Classic";
     }
     
-    .keuzemenu{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
     .keuzemenu li a{
         padding: 10px;
         width: 500px;
@@ -1215,8 +1208,8 @@ h1 {
 
 .pokeguesser_image img {
     position: absolute;
-    left: 40px;
-    top: 80px
+    left: 60px;
+    top: 110px
 }
 
 
@@ -1262,10 +1255,6 @@ h1 {
 }
 
 @media screen and (max-width: 700px) {
-    .pokeguesser_main h2 {
-        font-size: 1rem;
-    }
-
     .pokeguesser_bg {
         width: 380px;
         height: 214px;
@@ -2109,7 +2098,7 @@ ol > li{
 /*--------media-queries-----------*/
 
 @media screen and (max-width: 600px) {
-    .keuzemenu, aside, .keuzemenu li a {
+    .keuzemenu, .keuzemenu li a {
         width: 280px;
     }
 
@@ -2125,6 +2114,12 @@ ol > li{
         background-image: none;
         display: flex;
         justify-content: center;
+    }
+
+    aside {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 #evo-article > h2{
