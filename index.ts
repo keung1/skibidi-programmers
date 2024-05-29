@@ -126,31 +126,36 @@ let randomPokemonInstance = {} as Pokemon;
 let ownPokemon = {} as Pokemon | undefined;
 let opponentPokemon: Pokemon;
 
-app.get("/battle", (req, res) => {
+app.get("/battle", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     ownPokemon = req.session.current;
     let resultMessage = "";
     
         randomPokemonInstance = randomPokemon();
-        opponentPokemon = randomPokemonInstance;
-      
-        opponentPokemon.level = randomPokemonInstance.stats[0].base_stat;
-        opponentPokemon.attack = randomPokemonInstance.stats[1].base_stat;
-        opponentPokemon.defense = randomPokemonInstance.stats[2].base_stat;
-        opponentPokemon.hp = randomPokemonInstance.stats[0].base_stat;
+        let image = randomPokemonInstance.sprites.other["official-artwork"].front_default;
+        let attack = randomPokemonInstance.stats[1].base_stat;
+        let defense = randomPokemonInstance.stats[2].base_stat;
+        let hp = randomPokemonInstance.stats[0].base_stat;
 
         req.session.opponentPokemon = opponentPokemon;
         
     res.render("battle", { 
         ownPokemon,
         opponentPokemon,
-        resultMessage
+        resultMessage,
+        myPokemons: user?.pokemon_collection,
+        image,
+        attack,
+        defense,
+        hp
         });
 });
 
 // Hp = totale hp - attack + defence
 
 
-app.get("/search", (req, res) => {
+app.get("/search", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
 
@@ -165,24 +170,28 @@ app.get("/search", (req, res) => {
     );
 
     const randomPokemonInstance = randomPokemon();
-    if (opponentPokemon) {
-        opponentPokemon.level = randomPokemonInstance.stats[0].base_stat;
-        opponentPokemon.attack = randomPokemonInstance.stats[1].base_stat;
-        opponentPokemon.defense = randomPokemonInstance.stats[2].base_stat;
-        opponentPokemon.hp = randomPokemonInstance.stats[0].base_stat;
+        let attack = randomPokemonInstance.stats[1].base_stat;
+        let defense = randomPokemonInstance.stats[2].base_stat;
+        let hp = randomPokemonInstance.stats[0].base_stat;
 
-    }
+    
 
     res.render('battle', { 
         pokemons, 
         query, 
         ownPokemon,
         opponentPokemon,
-
+        myPokemons: user?.pokemon_collection,
+        defense,
+        attack,
+        hp
     });
 });
 
-app.post("/battle/attack", (req, res) => {
+
+
+app.post("/battle/attack", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
     ownPokemon = req.session.current;
 
     if (!ownPokemon || !opponentPokemon) {
@@ -209,7 +218,8 @@ app.post("/battle/attack", (req, res) => {
     res.render("battle", {
         ownPokemon: ownPokemon, 
         opponentPokemon: opponentPokemon, 
-        resultMessage: resultMessage 
+        resultMessage: resultMessage,
+        myPokemons: user?.pokemon_collection
     });
 });
 
