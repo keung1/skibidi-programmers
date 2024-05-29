@@ -93,29 +93,56 @@ app.get("/home", secureMiddleware, async(req, res) => {
 
 app.get("/pokedex", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
+    let allPokemons: boolean = false;
+    for (let pokemon of pokemons) {
+        pokemon.owned = true;
+    }
     res.render('pokedex', { pokemons,
-        myPokemons: user?.pokemon_collection
-     });
+        myPokemons: user?.pokemon_collection,
+        allPokemons: allPokemons
+    });
 });
 
-app.get("/filter", async(req, res) => {
+app.get("/myPokedex", async(req, res) => {
+    let user: User | null = await getUser(req.session.user!);
+    let myPokemons: Pokemon[] | undefined = user!.pokemon_collection;
+    let allPokemons: boolean = true;
+    for (let pokemon of pokemons) {
+        pokemon.owned = false;
+    }
+    if (myPokemons) {
+        for(let i: number = 0; i < myPokemons.length; i++) {
+            if (myPokemons[i].id == pokemons[parseInt(myPokemons[i].id) - 1].id) {
+                pokemons[parseInt(myPokemons[i].id) - 1].owned = true;
+            }
+            else {
+                pokemons[parseInt(myPokemons[i].id) - 1].owned = false;
+            }
+        }
+    }
+    res.render('pokedex', { pokemons,
+        myPokemons: user?.pokemon_collection,
+        allPokemons: allPokemons
+    });
+});
 
-    
+app.get("/filter", async(req, res) => {    
     const queryParam = req.query.query;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
     let user: User | null = await getUser(req.session.user!);
     if (typeof query !== 'string') {
       return res.redirect('/pokedex');
-  }
+    }
       const filtered = pokemons.filter(pokemon =>
         pokemon.name.toLowerCase().includes(query.toLowerCase())
     );
     res.render('pokedex', { 
         pokemons: filtered,
         myPokemons: user?.pokemon_collection,
-        query 
+        query,
+        allPokemons: true
     });
-  });
+});
 
 
 /*-------------------------- battle -------------------------- */
@@ -403,7 +430,6 @@ let speciald2;
 let speed2;
 
 app.get("/filterpoke", async(req, res) => {
-    
     let user: User | null = await getUser(req.session.user!);
     const queryParam = req.query.pokemon1;
     const query = Array.isArray(queryParam) ? queryParam[0] : queryParam;
@@ -762,7 +788,12 @@ app.get("/safari/:id",secureMiddleware , async(req, res) => {
         spawn = pokemons.find(pokemon => pokemon.id == checkSpawn); 
     }
     let maxLevel: number = 10;
-    catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);   
+    if (req.session.current){
+        catchLevel = Math.floor(Math.random() * (maxLevel - 1) + 1);  
+    }
+    else {
+        catchLevel = Math.floor(Math.random() * (req.session.current!.level! - 1) + 1); 
+    } 
     let caught: boolean = await checkPokemons(req.session.user!, spawn!)
     if (spawn != undefined) {
         spawn!.level = catchLevel;
@@ -902,6 +933,7 @@ app.post("/catchMenu", async(req, res) => {
 app.post("/run", (req, res) => {
     succes = "none"
     pokeballs = 3;
+    pokemonSpawns = [];
     res.redirect("/safari");
 })
 

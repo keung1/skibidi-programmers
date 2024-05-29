@@ -14,6 +14,7 @@ export interface Pokemon{
     Evolutions: Evolution;
     sprites: Sprite;
     level?: number;
+    owned?: boolean;
 }
 
 export interface species{
