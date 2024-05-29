@@ -45,7 +45,6 @@ app.post("/", async (req, res, next) => {
         const password: string = req.body.password;
         try {
             let user: User | undefined =  await login(username, password);  
-            console.log(user);
             if (user) {
                 delete user.password;
                 req.session.user = user;
@@ -65,8 +64,6 @@ app.post("/", async (req, res, next) => {
 app.post("/", async (req, res) => {
     const username_signin: string = req.body.username_signin;
     const password_signin: string = req.body.password_signin;
-    console.log(username_signin);
-    console.log(password_signin);
         try {
             await registerUser(username_signin, password_signin);
             res.redirect("/");
@@ -387,40 +384,56 @@ function randomPokemon() {
     return randomPokemon;
 };
 
+let raiseAtt: boolean = false;
+let raiseDef: boolean = false;
+let answer: boolean = false;
+let oldCurrentPokemon = {} as Pokemon | undefined;
 app.get("/restart", (req, res) => {
     pokemonAnswer = randomPokemon();
+    raiseAtt = false;
+    raiseDef = false;
+    answer = false;
     res.redirect("/guesser");
 });
 
 app.get("/guesser", async(req, res) => {   
     let user: User | null = await getUser(req.session.user!);
     pokemonAnswer = randomPokemon();
-    let oldCurrentPokemon = req.session.current;
+    oldCurrentPokemon = req.session.current;
     res.render("pokeguesser", {
         pokemonGuess: {
             name: pokemonAnswer.name,
             image: pokemonAnswer.sprites.other["official-artwork"].front_default,
-            succes: false
+            succes: answer
         },
         myPokemons: user?.pokemon_collection,
-        oldCurrent: oldCurrentPokemon
+        oldCurrent: oldCurrentPokemon,
+        attack: raiseAtt,
+        defense: raiseDef
     });
 });
 
 app.post("/guesser", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     let guess: string = req.body.guess;
-    let answer: boolean = false;
-    let oldCurrentPokemon = {} as Pokemon | undefined;
     if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
         let currentPokemon: Pokemon | undefined = req.session.current;
         if(currentPokemon) {
             if (Math.random() < 0.5) {
-                currentPokemon!.stats[1].base_stat + 1;
+                console.log(currentPokemon.stats[1].base_stat);
+                let att: number = currentPokemon.stats[1].base_stat;
+                currentPokemon.stats[1].base_stat = att + 1;
+                console.log("+" + currentPokemon.stats[1].base_stat);
+                raiseAtt = true;
             }
             else {
-                currentPokemon!.stats[2].base_stat + 1
+                console.log(currentPokemon.stats[2].base_stat);
+                let def: number = currentPokemon.stats[2].base_stat;
+                currentPokemon.stats[2].base_stat = def + 1;
+                console.log("+" + currentPokemon.stats[2].base_stat);
+                raiseDef = true;
             }
+            
             await enhancePokemon(user!, currentPokemon!);
             req.session.current = currentPokemon;
             answer = true;
@@ -428,7 +441,6 @@ app.post("/guesser", async(req, res) => {
         else {
             answer = false;
             req.session.message = {type: "noCurrent", message: `je hebt juist geraden maar nog geen huidige pokemon gekozen`};
-            console.log(req.session.message);
         }
         
     }
@@ -436,7 +448,18 @@ app.post("/guesser", async(req, res) => {
         if(err) { 
             res.status(500);
         }
-        else { res.redirect("/guesser");
+        else { 
+            res.render("pokeguesser", {
+            pokemonGuess: {
+                name: pokemonAnswer.name,
+                image: pokemonAnswer.sprites.other["official-artwork"].front_default,
+                succes: answer
+            },
+            myPokemons: user?.pokemon_collection,
+            oldCurrent: oldCurrentPokemon,
+            attack: raiseAtt,
+            defense: raiseDef
+        });
         }
     });
 });
@@ -652,9 +675,6 @@ app.post("/currentPokemon", async(req, res) => {
         });
         if(currentPokemon != undefined) {
             req.session.current = currentPokemon;
-            
-            console.log("-" + currentPokemon.name)
-            console.log("=" + req.session.current.name)
         }
         req.session.save(function(err) {
             if(err) res.status(500);

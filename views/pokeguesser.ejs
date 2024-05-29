@@ -15,10 +15,33 @@
         <% } %> 
         <% if (pokemonGuess.succes) { %>
             <section id = "container_pokeguesser_image">
-                <button class = "close_button"><a href = "/restart">X</a></button>
                 <article class = "pokeguesser_image">
-                    <p>Je hebt juist geraden!</p><br>
-                    <img src = "<%= pokemonGuess.image %>" alt = "pokemonToGuess"  width="300" height="300" id = "pokeguesser_answer">
+                    <button class = "close_button"><a href = "/restart">X</a></button>
+                    <h2>Je hebt juist geraden!</h2>
+                    <img src = "<%= pokemonGuess.image %>" alt = "pokemonToGuess"  width="150" height="150" id = "pokeguesser_answer">
+                    <div id = "guessStats">
+                        <h3>Jouw stats</h3>
+                        <article class = "guessStat">
+                            <p>Hp: <%= oldCurrent.stats[0].base_stat %></p>
+                        </article>
+                        <article class = "guessStat">
+                            <p>Att: <%= oldCurrent.stats[1].base_stat %>
+                                <% if(attack) { %>
+                                    -> <%= current.stats[1].base_stat %>
+                                <% } %>
+                            </p>
+                        </article>
+                        <article class = "guessStat">
+                            <p>Def: <%= oldCurrent.stats[2].base_stat %>
+                                <% if(defense) { %>
+                                    -> <%= current.stats[2].base_stat %>
+                                <% } %>
+                            </p>
+                        </article>
+                        <article class = "guessStat">
+                            <p>Speed: <%= oldCurrent.stats[5].base_stat %></p>
+                        </article>
+                    </div>
                 </article>
             </section>
         <% } %>
