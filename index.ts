@@ -10,6 +10,7 @@ import { flashMiddleware } from "./middleware/flashMiddleware";
 import { secureMiddleware } from "./middleware/secureMiddleware";
 import { currentPokemonMiddleware } from "./middleware/currentPokemonMiddleware";
 import { promisify } from "util";
+import { exists } from "fs";
 
 const app = express();
 
@@ -240,6 +241,7 @@ let evolutionChain: any[] = [];
 let evo1 : Pokemon;
 let evo2: Pokemon;
 let evo3 : Pokemon;
+let nummer3: boolean;
 
 app.get("/detail/:id", async(req, res) => {
     
@@ -272,20 +274,21 @@ app.get("/detail/:id", async(req, res) => {
 
     for(let pokemon of pokemons){
 
-    if(evolutionChain[0] == pokemon.name ){
-        evo1 = pokemon;
-    }
-    if( evolutionChain[1] == pokemon.name ){
-        evo2 = pokemon
-    }
-    if( evolutionChain[2] == pokemon.name ){
-        evo3 = pokemon
-    }
+        if(evolutionChain[0] == pokemon.name ){
+            evo1 = pokemon;
+        }
+        if( evolutionChain[1] == pokemon.name ){
+            evo2 = pokemon
+        }
+        
+        if ( evolutionChain[2] == pokemon.name ){
+            evo3 = pokemon
+            nummer3 = true;
+        }
 
-       
-
     }
-    res.render('detailed', {  pokemon , myPokemons: user?.pokemon_collection, evolution : evolutionChain, evo1 : evo1, evo2 : evo2, evo3 : evo3});   
+    
+    res.render('detailed', { nummer3 : nummer3 , pokemon , myPokemons: user?.pokemon_collection, evolution : evolutionChain, evo1 : evo1, evo2 : evo2, evo3 : evo3});   
     evolutionChain = [];  
 });
 

@@ -37,8 +37,6 @@
                         <li>Hoogte:</li>
                         <li>Gewicht:</li>
                         <li>Capaciteiten:</li>
-                        <li>    </li>
-                        <li>    </li>
                         <li>Gevangen op:</li>
                             
                         
@@ -80,11 +78,19 @@
                  <li>
                     <a href="/detail/<%= evo2.id %>"> <img src="<%= evo2.sprites.other["official-artwork"].front_default  %>" alt=""> </a>
                 </li>
+                
+                <%- if(nummer3 == true){%>
+
                 <li>
                     <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
-                <li>
+                    
+                         <li>
                     <a href="/detail/<%= evo3.id %>">  <img src="<%= evo3.sprites.other["official-artwork"].front_default  %>" alt=""> </a>
-                </li>
+                    </li>
+                <%-}%>
+                  
+                 
+               
 
             </section>
         </article>
