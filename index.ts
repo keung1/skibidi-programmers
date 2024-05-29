@@ -377,6 +377,7 @@ function randomPokemon() {
 let raiseAtt: boolean = false;
 let raiseDef: boolean = false;
 let answer: boolean = false;
+let oldCurrentPokemon = {} as Pokemon | undefined;
 app.get("/restart", (req, res) => {
     pokemonAnswer = randomPokemon();
     raiseAtt = false;
@@ -388,7 +389,7 @@ app.get("/restart", (req, res) => {
 app.get("/guesser", async(req, res) => {   
     let user: User | null = await getUser(req.session.user!);
     pokemonAnswer = randomPokemon();
-    let oldCurrentPokemon = req.session.current;
+    oldCurrentPokemon = req.session.current;
     res.render("pokeguesser", {
         pokemonGuess: {
             name: pokemonAnswer.name,
@@ -405,14 +406,13 @@ app.get("/guesser", async(req, res) => {
 app.post("/guesser", async(req, res) => {
     let user: User | null = await getUser(req.session.user!);
     let guess: string = req.body.guess;
-    let oldCurrentPokemon = req.session.current;
     if (guess.toUpperCase() == pokemonAnswer.name.toUpperCase()) {
         let currentPokemon: Pokemon | undefined = req.session.current;
         if(currentPokemon) {
             if (Math.random() < 0.5) {
                 console.log(currentPokemon.stats[1].base_stat);
                 let att: number = currentPokemon.stats[1].base_stat;
-                currentPokemon.stats[2].base_stat = att + 1;
+                currentPokemon.stats[1].base_stat = att + 1;
                 console.log("+" + currentPokemon.stats[1].base_stat);
                 raiseAtt = true;
             }
