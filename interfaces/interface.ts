@@ -18,7 +18,8 @@ export interface Pokemon{
 
 export interface species{
     name : string;
-    url: pokemon_species;
+    url : string;
+    evolution: pokemon_species;
 }
 
 export interface pokemon_species{

@@ -31,13 +31,13 @@
                     <ol class="values">
                         <li><%= pokemon1.types[0].type.name %></li>
                         
-                        <li class="<%= classname %>"><%= pokemon1.stats[0].base_stat %></li>
-                        <li class="<%= classname %>"><%= pokemon1.stats[1].base_stat %></li>
-                        <li class="<%= classname %>" ><%= pokemon1.stats[2].base_stat %></li>
-                        <li class="<%= classname %>" ><%= pokemon1.stats[3].base_stat %></li>
-                        <li class="<%= classname %>" ><%= pokemon1.stats[4].base_stat %></li>
+                        <li class="<%= hp1 %>"><%= pokemon1.stats[0].base_stat %></li>
+                        <li class="<%= attack1 %>" id=" attack1 "><%= pokemon1.stats[1].base_stat %></li>
+                        <li class="<%= defense1 %>" id=" defense1 " ><%= pokemon1.stats[2].base_stat %></li>
+                        <li class="<%= speciala1 %>" id=" speciala1 " ><%= pokemon1.stats[3].base_stat %></li>
+                        <li class="<%= speciald1 %>" id=" speciald1 " ><%= pokemon1.stats[4].base_stat %></li>
                         <li>    </li>
-                        <li class="<%= classname %>" ><%= pokemon1.stats[5].base_stat %></li>
+                        <li class="<%= speed1 %>" id=" speed1" ><%= pokemon1.stats[5].base_stat %></li>
                     </ol>
                 </section>     
             </article>
@@ -45,7 +45,7 @@
             <article class="Pokemons">
                 <form  role="search" action="/filterpoke2" method="GET" id="pokemon2">
                     <input class="search-poke" type="text" placeholder="Search.." name="pokemon2">
-                    <button class="comp-btn" type="submit"> zoek</button>
+                    <button  class="comp-btn" type="submit"> zoek</button>
                 <img src="<%= pokemon2.sprites.other["official-artwork"].front_default  %>" alt="">
                 <h3 class="vergelijkingnaam"><%=  pokemon2.name %></h3>
 
@@ -63,13 +63,13 @@
 
                     <ol class="values">
                         <li  ><%= pokemon2.types[0].type.name %></li>
-                        <li class="<%= clas %>" ><%= pokemon2.stats[0].base_stat %></li>
-                        <li class="<%= clas %>" ><%= pokemon2.stats[1].base_stat %></li>
-                        <li class="<%= clas %>" ><%= pokemon2.stats[2].base_stat %></li>
-                        <li class="<%= clas %>" ><%= pokemon2.stats[3].base_stat %></li>
-                        <li  class="<%= clas %>" ><%= pokemon2.stats[4].base_stat %></li>
+                        <li class="<%= hp2 %>"><%= pokemon2.stats[0].base_stat %></li>
+                        <li class="<%= attack2 %>" id=" attack2 " ><%= pokemon2.stats[1].base_stat %></li>
+                        <li class="<%= defense2 %>" id=" defense2 " ><%= pokemon2.stats[2].base_stat %></li>
+                        <li class="<%= speciala2 %>" id=" speciala2 " ><%= pokemon2.stats[3].base_stat %></li>
+                        <li class="<%= speciald2 %>" id=" speciald2 " ><%= pokemon2.stats[4].base_stat %></li>
                         <li>    </li>
-                        <li class="<%= clas %>" ><%= pokemon2.stats[5].base_stat %></li>
+                        <li class="<%= speed2 %>" id=" speed2 " ><%= pokemon2.stats[5].base_stat %></li>
                     </ol>
                 </section>            
             </article>

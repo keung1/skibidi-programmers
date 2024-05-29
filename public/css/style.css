@@ -1451,12 +1451,7 @@ article{
     #select-pokemon{
         margin-left: 30%;
     }
-
-
-
-
 }
-
 
 
 /*-------pokemonvergelijking.html------------*/
@@ -1470,13 +1465,16 @@ input{
     width: 15rem;
 }
 
-#pokemon1{
-    width: 70%;
-}
 
 .comp-btn{
-    
-} 
+    background-color: rgb(238, 82, 82);
+    padding: 5px;
+    border-radius: 10px;
+}
+.comp-btn :hover{
+    background-color: rgb(113, 31, 31);
+}
+
 
 #vergelijking{
     display: flex;
@@ -1506,7 +1504,7 @@ input{
 .Pokemons > form > input{
     border: solid black 1px;
     border-radius: 15px;
-    width: 90%;
+    width: 80%;
 }
 
 

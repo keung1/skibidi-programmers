@@ -59,7 +59,6 @@
                         <li><%= pokemon.height %> m</li>
                         <li><%= pokemon.weight %> kg</li>
                         <li><%= pokemon.abilities[0].ability.name%></li>
-                        <li><%= pokemon.abilities[1].ability.name%></li>
                         <li>20/3/2024</li>
                     </ol>
                 </section> 
@@ -74,17 +73,17 @@
             <section id="evolution">
 
                 <li>
-                    <img src="<%= pokemon.species.url.evolution_chain %>" alt="">
+                   <a href="/detail/<%= evo1.id %>"> <img src="<%= evo1.sprites.other["official-artwork"].front_default  %>" alt=""></a>
                 </li>
                 <li>
                     <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
                  <li>
-                    <img src="/assets/images/002.png" alt="">
+                    <a href="/detail/<%= evo2.id %>"> <img src="<%= evo2.sprites.other["official-artwork"].front_default  %>" alt=""> </a>
                 </li>
                 <li>
                     <img class="arrow" src="/assets/images/right-arrow.png" alt="" height="70px"></li>
                 <li>
-                    <img src="/assets/images/003.png" alt="">
+                    <a href="/detail/<%= evo3.id %>">  <img src="<%= evo3.sprites.other["official-artwork"].front_default  %>" alt=""> </a>
                 </li>
 
             </section>
